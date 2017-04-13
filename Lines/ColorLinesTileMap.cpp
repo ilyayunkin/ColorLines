@@ -5,9 +5,13 @@
 
 void ColorLinesTileMap::set(ColorLinesTile *tile, ColorLinesTile::Color color)
 {
-    tile->setColor(color);
-    ownedList.push_back(tile);
-    freeList.removeAll(tile);
+    if(color == ColorLinesTile::NONE){
+        free(tile);
+    }else{
+        tile->setColor(color);
+        ownedList.push_back(tile);
+        freeList.removeAll(tile);
+    }
 }
 
 void ColorLinesTileMap::free(ColorLinesTile *tile)
