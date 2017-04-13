@@ -34,8 +34,6 @@ class TetrisGame : public AbstractColorLinesGame
     bool isCaput();
     /// Создает новую падающую фигуру.
     Block *createBlock();
-    /// Флаг постановки на паузу.
-    bool paused;
 public:
     TetrisGame();
     int getRowCount() const;

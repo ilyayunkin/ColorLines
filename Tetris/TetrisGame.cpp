@@ -533,6 +533,8 @@ struct GameData
 
     /// Набранные очки.
     int coins;
+    /// Флаг постановки на паузу.
+    bool paused;
     ColorLinesTileMap tileMap;
     QString statistics;
     explicit GameData(TetrisGame *game);
@@ -552,6 +554,7 @@ GameData::GameData(TetrisGame *game)
       blockDownPeriod(50),
       level(1),
       coins(0),
+      paused(false),
       tileMap(PLOT_COL_CNT, PLOT_ROW_CNT)
 {
     QObject::connect(&timer, SIGNAL(timeout()), game, SLOT(update()));
@@ -560,8 +563,7 @@ GameData::GameData(TetrisGame *game)
 
 
 TetrisGame::TetrisGame()
-    : data(new GameData(this)),
-      paused(false)
+    : data(new GameData(this))
 {
     srand(time(0));
 }
@@ -737,7 +739,7 @@ QList<ColorLinesTile *> const &TetrisGame::getPath() const
 
 void TetrisGame::update()
 {
-    if(!paused){
+    if(!data->paused){
         data->periodCnt++;
         while(clearIfLined()){
         }
@@ -811,6 +813,6 @@ void TetrisGame::keyReleased(int key)
 
 void TetrisGame::pauseToggle()
 {
-    paused = !paused;
+    data->paused = !data->paused;
 }
 
