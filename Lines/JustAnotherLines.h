@@ -11,10 +11,13 @@
 class JustAnotherLines;
 class AdapterData;
 
+/// Класс объекта-модели, подсказывающего следующий ход.
 class Adapter : public AbstractColorLinesGame
 {
     Q_OBJECT
+    /// Приватная реализация
     QSharedPointer<AdapterData> data;
+    /// Объект игры, для которой выполняется подсказка.
     JustAnotherLines *game;
 private slots:
     void update();
@@ -36,6 +39,7 @@ enum
     BALLS_IN_STEP = 3,
 };
 
+/// Набор цветов фишек, появляющихся за один ход
 struct NextColors
 {
     ColorLinesTile::Color color[BALLS_IN_STEP];
@@ -44,9 +48,11 @@ struct NextColors
 class JustAnotherLines : public AbstractColorLinesGame
 {
     Q_OBJECT
-
+    friend class Adapter;
+    /// Приватная реализация
     QSharedPointer<GameData> data;
-    /// Обрабатывает случай поражения.
+    /// Возвращает цвета фишек, которые появятся на следующим ходе.
+    NextColors getNextColors();
 public:
     explicit JustAnotherLines(QObject *parent = 0);
     int getRowCount() const;
@@ -57,10 +63,12 @@ public:
     ColorLinesTile *getRootTile() const;
     ColorLinesTile *getSelectedTile() const;
     QList<ColorLinesTile *> const&getPath() const;
-    void lose();
-    AbstractColorLinesGame *getAdapter() { return new Adapter(this);}
 
-    NextColors getNextColors();
+    /// Обрабатывает случай поражения.
+    void lose();
+    /// Возвращает указатель на объект-модель,
+    /// подсказывающий следующий ход.
+    AbstractColorLinesGame *getAdapter();
 
 private slots:
     void update();

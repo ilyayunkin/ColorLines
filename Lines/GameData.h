@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #ifndef GAMEDATA_H
 #define GAMEDATA_H
 

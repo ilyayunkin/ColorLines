@@ -76,8 +76,7 @@ int ColorLinesTileMap::getColCount()
 
 void ColorLinesTileMap::deleteBottomTiles(ColorLinesTile *tile)
 {
-    if(tile->getBottomTile())
-    {
+    if(tile->getBottomTile()){
         deleteBottomTiles(tile->getBottomTile());
     }
     deleteRightTiles(tile);
@@ -85,8 +84,7 @@ void ColorLinesTileMap::deleteBottomTiles(ColorLinesTile *tile)
 
 void ColorLinesTileMap::deleteRightTiles(ColorLinesTile *tile)
 {
-    if(tile->getRightTile())
-    {
+    if(tile->getRightTile()){
         deleteRightTiles(tile->getRightTile());
     }
     delete tile;

@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
@@ -5,15 +8,12 @@
 
 #include "JustAnotherLines.h"
 
+/// Color Lines game window
 class MainWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MainWidget(JustAnotherLines *game, QWidget *parent = 0);
-
-signals:
-
-public slots:
+     MainWidget(JustAnotherLines *game, QWidget *parent = 0);
 };
 
 #endif // MAINWIDGET_H

@@ -102,6 +102,12 @@ void JustAnotherLines::lose()
     }
 }
 
+AbstractColorLinesGame *JustAnotherLines::getAdapter()
+{
+    return new Adapter(this);
+}
+
+
 int JustAnotherLines::getRowCount() const
 {
     return DIMENSION;

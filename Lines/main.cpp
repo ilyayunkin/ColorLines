@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #include <QApplication>
 #include "JustAnotherLines.h"
 #include "MainWidget.h"

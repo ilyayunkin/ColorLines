@@ -9,18 +9,21 @@
 #include "AbstractColorLinesGame.h"
 
 /// Виджет, представляющий окно игры "Цветные линии"
+/// В архитектуре Модель/Представление играет роль представления.
 class ColorLinesWidget : public QWidget
 {
     Q_OBJECT
 
 public:
+    /// Виджет поддерживает две формы фишек.
     typedef enum
     {
-        CIRCLE,
-        RECTANGLE
+        CIRCLE, ///< Круглая фишка
+        RECTANGLE ///< Квадратная фишка
     }elementType_t;
 
 private:
+    /// Указатель на объект модели.
     AbstractColorLinesGame *game;
 
     int side;

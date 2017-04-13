@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #include "GameData.h"
 #include "PathSearchToWidth.h"
 

@@ -8,16 +8,21 @@
 #include <QColor>
 #include <QPoint>
 
-/// Класс для представления в памяти тайла, который может быть свободным
-/// или нести одну цветную фишку.
+/// Класс для представления в памяти тайла (вадрата игрового поля),
+/// который может быть свободным или нести одну цветную фишку.
 class ColorLinesTile
 {
+    /// Тайл слева.
     ColorLinesTile *left;
+    /// Тайл справа.
     ColorLinesTile *right;
+    /// Тайл сверху.
     ColorLinesTile *top;
+    /// Тайл снизу.
     ColorLinesTile *bottom;
 
 public:
+    /// Используемые в игре цвета
     enum Color
     {
         RED,
@@ -29,7 +34,7 @@ public:
         CYAN,
 
         COUNT,
-        NONE = COUNT
+        NONE = COUNT ///< Тайл чист
     };
 
     explicit ColorLinesTile(Color color = NONE);
@@ -61,6 +66,9 @@ public:
      * @warning Запрещено вызывать для свободных тайлов.
      */
     QColor getQColor() const;
+
+    /// Устанавливает цвет фишки color,
+    /// что может соответствовать снятию фишки, если значение равно NONE
     void setColor(Color color);
 
     /// Возвращает список тайлов при движении вправо и вниз,
@@ -71,6 +79,7 @@ public:
     QList<ColorLinesTile *>getDiagonal1ColorList() const;
     QList<ColorLinesTile *>getDiagonal2ColorList() const;
 private:
+    /// Цвет фишки, стоящей на тайле.
     Color color;
 };
 
