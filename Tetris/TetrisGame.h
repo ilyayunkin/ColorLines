@@ -11,20 +11,30 @@
 struct Block;
 struct GameData;
 
+/// Реализация игры "Тетрис"
 class TetrisGame : public AbstractColorLinesGame
 {
     Q_OBJECT
     friend class GameData;
 
+    /// Приватная реализация.
     QSharedPointer<GameData> data;
 
+    /// Обработка поражения.
     void lose();
+    /// Проверяет строку row  очищает ее, если она вся заполнена.
     bool clearIfLined(int row);
+    /// Очищает все заполненные строки.
     bool clearIfLined();
+    /// Опускает верхние строки на место образовавшихся пустот.
     void dropAfterLined(int row);
+    /// Поворачивает двигающуюся фигуру.
     void rotate();
+    /// Возвращает истину, если поле застроено до верхней границы
     bool isCaput();
+    /// Создает новую падающую фигуру.
     Block *createBlock();
+    /// Флаг постановки на паузу.
     bool paused;
 public:
     TetrisGame();

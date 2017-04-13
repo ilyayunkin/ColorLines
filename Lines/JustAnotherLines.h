@@ -45,6 +45,7 @@ struct NextColors
     ColorLinesTile::Color color[BALLS_IN_STEP];
 };
 
+/// Реализация игры "Цветные линии"
 class JustAnotherLines : public AbstractColorLinesGame
 {
     Q_OBJECT
