@@ -27,3 +27,8 @@
 *.exe
 *.out
 *.app
+
+#Qt local
+build-*-Debug
+build-*-Release
+*.user
