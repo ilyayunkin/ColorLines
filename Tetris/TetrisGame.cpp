@@ -538,11 +538,13 @@ struct GameData
     ColorLinesTileMap tileMap;
     QString statistics;
     explicit GameData(TetrisGame *game);
+    /// Создает новую падающую фигуру.
+    Block *createBlock();
 private:
     GameData();
     explicit GameData(GameData&);
     GameData &operator =(const GameData&);
-};
+ };
 
 GameData::GameData(TetrisGame *game)
     : block(0),
@@ -561,6 +563,52 @@ GameData::GameData(TetrisGame *game)
     timer.start(TIMER_PERIOD);
 }
 
+Block* GameData::createBlock()
+{
+    enum
+    {
+        LINE,
+        CROSS,
+        L_BLOCK,
+        RECT,
+        ZETA,
+        ZETA2,
+        L_BLOCK2,
+
+        COUNT
+    };
+
+    Block *block = 0;
+    int type = rand() % COUNT;
+    qDebug() << type;
+    switch (type) {
+    case LINE:
+        block = new Line(tileMap.topLeft);
+        break;
+    case CROSS:
+        block = new Cross(tileMap.topLeft);
+        break;
+    case L_BLOCK:
+        block = new LBlock(tileMap.topLeft);
+        break;
+    case RECT:
+        block = new Rect(tileMap.topLeft);
+        break;
+    case ZETA:
+        block = new Zeta(tileMap.topLeft);
+        break;
+    case ZETA2:
+        block = new Zeta2(tileMap.topLeft);
+        break;
+    case L_BLOCK2:
+        block = new LBlock2(tileMap.topLeft);
+        break;
+    default:
+        assert(false);
+        break;
+    }
+    return block;
+}
 
 TetrisGame::TetrisGame()
     : data(new GameData(this))
@@ -661,53 +709,6 @@ bool TetrisGame::isCaput()
     return ret;
 }
 
-Block* TetrisGame::createBlock()
-{
-    enum
-    {
-        LINE,
-        CROSS,
-        L_BLOCK,
-        RECT,
-        ZETA,
-        ZETA2,
-        L_BLOCK2,
-
-        COUNT
-    };
-
-    Block *block = 0;
-    int type = rand() % COUNT;
-    qDebug() << type;
-    switch (type) {
-    case LINE:
-        block = new Line(data->tileMap.topLeft);
-        break;
-    case CROSS:
-        block = new Cross(data->tileMap.topLeft);
-        break;
-    case L_BLOCK:
-        block = new LBlock(data->tileMap.topLeft);
-        break;
-    case RECT:
-        block = new Rect(data->tileMap.topLeft);
-        break;
-    case ZETA:
-        block = new Zeta(data->tileMap.topLeft);
-        break;
-    case ZETA2:
-        block = new Zeta2(data->tileMap.topLeft);
-        break;
-    case L_BLOCK2:
-        block = new LBlock2(data->tileMap.topLeft);
-        break;
-    default:
-        assert(false);
-        break;
-    }
-    return block;
-}
-
 int TetrisGame::getRowCount() const
 {
     return PLOT_ROW_CNT;
@@ -745,7 +746,7 @@ void TetrisGame::update()
         }
 
         if(data->block == 0){
-            data->block = QSharedPointer<Block>(createBlock());
+            data->block = QSharedPointer<Block>(data->createBlock());
         }else{
             if(data->periodCnt % HORIZONTAL_MOVING_PERIOD == 0){
                 if(data->left){

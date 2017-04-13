@@ -8,7 +8,6 @@
 
 #include "Lines/AbstractColorLinesGame.h"
 
-struct Block;
 struct GameData;
 
 /// Реализация игры "Тетрис"
@@ -32,8 +31,6 @@ class TetrisGame : public AbstractColorLinesGame
     void rotate();
     /// Возвращает истину, если поле застроено до верхней границы
     bool isCaput();
-    /// Создает новую падающую фигуру.
-    Block *createBlock();
 public:
     TetrisGame();
     int getRowCount() const;
