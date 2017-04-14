@@ -1,0 +1,4 @@
+#ifndef TETRISCOMMON_H
+#define TETRISCOMMON_H
+
+#endif // TETRISCOMMON_H
