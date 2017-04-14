@@ -7,7 +7,6 @@
 #include <QSettings>
 #include <QInputDialog>
 #include <QMessageBox>
-#include <QDebug>
 
 ChampionsTable::ChampionsTable(QString company, QString application)
     : key("champions"),

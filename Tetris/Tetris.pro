@@ -19,11 +19,14 @@ SOURCES += main.cpp\
     ../Lines/ColorLinesTileMap.cpp \
     ../Lines/ColorLinesWidget.cpp \
     TetrisGame.cpp \
-    ../COMMON/GUI/ChampionsTable.cpp
+    ../COMMON/GUI/ChampionsTable.cpp \
+    Block.cpp
 
 HEADERS  += ../Lines/AbstractColorLinesGame.h \
     ../Lines/ColorLinesTile.h \
     ../Lines/ColorLinesTileMap.h \
     ../Lines/ColorLinesWidget.h \
     TetrisGame.h \
-    ../COMMON/GUI/ChampionsTable.h
+    ../COMMON/GUI/ChampionsTable.h \
+    Block.h \
+    TetrisCommon.h
