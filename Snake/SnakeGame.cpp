@@ -16,18 +16,20 @@ static const ColorLinesTile::Color eatColor = ColorLinesTile::GREEN;
 
 enum
 {
-    DIMENSIONS = 15,
-    APPLES_IN_STEP = 1,
-    MINIMUM_MS = 30,
-    PERIOD_DECREMENT = 8
+    DIMENSIONS = 15,///< Количество строк и столбцов поля.
+    APPLES_IN_STEP = 1,///< Количество яблок, появляющихся за один шаг.
+    MINIMUM_MS = 30,///< Минимальный интервал между движениями змейки.
+    PERIOD_DECREMENT_MS = 8 ///< Мера ускорения змейки после поедания яблока.
 };
 
+/// Варианты направлений движения.
 enum Direction
 {
     UP,
     LEFT,
     DOWN,
     RIGHT,
+
     COUNT
 };
 
@@ -37,7 +39,7 @@ struct GameData
     Direction direction;
     Direction newDirection;
 
-    int period;
+    int period_ms;
     int apples;
     ColorLinesTileMap tileMap;
     QList<ColorLinesTile *> snake;
@@ -48,20 +50,27 @@ private:
     GameData();
     explicit GameData(GameData&);
     GameData &operator =(const GameData&);
+    /// Поместить пока еще короткую змейку на поле.
+    void initSnakeOnField();
 };
 
 GameData::GameData(SnakeGame *game)
     : direction(UP),
       newDirection(direction),
-      period(500),
+      period_ms(500),
       apples(0),
       tileMap(DIMENSIONS, DIMENSIONS)
 {
-    snake.push_back(tileMap.topLeft->getTile(DIMENSIONS / 2, DIMENSIONS / 2));
-    snake.push_back(tileMap.topLeft->getTile(DIMENSIONS / 2, DIMENSIONS / 2 + 1));
+    initSnakeOnField();
     QObject::connect(&timer, SIGNAL(timeout()), game, SLOT(update()));
     timer.setSingleShot(true);
-    timer.start(period);
+    timer.start(period_ms);
+}
+
+void GameData::initSnakeOnField()
+{
+    snake.push_back(tileMap.topLeft->getTile(DIMENSIONS / 2, DIMENSIONS / 2));
+    snake.push_back(tileMap.topLeft->getTile(DIMENSIONS / 2, DIMENSIONS / 2 + 1));
 }
 
 SnakeGame::SnakeGame(QObject *parent)
@@ -151,8 +160,8 @@ void SnakeGame::update()
             if((i == 0) && (current->getColor() == eatColor)){
                 data->tileMap.free(current);
                 data->apples++;
-                data->period = ((data->period - PERIOD_DECREMENT) > MINIMUM_MS) ?
-                            (data->period - PERIOD_DECREMENT) :
+                data->period_ms = ((data->period_ms - PERIOD_DECREMENT_MS) > MINIMUM_MS) ?
+                            (data->period_ms - PERIOD_DECREMENT_MS) :
                             MINIMUM_MS;
                 data->eaten.push_back(current);
             }
@@ -168,12 +177,12 @@ void SnakeGame::update()
             addApple();
         }
         data->statistics =
-                QString("Apples=%1 Period=%2ms").arg(data->apples).arg(data->period);
+                QString("Apples=%1 Period=%2ms").arg(data->apples).arg(data->period_ms);
     }else {
         data->statistics = "Paused";
     }
 
-    data->timer.start(data->period);
+    data->timer.start(data->period_ms);
 }
 
 ColorLinesTile *SnakeGame::getNextHeadPosition(ColorLinesTile *head)
@@ -216,7 +225,7 @@ void SnakeGame::lose()
     if(b == QMessageBox::Yes)
     {
         data = QSharedPointer<GameData>(new GameData(this));
-        data->timer.start(data->period);
+        data->timer.start(data->period_ms);
 
         addApple();
     }

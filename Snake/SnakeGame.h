@@ -10,15 +10,21 @@
 
 struct GameData;
 
+/// Игра в змейку.
+/// Использованы механизмы игры "Цветные линии":
+/// Фишки - яблоки. Путь - змейка.
 class SnakeGame : public AbstractColorLinesGame
 {
     Q_OBJECT
 
+    /// Приватная реализация
     QSharedPointer<GameData> data;
-
+    /// Выбор тайла, на который заползет змея на следующем ходе.
     ColorLinesTile *getNextHeadPosition(ColorLinesTile *head);
+    /// Обработка поражения
     void lose();
-    void addApple();
+    /// Вбросить новое яблоко на поле.
+    void addApple(); 
     bool paused;
 public:
     explicit SnakeGame(QObject *parent = 0);
