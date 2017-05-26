@@ -19,6 +19,8 @@ class Adapter : public AbstractColorLinesGame
     QSharedPointer<AdapterData> data;
     /// Объект игры, для которой выполняется подсказка.
     JustAnotherLines *game;
+    Adapter();
+    Adapter(Adapter&);
 private slots:
     void update();
 public:
@@ -31,7 +33,7 @@ public:
     QList<ColorLinesTile *> const&getPath() const;
 };
 
-class GameData;
+class ColorLinesGameData;
 
 enum
 {
@@ -51,7 +53,7 @@ class JustAnotherLines : public AbstractColorLinesGame
     Q_OBJECT
     friend class Adapter;
     /// Приватная реализация
-    QSharedPointer<GameData> data;
+    QSharedPointer<ColorLinesGameData> data;
     /// Возвращает цвета фишек, которые появятся на следующим ходе.
     NextColors getNextColors();
 public:

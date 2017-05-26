@@ -8,7 +8,7 @@
 
 #include <QSharedPointer>
 
-struct GameData;
+struct SnakeGameData;
 
 /// Игра в змейку.
 /// Использованы механизмы игры "Цветные линии":
@@ -18,7 +18,7 @@ class SnakeGame : public AbstractColorLinesGame
     Q_OBJECT
 
     /// Приватная реализация
-    QSharedPointer<GameData> data;
+    QSharedPointer<SnakeGameData> data;
     /// Выбор тайла, на который заползет змея на следующем ходе.
     ColorLinesTile *getNextHeadPosition(ColorLinesTile *head);
     /// Обработка поражения

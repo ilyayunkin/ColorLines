@@ -115,7 +115,7 @@ ColorLinesTile *Drop::next(ColorLinesTile *tile)
     return next;
 }
 
-struct GameData
+struct TetrisGameData
 {
     QSharedPointer<Block> block;
     /// Последний успешно проделанный путь между тайлами.
@@ -141,14 +141,14 @@ struct GameData
     bool paused;
     ColorLinesTileMap tileMap;
     QString statistics;
-    explicit GameData(TetrisGame *game);
+    explicit TetrisGameData(TetrisGame *game);
 private:
-    GameData();
-    explicit GameData(GameData&);
-    GameData &operator =(const GameData&);
+    TetrisGameData();
+    explicit TetrisGameData(TetrisGameData&);
+    TetrisGameData &operator =(const TetrisGameData&);
  };
 
-GameData::GameData(TetrisGame *game)
+TetrisGameData::TetrisGameData(TetrisGame *game)
     : block(0),
       left(false),
       right(false),
@@ -166,7 +166,7 @@ GameData::GameData(TetrisGame *game)
 }
 
 TetrisGame::TetrisGame()
-    : data(new GameData(this))
+    : data(new TetrisGameData(this))
 {
     srand(time(0));
 }
@@ -174,6 +174,8 @@ TetrisGame::TetrisGame()
 
 void TetrisGame::lose()
 {
+    assert(!data.isNull());
+
     qDebug() << __PRETTY_FUNCTION__ << __LINE__;
     data->timer.stop();
     ChampionsTable t("Ilya Yunkin", "Tetris");
@@ -182,12 +184,14 @@ void TetrisGame::lose()
             QMessageBox::question(0, tr("Game over!"),
                                   tr("Do you want to replay?"));
     if(b == QMessageBox::Yes){
-        data = QSharedPointer<GameData>(new GameData(this));
+        data = QSharedPointer<TetrisGameData>(new TetrisGameData(this));
     }
 }
 
 bool TetrisGame::clearIfLined(int row)
 {
+    assert(!data.isNull());
+
     ColorLinesTile *left =
             data->tileMap.topLeft->getTile(0, row);
     ColorLinesTile *tile = left;
@@ -214,6 +218,8 @@ bool TetrisGame::clearIfLined(int row)
 
 bool TetrisGame::clearIfLined()
 {
+    assert(!data.isNull());
+
     bool lined = false;
 
     for(int row = 0; row < PLOT_ROW_CNT; row++){
@@ -237,6 +243,8 @@ bool TetrisGame::clearIfLined()
 
 void TetrisGame::dropAfterLined(int row)
 {
+    assert(!data.isNull());
+
     Drop d(data->tileMap.topLeft, row);
     while(!d.landed()){
         d.down();
@@ -245,6 +253,8 @@ void TetrisGame::dropAfterLined(int row)
 
 void TetrisGame::rotate()
 {
+    assert(!data.isNull());
+
     if(!data->block.isNull()){
         data->block->rotate();
     }
@@ -252,6 +262,8 @@ void TetrisGame::rotate()
 
 bool TetrisGame::isCaput()
 {
+    assert(!data.isNull());
+
     bool ret = false;
     ColorLinesTile *tile = data->tileMap.topLeft;
     while(tile != 0){
@@ -274,14 +286,17 @@ int TetrisGame::getColCount() const
 }
 int TetrisGame::getCoins() const
 {
+    assert(!data.isNull());
     return data->coins;
 }
 const QString &TetrisGame::getStatistics() const
 {
+    assert(!data.isNull());
     return data->statistics;
 }
 ColorLinesTile *TetrisGame::getRootTile() const
 {
+    assert(!data.isNull());
     return data->tileMap.topLeft;
 }
 ColorLinesTile *TetrisGame::getSelectedTile() const
@@ -290,11 +305,13 @@ ColorLinesTile *TetrisGame::getSelectedTile() const
 }
 QList<ColorLinesTile *> const &TetrisGame::getPath() const
 {
+    assert(!data.isNull());
     return data->path;
 }
 
 void TetrisGame::update()
 {
+    assert(!data.isNull());
     if(!data->paused){
         data->periodCnt++;
         while(clearIfLined()){
@@ -337,7 +354,9 @@ void TetrisGame::update()
 
 void TetrisGame::keyPressed(int key, Qt::KeyboardModifiers modifiers)
 {
+    assert(!data.isNull());
     Q_UNUSED(modifiers);
+
     switch (key) {
     case Qt::Key_Left: data->left = true;
         break;
@@ -354,6 +373,8 @@ void TetrisGame::keyPressed(int key, Qt::KeyboardModifiers modifiers)
 
 void TetrisGame::keyReleased(int key)
 {
+    assert(!data.isNull());
+
     switch (key) {
     case Qt::Key_Left: data->left = false;
         break;
@@ -369,6 +390,8 @@ void TetrisGame::keyReleased(int key)
 
 void TetrisGame::pauseToggle()
 {
+    assert(!data.isNull());
+
     data->paused = !data->paused;
 }
 

@@ -4,8 +4,9 @@
 #include "GameData.h"
 #include "COMMON/PathSearchToWidth.h"
 
-GameData::GameData(JustAnotherLines *game)
-    : combo(1),
+ColorLinesGameData::ColorLinesGameData(JustAnotherLines *game)
+    : lose(false),
+      combo(1),
       coins(0),
       tileMap(DIMENSION, DIMENSION),
       selection(0),
@@ -18,7 +19,7 @@ GameData::GameData(JustAnotherLines *game)
     randomColors();
 }
 
-bool GameData::clearIfLined(ColorLinesTile *tile)
+bool ColorLinesGameData::clearIfLined(ColorLinesTile *tile)
 {
     QList<ColorLinesTile *> hList = tile->getHorizontalColorList();
     QList<ColorLinesTile *> vList = tile->getVerticalColorList();
@@ -38,7 +39,7 @@ bool GameData::clearIfLined(ColorLinesTile *tile)
     return cash > 0;
 }
 
-int GameData::clearIfLined(QList<ColorLinesTile *> line)
+int ColorLinesGameData::clearIfLined(QList<ColorLinesTile *> line)
 {
     int cash = 0;
     if(line.size() >= MIN_LINE){
@@ -50,19 +51,19 @@ int GameData::clearIfLined(QList<ColorLinesTile *> line)
     return cash;
 }
 
-bool GameData::buildPath(ColorLinesTile *from, ColorLinesTile *to)
+bool ColorLinesGameData::buildPath(ColorLinesTile *from, ColorLinesTile *to)
 {
     PathSearchToWidth search;
     bool ret = search.search(from, to, path);
     return ret;
 }
 
-void GameData::placeBalls()
+void ColorLinesGameData::placeBalls()
 {
     int freeCells = tileMap.freeList.size();
     int ballsWeCanPlace = std::min(freeCells, (int)BALLS_IN_STEP);
     if(ballsWeCanPlace == 0){
-        game->lose();
+        lose = true;
     }else{
         for(int i = 0; i < ballsWeCanPlace; i++){
             int cell = rand() % freeCells;
@@ -79,11 +80,11 @@ void GameData::placeBalls()
     freeCells = tileMap.freeList.size();
 
     if(tileMap.freeList.size() == 0){
-        game->lose();
+        lose = true;
     }
 }
 
-void GameData::randomColors()
+void ColorLinesGameData::randomColors()
 {
     for(int i = 0; i < BALLS_IN_STEP; i++){
         int randomColor = rand() % ColorLinesTile::COUNT;
@@ -92,22 +93,22 @@ void GameData::randomColors()
 }
 
 
-void GameData::goToElementMovingState()
+void ColorLinesGameData::goToElementMovingState()
 {
     currentState = elementMovingStatePointer.data();
 }
 
-void GameData::goToWaitingState()
+void ColorLinesGameData::goToWaitingState()
 {
     currentState = waitingStatePointer.data();
 }
 
-void GameData::pathClean()
+void ColorLinesGameData::pathClean()
 {
     path.clear();
 }
 
-ElementMovingState::ElementMovingState(GameData *data) :
+ElementMovingState::ElementMovingState(ColorLinesGameData *data) :
     data(data)
 {
 }
@@ -140,7 +141,7 @@ void ElementMovingState::tileClicked(int col, int row)
     Q_UNUSED(row);
 }
 
-WaitingState::WaitingState(GameData *data) :
+WaitingState::WaitingState(ColorLinesGameData *data) :
     data(data)
 {
 }
@@ -168,4 +169,9 @@ void WaitingState::tileClicked(int col, int row)
         }
     }
 
+}
+
+bool ColorLinesGameData::isLose()
+{
+    return lose;
 }

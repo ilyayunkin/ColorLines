@@ -1,8 +1,8 @@
 /** @file
   * @author Yunkin Ilya.
   */
-#ifndef GAMEDATA_H
-#define GAMEDATA_H
+#ifndef ColorLinesGameData_H
+#define ColorLinesGameData_H
 
 #include <QObject>
 
@@ -27,26 +27,27 @@ public:
 
 class ElementMovingState : public AbstractGameState
 {
-    GameData *data;
+    ColorLinesGameData *data;
 public:
-    explicit ElementMovingState(GameData *data);
+    explicit ElementMovingState(ColorLinesGameData *data);
     void update();
     void tileClicked(int col, int row);
 };
 
 class WaitingState : public AbstractGameState
 {
-    GameData *data;
+    ColorLinesGameData *data;
 public:
-    explicit WaitingState(GameData *data);
+    explicit WaitingState(ColorLinesGameData *data);
     void update();
     void tileClicked(int col, int row);
 };
 
-class GameData: public QObject
+class ColorLinesGameData: public QObject
 {
     Q_OBJECT
 
+    bool lose;
     /// Последний успешно проделанный путь между тайлами.
 public:
     QList<ColorLinesTile *> path;
@@ -68,12 +69,12 @@ public:
 
     NextColors nextColors;
 
-    explicit GameData(JustAnotherLines *game);
+    explicit ColorLinesGameData(JustAnotherLines *game);
 private:
     JustAnotherLines *game;
-    GameData();
-    explicit GameData(GameData&);
-    GameData &operator =(const GameData&);
+    ColorLinesGameData();
+    explicit ColorLinesGameData(ColorLinesGameData&);
+    ColorLinesGameData &operator =(const ColorLinesGameData&);
 
 public slots:
     /**
@@ -111,6 +112,8 @@ public:
 
     void goToWaitingState();
     void goToElementMovingState();
+
+    bool isLose();
 };
 
-#endif // GAMEDATA_H
+#endif // ColorLinesGameData_H

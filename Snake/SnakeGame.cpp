@@ -33,9 +33,9 @@ enum Direction
     COUNT
 };
 
-struct GameData
+struct SnakeGameData
 {
-    GameData(SnakeGame *game);
+    SnakeGameData(SnakeGame *game);
     Direction direction;
     Direction newDirection;
 
@@ -47,14 +47,14 @@ struct GameData
     QString statistics;
     QTimer timer;
 private:
-    GameData();
-    explicit GameData(GameData&);
-    GameData &operator =(const GameData&);
+    SnakeGameData();
+    explicit SnakeGameData(SnakeGameData&);
+    SnakeGameData &operator =(const SnakeGameData&);
     /// Поместить пока еще короткую змейку на поле.
     void initSnakeOnField();
 };
 
-GameData::GameData(SnakeGame *game)
+SnakeGameData::SnakeGameData(SnakeGame *game)
     : direction(UP),
       newDirection(direction),
       period_ms(500),
@@ -67,15 +67,16 @@ GameData::GameData(SnakeGame *game)
     timer.start(period_ms);
 }
 
-void GameData::initSnakeOnField()
+void SnakeGameData::initSnakeOnField()
 {
     snake.push_back(tileMap.topLeft->getTile(DIMENSIONS / 2, DIMENSIONS / 2));
     snake.push_back(tileMap.topLeft->getTile(DIMENSIONS / 2, DIMENSIONS / 2 + 1));
 }
 
 SnakeGame::SnakeGame(QObject *parent)
-    : AbstractColorLinesGame(parent), data(new GameData(this)), paused(false)
+    : AbstractColorLinesGame(parent), data(new SnakeGameData(this)), paused(false)
 {        
+    data = QSharedPointer<SnakeGameData>(new SnakeGameData(this));
     srand(time(0));
     addApple();
 }
@@ -83,6 +84,8 @@ SnakeGame::SnakeGame(QObject *parent)
 void SnakeGame::keyPressed(int key, Qt::KeyboardModifiers modifiers)
 {
     Q_UNUSED(modifiers);
+    assert(!data.isNull());
+
     Direction tmpDirection = data->direction;
     switch (key) {
     case Qt::Key_Up:
@@ -120,14 +123,17 @@ int SnakeGame::getColCount() const
 }
 int SnakeGame::getCoins() const
 {
+    assert(!data.isNull());
     return data->apples;
 }
 const QString &SnakeGame::getStatistics() const
 {
+    assert(!data.isNull());
     return data->statistics;
 }
 ColorLinesTile *SnakeGame::getRootTile() const
 {
+    assert(!data.isNull());
     return data->tileMap.topLeft;
 }
 ColorLinesTile *SnakeGame::getSelectedTile() const
@@ -136,12 +142,15 @@ ColorLinesTile *SnakeGame::getSelectedTile() const
 }
 QList<ColorLinesTile *> const &SnakeGame::getPath() const
 {
+    assert(!data.isNull());
     return data->snake;
 }
 
 void SnakeGame::update()
 {
     if(!paused){
+        assert(!data.isNull());
+
         data->direction = data->newDirection;
         QList<ColorLinesTile *> newPath;
         int i = 0;
@@ -187,6 +196,8 @@ void SnakeGame::update()
 
 ColorLinesTile *SnakeGame::getNextHeadPosition(ColorLinesTile *head)
 {
+    assert(!data.isNull());
+
     ColorLinesTile *next = 0;
 
     /// i - небольшой трюк, чтобы змея не сменила направление
@@ -218,13 +229,15 @@ ColorLinesTile *SnakeGame::getNextHeadPosition(ColorLinesTile *head)
 
 void SnakeGame::lose()
 {
+    assert(!data.isNull());
+
     ChampionsTable t("Ilya Yunkin", "Snake");
     t.setCoins(data->apples);
     QMessageBox::StandardButton b =
             QMessageBox::question(0, tr("Game over!"), tr("Do you want to replay?"));
     if(b == QMessageBox::Yes)
     {
-        data = QSharedPointer<GameData>(new GameData(this));
+        data = QSharedPointer<SnakeGameData>(new SnakeGameData(this));
         data->timer.start(data->period_ms);
 
         addApple();
@@ -233,6 +246,8 @@ void SnakeGame::lose()
 
 void SnakeGame::addApple()
 {
+    assert(!data.isNull());
+
     int freeCells = data->tileMap.freeList.size();
     int applesToAdd = std::min(freeCells, (int)APPLES_IN_STEP);
     if(applesToAdd == 0){

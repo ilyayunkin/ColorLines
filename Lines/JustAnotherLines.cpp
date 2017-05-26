@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include <assert.h>
 
 #include <QMessageBox>
 #include <QTimer>
@@ -46,6 +47,8 @@ Adapter::~Adapter()
 
 void Adapter::update()
 {
+    assert(!data.isNull());
+
     ColorLinesTile *tile = data->tileMap.topLeft;
     NextColors nextColors = game->getNextColors();
     for(int i = 0; i < data->tileMap.getColCount(); i++){
@@ -56,14 +59,17 @@ void Adapter::update()
 
 int Adapter::getRowCount() const
 {
+    assert(!data.isNull());
     return data->tileMap.getRowCount();
 }
 int Adapter::getColCount() const
 {
+    assert(!data.isNull());
     return data->tileMap.getColCount();
 }
 ColorLinesTile *Adapter::getRootTile() const
 {
+    assert(!data.isNull());
     return data->tileMap.topLeft;
 }
 ColorLinesTile *Adapter::getSelectedTile() const
@@ -72,12 +78,13 @@ ColorLinesTile *Adapter::getSelectedTile() const
 }
 QList<ColorLinesTile *> const& Adapter::getPath() const
 {
+    assert(!data.isNull());
     return data->path;
 }
 
 JustAnotherLines::JustAnotherLines(QObject *parent)
     : AbstractColorLinesGame(parent),
-      data(new GameData(this))
+      data(new ColorLinesGameData(this))
 {    
     srand(time(0));
     data->placeBalls();
@@ -89,13 +96,15 @@ JustAnotherLines::JustAnotherLines(QObject *parent)
 
 void JustAnotherLines::lose()
 {
+    assert(!data.isNull());
+
     ChampionsTable t("Ilya Yunkin", "Just Another Lines");
     t.setCoins(data->coins);
     QMessageBox::StandardButton b =
             QMessageBox::question(0, tr("Game over!"), tr("Do you want to replay?"));
     if(b == QMessageBox::Yes)
     {
-        data = QSharedPointer<GameData>(new GameData(this));
+        data = QSharedPointer<ColorLinesGameData>(new ColorLinesGameData(this));
         data->placeBalls();
     }else{
         QApplication::quit();
@@ -120,46 +129,59 @@ int JustAnotherLines::getColCount() const
 
 int JustAnotherLines::getCoins() const
 {
+    assert(!data.isNull());
     return data->coins;
 }
 
 int JustAnotherLines::getCombo() const
 {
+    assert(!data.isNull());
     return data->combo;
 }
 
 const QString &JustAnotherLines::getStatistics() const
 {
+    assert(!data.isNull());
     return data->statistics;
 }
 
 ColorLinesTile *JustAnotherLines::getRootTile() const
 {
+    assert(!data.isNull());
     return data->tileMap.topLeft;
 }
 
 ColorLinesTile *JustAnotherLines::getSelectedTile() const
 {
+    assert(!data.isNull());
     return data->selection;
 }
 
 QList<ColorLinesTile *> const&JustAnotherLines::getPath() const
 {
+    assert(!data.isNull());
     return data->path;
 }
 
 void JustAnotherLines::tileClicked(int col, int row)
 {
+    assert(!data.isNull());
     data->currentState->tileClicked(col, row);
 }
 
 void JustAnotherLines::update()
 {
-    data->currentState->update();
+    assert(!data.isNull());
+    if(data->isLose()){
+        lose();
+    }else{
+        data->currentState->update();
+    }
 }
 
 NextColors JustAnotherLines::getNextColors()
 {
+    assert(!data.isNull());
     return data->nextColors;
 }
 

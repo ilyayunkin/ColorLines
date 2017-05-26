@@ -8,16 +8,16 @@
 
 #include "COMMON/INTERFACES/AbstractColorLinesGame.h"
 
-struct GameData;
+struct TetrisGameData;
 
 /// Реализация игры "Тетрис"
 class TetrisGame : public AbstractColorLinesGame
 {
     Q_OBJECT
-    friend class GameData;
+    friend class TetrisGameData;
 
     /// Приватная реализация.
-    QSharedPointer<GameData> data;
+    QSharedPointer<TetrisGameData> data;
 
     /// Обработка поражения.
     void lose();
