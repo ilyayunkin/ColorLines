@@ -42,6 +42,8 @@ ColorLinesWidget::ColorLinesWidget(AbstractColorLinesGame *game, QWidget *parent
     QTimer *updateTimer= new QTimer(this);
     connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
     updateTimer->start(10);
+
+    setFocusPolicy(Qt::StrongFocus);
 }
 
 ColorLinesWidget::~ColorLinesWidget()
