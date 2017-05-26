@@ -15,23 +15,23 @@ INCLUDEPATH += ../
 
 SOURCES += main.cpp\
     ../COMMON/GUI/ChampionsTable.cpp \
-    ColorLinesTile.cpp \
-    PathSearchToWidth.cpp \
+    ../COMMON/MAP/ColorLinesTile.cpp \
+    ../COMMON/PathSearchToWidth.cpp \
     JustAnotherLines.cpp \
-    AbstractColorLinesGame.cpp \
-    ColorLinesWidget.cpp \
-    ColorLinesTileMap.cpp \
+    ../COMMON/INTERFACES/AbstractColorLinesGame.cpp \
+    ../COMMON/GUI/ColorLinesWidget.cpp \
+    ../COMMON/MAP/ColorLinesTileMap.cpp \
     GameData.cpp \
     MainWidget.cpp
 
 HEADERS  += \
-    ../COMMON/GUI//trunk/ChampionsTable.h \
-    ColorLinesTile.h \
-    PathSearchToWidth.h \
+    ../COMMON/GUI/ChampionsTable.h \
+    ../COMMON/MAP/ColorLinesTile.h \
+    /COMMON/PathSearchToWidth.h \
     JustAnotherLines.h \
-    AbstractColorLinesGame.h \
-    ColorLinesWidget.h \
-    ColorLinesTileMap.h \
+    ../COMMON/INTERFACES/AbstractColorLinesGame.h \
+    ../COMMON/GUI/ColorLinesWidget.h \
+    ../COMMON/MAP/ColorLinesTileMap.h \
     GameData.h \
     MainWidget.h
     COMMON/sign.h \

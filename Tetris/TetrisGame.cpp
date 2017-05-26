@@ -12,7 +12,7 @@
 #include <QDebug>
 
 #include "COMMON/GUI/ChampionsTable.h"
-#include "Lines/ColorLinesTileMap.h"
+#include "COMMON/MAP/ColorLinesTileMap.h"
 #include "Block.h"
 #include "TetrisCommon.h"
 

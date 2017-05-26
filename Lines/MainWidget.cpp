@@ -3,7 +3,7 @@
   */
 #include "MainWidget.h"
 
-#include "ColorLinesWidget.h"
+#include "COMMON/GUI/ColorLinesWidget.h"
 
 #include <QVBoxLayout>
 

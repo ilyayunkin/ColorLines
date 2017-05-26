@@ -6,7 +6,7 @@
 
 #include <QObject>
 
-#include "ColorLinesTile.h"
+#include "COMMON/MAP/ColorLinesTile.h"
 
 /// Интерфейс для взаимодействия игры
 /// и класса представления игрового поля с фишками.

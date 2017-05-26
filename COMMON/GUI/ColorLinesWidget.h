@@ -6,7 +6,7 @@
 
 #include <QWidget>
 
-#include "AbstractColorLinesGame.h"
+#include "COMMON/INTERFACES/AbstractColorLinesGame.h"
 
 /// Виджет, представляющий окно игры "Цветные линии"
 /// В архитектуре Модель/Представление играет роль представления.

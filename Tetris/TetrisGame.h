@@ -6,7 +6,7 @@
 
 #include <QSharedPointer>
 
-#include "Lines/AbstractColorLinesGame.h"
+#include "COMMON/INTERFACES/AbstractColorLinesGame.h"
 
 struct GameData;
 

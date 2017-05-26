@@ -7,7 +7,7 @@
 #include <QObject>
 
 #include "JustAnotherLines.h"
-#include "ColorLinesTileMap.h"
+#include "COMMON/MAP/ColorLinesTileMap.h"
 
 enum
 {

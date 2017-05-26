@@ -2,7 +2,7 @@
   * @author Yunkin Ilya.
   */
 #include "GameData.h"
-#include "PathSearchToWidth.h"
+#include "COMMON/PathSearchToWidth.h"
 
 GameData::GameData(JustAnotherLines *game)
     : combo(1),

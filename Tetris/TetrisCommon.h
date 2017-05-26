@@ -1,7 +1,7 @@
 #ifndef TETRISCOMMON_H
 #define TETRISCOMMON_H
 
-#include "Lines/ColorLinesTile.h"
+#include "COMMON/MAP/ColorLinesTile.h"
 
 enum
 {

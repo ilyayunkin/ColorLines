@@ -3,7 +3,7 @@
   */
 #include <QApplication>
 #include "TetrisGame.h"
-#include "Lines/ColorLinesWidget.h"
+#include "COMMON/GUI/ColorLinesWidget.h"
 
 int main(int argc, char *argv[])
 {

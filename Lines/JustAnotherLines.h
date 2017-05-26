@@ -4,7 +4,7 @@
 #ifndef JUSTANOTHERLINES_H
 #define JUSTANOTHERLINES_H
 
-#include "AbstractColorLinesGame.h"
+#include "../COMMON/INTERFACES/AbstractColorLinesGame.h"
 
 #include <QSharedPointer>
 

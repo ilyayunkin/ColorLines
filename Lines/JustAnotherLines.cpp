@@ -11,7 +11,7 @@
 #include <QApplication>
 
 #include "COMMON/GUI/ChampionsTable.h"
-#include "ColorLinesTileMap.h"
+#include "COMMON/MAP/ColorLinesTileMap.h"
 
 #include "GameData.h"
 

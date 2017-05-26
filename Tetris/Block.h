@@ -2,7 +2,7 @@
 #define BLOCK_H
 
 #include <QList>
-#include "Lines/ColorLinesTileMap.h"
+#include "COMMON/MAP/ColorLinesTileMap.h"
 
 struct Block
 {

@@ -4,7 +4,7 @@
 #ifndef SNAKEGAME_H
 #define SNAKEGAME_H
 
-#include "Lines/AbstractColorLinesGame.h"
+#include "COMMON/INTERFACES/AbstractColorLinesGame.h"
 
 #include <QSharedPointer>
 

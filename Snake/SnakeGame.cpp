@@ -10,7 +10,7 @@
 #include <QTimer>
 
 #include "COMMON/GUI/ChampionsTable.h"
-#include "Lines/ColorLinesTileMap.h"
+#include "COMMON/MAP/ColorLinesTileMap.h"
 
 static const ColorLinesTile::Color eatColor = ColorLinesTile::GREEN;
 

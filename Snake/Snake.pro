@@ -16,16 +16,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     SnakeGame.cpp \
-    ../Lines/AbstractColorLinesGame.cpp \
-    ../Lines/ColorLinesTile.cpp \
-    ../Lines/ColorLinesTileMap.cpp \
-    ../Lines/ColorLinesWidget.cpp \
+    ../COMMON/INTERFACES/AbstractColorLinesGame.cpp \
+    ../COMMON/MAP/ColorLinesTile.cpp \
+    ../COMMON/MAP/ColorLinesTileMap.cpp \
+    ../COMMON/GUI/ColorLinesWidget.cpp \
     ../COMMON/GUI/ChampionsTable.cpp
 
 HEADERS  += \
     SnakeGame.h \
-    ../Lines/AbstractColorLinesGame.h \
-    ../Lines/ColorLinesTile.h \
-    ../Lines/ColorLinesTileMap.h \
-    ../Lines/ColorLinesWidget.h \
+    ../COMMON/INTERFACES/AbstractColorLinesGame.h \
+    ../COMMON/MAP/ColorLinesTile.h \
+    ../COMMON/MAP/ColorLinesTileMap.h \
+    ../COMMON/GUI/ColorLinesWidget.h \
     ../COMMON/GUI/ChampionsTable.h

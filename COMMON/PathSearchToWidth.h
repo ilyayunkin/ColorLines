@@ -7,7 +7,7 @@
 #include <QQueue>
 #include <QMap>
 
-#include "ColorLinesTile.h"
+#include "COMMON/MAP/ColorLinesTile.h"
 
 /// Класс, реализующий алгоритм "Поиск в глубину".
 class PathSearchToWidth
