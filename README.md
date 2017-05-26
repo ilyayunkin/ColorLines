@@ -6,6 +6,8 @@ Project contains follow directories:
 * *Tetris* - Classic Tetris game.
 * *Snake* - Snake eats apples.
 
+![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-ColorLinesMultigame.png)
+
 ![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-Tetris.png)
 
 ![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-ColorLines.png)
