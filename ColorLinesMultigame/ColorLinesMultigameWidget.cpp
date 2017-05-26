@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #include "ColorLinesMultigameWidget.h"
 
 #include <assert.h>

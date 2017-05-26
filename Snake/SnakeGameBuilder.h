@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #ifndef SNAKEGAMEBUILDER_H
 #define SNAKEGAMEBUILDER_H
 

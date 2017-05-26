@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #include "SnakeGameBuilder.h"
 
 #include "SnakeGame.h"

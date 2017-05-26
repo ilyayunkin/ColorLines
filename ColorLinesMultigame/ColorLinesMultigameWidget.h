@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #ifndef COLORLINESMULTIGAMEWIDGET_H
 #define COLORLINESMULTIGAMEWIDGET_H
 

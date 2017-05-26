@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #ifndef ABSTRACTGAMEBUILDER_H
 #define ABSTRACTGAMEBUILDER_H
 

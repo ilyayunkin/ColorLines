@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #ifndef COLORLINESBUILDER_H
 #define COLORLINESBUILDER_H
 

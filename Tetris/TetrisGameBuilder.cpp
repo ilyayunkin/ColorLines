@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #include "TetrisGameBuilder.h"
 
 #include "TetrisGame.h"

@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #include "MenuWidget.h"
 
 #include <QPushButton>

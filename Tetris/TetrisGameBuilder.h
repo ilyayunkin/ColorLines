@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #ifndef TETRISGAMEBUILDER_H
 #define TETRISGAMEBUILDER_H
 

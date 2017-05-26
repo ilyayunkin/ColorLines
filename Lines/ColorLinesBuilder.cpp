@@ -1,3 +1,6 @@
+/** @file
+  * @author Yunkin Ilya.
+  */
 #include "ColorLinesBuilder.h"
 
 #include "JustAnotherLines.h"
