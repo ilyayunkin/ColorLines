@@ -20,7 +20,9 @@ SOURCES += main.cpp \
     ../COMMON/MAP/ColorLinesTile.cpp \
     ../COMMON/MAP/ColorLinesTileMap.cpp \
     ../COMMON/GUI/ColorLinesWidget.cpp \
-    ../COMMON/GUI/ChampionsTable.cpp
+    ../COMMON/GUI/ChampionsTable.cpp \
+    SnakeGameBuilder.cpp \
+    ../COMMON/INTERFACES/AbstractGameBuilder.cpp
 
 HEADERS  += \
     SnakeGame.h \
@@ -28,4 +30,6 @@ HEADERS  += \
     ../COMMON/MAP/ColorLinesTile.h \
     ../COMMON/MAP/ColorLinesTileMap.h \
     ../COMMON/GUI/ColorLinesWidget.h \
-    ../COMMON/GUI/ChampionsTable.h
+    ../COMMON/GUI/ChampionsTable.h \
+    SnakeGameBuilder.h \
+    ../COMMON/INTERFACES/AbstractGameBuilder.h

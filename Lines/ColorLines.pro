@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     ../COMMON/GUI/ColorLinesWidget.cpp \
     ../COMMON/MAP/ColorLinesTileMap.cpp \
     GameData.cpp \
-    MainWidget.cpp
+    MainWidget.cpp \
+    ColorLinesBuilder.cpp \
+    ../COMMON/INTERFACES/AbstractGameBuilder.cpp
 
 HEADERS  += \
     ../COMMON/GUI/ChampionsTable.h \
@@ -33,5 +35,7 @@ HEADERS  += \
     ../COMMON/GUI/ColorLinesWidget.h \
     ../COMMON/MAP/ColorLinesTileMap.h \
     GameData.h \
-    MainWidget.h
+    MainWidget.h \
+    ColorLinesBuilder.h \
+    ../COMMON/INTERFACES/AbstractGameBuilder.h
     COMMON/sign.h \

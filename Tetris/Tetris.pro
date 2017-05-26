@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     ../COMMON/GUI/ColorLinesWidget.cpp \
     TetrisGame.cpp \
     ../COMMON/GUI/ChampionsTable.cpp \
-    Block.cpp
+    Block.cpp \
+    TetrisGameBuilder.cpp \
+    ../COMMON/INTERFACES/AbstractGameBuilder.cpp
 
 HEADERS  += ../COMMON/INTERFACES/AbstractColorLinesGame.h \
     ../COMMON/MAP/ColorLinesTile.h \
@@ -29,4 +31,6 @@ HEADERS  += ../COMMON/INTERFACES/AbstractColorLinesGame.h \
     TetrisGame.h \
     ../COMMON/GUI/ChampionsTable.h \
     Block.h \
-    TetrisCommon.h
+    TetrisCommon.h \
+    TetrisGameBuilder.h \
+    ../COMMON/INTERFACES/AbstractGameBuilder.h

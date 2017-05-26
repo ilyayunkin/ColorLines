@@ -2,18 +2,27 @@
   * @author Yunkin Ilya.
   */
 #include <QApplication>
+#include <QSharedPointer>
 
-#include "SnakeGame.h"
-#include "COMMON/GUI/ColorLinesWidget.h"
+#include "SnakeGameBuilder.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    SnakeGame game;
-    ColorLinesWidget w(&game);
-    w.setElementType(ColorLinesWidget::CIRCLE);
-    w.setElementWidth(0.8);
-    w.show();
+
+    QSharedPointer<AbstractColorLinesGame> gameP;
+    QSharedPointer<QWidget> widgetP;
+
+    {
+        AbstractColorLinesGame *game;
+        QWidget *w;
+        SnakeGameBuilder b;
+        b.createGame(game, w);
+        gameP = QSharedPointer<AbstractColorLinesGame>(game);
+        widgetP = QSharedPointer<QWidget>(w);
+    }
+
+    widgetP->show();
 
     return a.exec();
 }

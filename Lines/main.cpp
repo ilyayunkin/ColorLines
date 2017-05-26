@@ -2,16 +2,27 @@
   * @author Yunkin Ilya.
   */
 #include <QApplication>
-#include "JustAnotherLines.h"
-#include "MainWidget.h"
+#include <QSharedPointer>
+
+#include "ColorLinesBuilder.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    JustAnotherLines jal;
-    MainWidget w(&jal);
-    w.show();
+    QSharedPointer<AbstractColorLinesGame> gameP;
+    QSharedPointer<QWidget> widgetP;
+
+    {
+        AbstractColorLinesGame *game;
+        QWidget *w;
+        ColorLinesBuilder b;
+        b.createGame(game, w);
+        gameP = QSharedPointer<AbstractColorLinesGame>(game);
+        widgetP = QSharedPointer<QWidget>(w);
+    }
+
+    widgetP->show();
 
     return a.exec();
 }
