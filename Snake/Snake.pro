@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     ../COMMON/GUI/ColorLinesWidget.cpp \
     ../COMMON/GUI/ChampionsTable.cpp \
     SnakeGameBuilder.cpp \
-    ../COMMON/INTERFACES/AbstractGameBuilder.cpp
+    ../COMMON/INTERFACES/AbstractGameBuilder.cpp \
+    ../COMMON/GUI/StatusBar.cpp
 
 HEADERS  += \
     SnakeGame.h \
@@ -32,4 +33,5 @@ HEADERS  += \
     ../COMMON/GUI/ColorLinesWidget.h \
     ../COMMON/GUI/ChampionsTable.h \
     SnakeGameBuilder.h \
-    ../COMMON/INTERFACES/AbstractGameBuilder.h
+    ../COMMON/INTERFACES/AbstractGameBuilder.h \
+    ../COMMON/GUI/StatusBar.h

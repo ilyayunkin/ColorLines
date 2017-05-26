@@ -119,7 +119,6 @@ void ColorLinesWidget::paintEvent(QPaintEvent *e)
     f.setPixelSize(plotWidth / 100 * 4);
     p.setPen(Qt::black);
     p.setFont(f);
-    p.drawText(plotWidth / 100, plotWidth / 100 * 4, game->getStatistics());
 
     drawPath(p);
 }

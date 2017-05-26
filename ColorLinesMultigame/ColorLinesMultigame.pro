@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     ../Tetris/Block.cpp \
     ../Tetris/TetrisGame.cpp \
     ../Tetris/TetrisGameBuilder.cpp \
-    MenuWidget.cpp
+    MenuWidget.cpp \
+    ../COMMON/GUI/StatusBar.cpp
 
 HEADERS  += ColorLinesMultigameWidget.h \
     ../COMMON/INTERFACES/AbstractColorLinesGame.h \
@@ -53,4 +54,5 @@ HEADERS  += ColorLinesMultigameWidget.h \
     ../Tetris/TetrisCommon.h \
     ../Tetris/TetrisGame.h \
     ../Tetris/TetrisGameBuilder.h \
-    MenuWidget.h
+    MenuWidget.h \
+    ../COMMON/GUI/StatusBar.h

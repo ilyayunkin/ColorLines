@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     GameData.cpp \
     MainWidget.cpp \
     ColorLinesBuilder.cpp \
-    ../COMMON/INTERFACES/AbstractGameBuilder.cpp
+    ../COMMON/INTERFACES/AbstractGameBuilder.cpp \
+    ../COMMON/GUI/StatusBar.cpp
 
 HEADERS  += \
     ../COMMON/GUI/ChampionsTable.h \
@@ -37,5 +38,6 @@ HEADERS  += \
     GameData.h \
     MainWidget.h \
     ColorLinesBuilder.h \
-    ../COMMON/INTERFACES/AbstractGameBuilder.h
+    ../COMMON/INTERFACES/AbstractGameBuilder.h \
+    ../COMMON/GUI/StatusBar.h
     COMMON/sign.h \
