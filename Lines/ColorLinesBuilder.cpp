@@ -28,4 +28,6 @@ void ColorLinesBuilder::createGame(AbstractColorLinesGame *&game,
     linesWidget->setElementType(ColorLinesWidget::CIRCLE);
     linesWidget->setElementWidth(0.6);
     mainLayout->addWidget(linesWidget);
+
+    mainLayout->setMargin(0);
 }
