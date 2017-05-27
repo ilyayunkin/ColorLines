@@ -44,6 +44,8 @@ ColorLinesWidget::ColorLinesWidget(AbstractColorLinesGame *game, QWidget *parent
     updateTimer->start(10);
 
     setFocusPolicy(Qt::StrongFocus);
+    setSizePolicy(QSizePolicy(QSizePolicy::Expanding,
+                              QSizePolicy::Expanding));
 }
 
 ColorLinesWidget::~ColorLinesWidget()
