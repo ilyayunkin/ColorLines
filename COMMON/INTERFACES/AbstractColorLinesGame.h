@@ -42,6 +42,10 @@ public slots:
     virtual void pauseToggle();
     /// Обработчик нажатия на кнопку "Esc".
     virtual void escape();
+
+signals:
+    /// Сигнализирует о нежелании продолжать игру.
+    void quitToMenu();
 };
 
 #endif // ABSTRACTCOLORLINESGAME_H

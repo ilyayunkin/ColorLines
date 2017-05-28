@@ -241,6 +241,8 @@ void SnakeGame::lose()
         data->timer.start(data->period_ms);
 
         addApple();
+    }else{
+        emit quitToMenu();
     }
 }
 

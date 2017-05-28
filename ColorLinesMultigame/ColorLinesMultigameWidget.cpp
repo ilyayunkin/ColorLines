@@ -41,6 +41,7 @@ void ColorLinesMultigameWidget::runGame(AbstractGameBuilder *builder)
         AbstractColorLinesGame *game;
         builder->createGame(game, gameWidget);
         this->game = QSharedPointer<AbstractColorLinesGame>(game);
+        connect(game, SIGNAL(quitToMenu()), SLOT(quitToMenu()));
     }
 
     gameWidget->setFocus();
@@ -76,4 +77,16 @@ void ColorLinesMultigameWidget::runTetris()
 {
     TetrisGameBuilder b;
     runGame(&b);
+}
+
+void ColorLinesMultigameWidget::quitToMenu()
+{
+    menuWidget->show();
+
+    {
+        layout()->removeWidget(gameWidget);
+        delete gameWidget;
+        gameWidget = NULL;
+    }
+    game.clear();
 }

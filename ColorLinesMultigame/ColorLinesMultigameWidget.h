@@ -24,13 +24,15 @@ public:
     ColorLinesMultigameWidget(QWidget *parent = 0);
     ~ColorLinesMultigameWidget();
 
-public slots:
+private slots:
     void keyPressEvent(QKeyEvent *e);
     void keyReleaseEvent(QKeyEvent *e);
 
     void runColorLines();
     void runSnake();
     void runTetris();
+
+    void quitToMenu();
 };
 
 #endif // COLORLINESMULTIGAMEWIDGET_H

@@ -107,7 +107,7 @@ void JustAnotherLines::lose()
         data = QSharedPointer<ColorLinesGameData>(new ColorLinesGameData(this));
         data->placeBalls();
     }else{
-        QApplication::quit();
+        emit quitToMenu();
     }
 }
 

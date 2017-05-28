@@ -185,6 +185,8 @@ void TetrisGame::lose()
                                   tr("Do you want to replay?"));
     if(b == QMessageBox::Yes){
         data = QSharedPointer<TetrisGameData>(new TetrisGameData(this));
+    }else{
+        emit quitToMenu();
     }
 }
 
