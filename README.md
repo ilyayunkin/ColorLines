@@ -6,6 +6,26 @@ Project contains follow directories:
 * *Tetris* - Classic Tetris game.
 * *Snake* - Snake eats apples.
 
+## Controls
+### Lines
+Use a left mouse button:
+* Click to a ball - select a ball to move it.
+* Click to free cell - move the selected ball to the cell.
+
+### Snake
+Use keyboard buttons:
+* Up - when the snake are moving horizontally - turn head to top side of the game field.
+* Down - when the snake are moving horizontally - turn head to bottom side of the game field.
+* Left - when the snake are moving vertically - turn head to left side of the game field.
+* Rignt - when the snake are moving vertically - turn head to right side of the game field.
+
+### Tetris
+Use keyboard buttons:
+* Space - turn a falling block.
+* Down - Force block's falling.
+
+## Screenshots
+
 ![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-ColorLinesMultigame.png)
 
 ![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-Tetris.png)
