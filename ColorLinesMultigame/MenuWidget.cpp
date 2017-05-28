@@ -13,18 +13,21 @@ MenuWidget::MenuWidget(QWidget *parent) :
     {
         QPushButton *b = new QPushButton(QIcon(":/icons/icons/lines_ico.png"),
                                          "Color Lines");
+        b->setIconSize(QSize(32, 32));
         lay->addWidget(b);
         connect(b, SIGNAL(clicked()), SIGNAL(runColorLines()));
     }
     {
         QPushButton *b = new QPushButton(QIcon(":/icons/icons/snake_ico.png"),
                                          "Snake");
+        b->setIconSize(QSize(32, 32));
         lay->addWidget(b);
         connect(b, SIGNAL(clicked()), SIGNAL(runSnake()));
     }
     {
         QPushButton *b = new QPushButton(QIcon(":/icons/icons/tetris_ico.png"),
                                          "Tetris");
+        b->setIconSize(QSize(32, 32));
         lay->addWidget(b);
         connect(b, SIGNAL(clicked()), SIGNAL(runTetris()));
     }
