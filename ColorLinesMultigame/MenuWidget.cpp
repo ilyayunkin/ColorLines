@@ -11,18 +11,22 @@ MenuWidget::MenuWidget(QWidget *parent) :
 {
     QVBoxLayout *lay = new QVBoxLayout(this);
     {
-        QPushButton *b = new QPushButton("Color Lines");
+        QPushButton *b = new QPushButton(QIcon(":/icons/icons/lines_ico.png"),
+                                         "Color Lines");
         lay->addWidget(b);
-        connect(b, SIGNAL(clicked()), this, SIGNAL(runColorLines()));
+        connect(b, SIGNAL(clicked()), SIGNAL(runColorLines()));
     }
     {
-        QPushButton *b = new QPushButton("Snake");
+        QPushButton *b = new QPushButton(QIcon(":/icons/icons/snake_ico.png"),
+                                         "Snake");
         lay->addWidget(b);
-        connect(b, SIGNAL(clicked()), this, SIGNAL(runSnake()));
+        connect(b, SIGNAL(clicked()), SIGNAL(runSnake()));
     }
     {
-        QPushButton *b = new QPushButton("Tetris");
+        QPushButton *b = new QPushButton(QIcon(":/icons/icons/tetris_ico.png"),
+                                         "Tetris");
         lay->addWidget(b);
-        connect(b, SIGNAL(clicked()), this, SIGNAL(runTetris()));
+        connect(b, SIGNAL(clicked()), SIGNAL(runTetris()));
     }
+    setMinimumSize(200, 300);
 }

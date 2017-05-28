@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/lines_ico.png</file>
+        <file>icons/snake_ico.png</file>
+        <file>icons/tetris_ico.png</file>
+        <file>icons/field.png</file>
+    </qresource>
+</RCC>

@@ -56,3 +56,6 @@ HEADERS  += ColorLinesMultigameWidget.h \
     ../Tetris/TetrisGameBuilder.h \
     MenuWidget.h \
     ../COMMON/GUI/StatusBar.h
+
+RESOURCES += \
+    icons.qrc

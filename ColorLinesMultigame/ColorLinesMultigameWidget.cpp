@@ -6,6 +6,7 @@
 #include <assert.h>
 
 #include <QHBoxLayout>
+#include <QIcon>
 
 #include "Lines/ColorLinesBuilder.h"
 #include "Snake/SnakeGameBuilder.h"
@@ -25,6 +26,7 @@ ColorLinesMultigameWidget::ColorLinesMultigameWidget(QWidget *parent)
     connect(menuWidget, SIGNAL(runTetris()), this, SLOT(runTetris()));
 
     layout()->setMargin(0);
+    setWindowIcon(QIcon(":/icons/icons/field.png"));
 }
 
 ColorLinesMultigameWidget::~ColorLinesMultigameWidget()
