@@ -40,6 +40,7 @@ void ColorLinesMultigameWidget::addBuilder(AbstractGameBuilder *builder)
     QPushButton *button = new QPushButton(builder->getIcon(),
                                           builder->getName());
 
+    button->setIconSize(QSize(32, 32));
     connect(button, SIGNAL(clicked()), SLOT(runGameClicked()));
     buttonToBuilderMap.insert(button,
                               QSharedPointer<AbstractGameBuilder>(builder));
