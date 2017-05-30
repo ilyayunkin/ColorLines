@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QSharedPointer>
 #include <QKeyEvent>
+#include <QMap>
 
 #include "COMMON/INTERFACES/AbstractGameBuilder.h"
 #include "MenuWidget.h"
@@ -19,18 +20,20 @@ class ColorLinesMultigameWidget : public QWidget
     QWidget *gameWidget;
     MenuWidget *menuWidget;
 
+    typedef QMap<QObject *, QSharedPointer<AbstractGameBuilder> > ButtonToBuilderMap;
+    ButtonToBuilderMap buttonToBuilderMap;
+
     void runGame(AbstractGameBuilder *builder);
+    void addBuilder(AbstractGameBuilder *builder);
 public:
     ColorLinesMultigameWidget(QWidget *parent = 0);
     ~ColorLinesMultigameWidget();
 
 private slots:
+    void runGameClicked();
+
     void keyPressEvent(QKeyEvent *e);
     void keyReleaseEvent(QKeyEvent *e);
-
-    void runColorLines();
-    void runSnake();
-    void runTetris();
 
     void quitToMenu();
 };

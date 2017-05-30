@@ -27,3 +27,13 @@ void TetrisGameBuilder::createGame(AbstractColorLinesGame *&game,
 
     mainLayout->setMargin(0);
 }
+
+QString TetrisGameBuilder::getName() const
+{
+    return "Tetris";
+}
+
+QIcon TetrisGameBuilder::getIcon() const
+{
+    return QIcon(":/icons/icons/tetris_ico.png");
+}

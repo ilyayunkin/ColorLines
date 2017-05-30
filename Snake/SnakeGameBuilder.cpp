@@ -31,3 +31,13 @@ void SnakeGameBuilder::createGame(AbstractColorLinesGame *&game,
 
     mainLayout->setMargin(0);
 }
+
+QString SnakeGameBuilder::getName() const
+{
+    return "Snake";
+}
+
+QIcon SnakeGameBuilder::getIcon() const
+{
+    return QIcon(":/icons/icons/snake_ico.png");
+}

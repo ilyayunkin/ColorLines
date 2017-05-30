@@ -42,3 +42,13 @@ void ColorLinesBuilder::createGame(AbstractColorLinesGame *&game,
         mainLayout->setMargin(0);
     }
 }
+
+QString ColorLinesBuilder::getName() const
+{
+    return "Color Lines";
+}
+
+QIcon ColorLinesBuilder::getIcon() const
+{
+    return QIcon(":/icons/icons/lines_ico.png");
+}

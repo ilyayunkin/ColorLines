@@ -21,9 +21,10 @@ ColorLinesMultigameWidget::ColorLinesMultigameWidget(QWidget *parent)
 
     menuWidget = new MenuWidget;
     lay->addWidget(menuWidget);
-    connect(menuWidget, SIGNAL(runColorLines()), this, SLOT(runColorLines()));
-    connect(menuWidget, SIGNAL(runSnake()), this, SLOT(runSnake()));
-    connect(menuWidget, SIGNAL(runTetris()), this, SLOT(runTetris()));
+
+    addBuilder(new ColorLinesBuilder);
+    addBuilder(new SnakeGameBuilder);
+    addBuilder(new TetrisGameBuilder);
 
     layout()->setMargin(0);
     setWindowIcon(QIcon(":/icons/icons/field.png"));
@@ -31,6 +32,25 @@ ColorLinesMultigameWidget::ColorLinesMultigameWidget(QWidget *parent)
 
 ColorLinesMultigameWidget::~ColorLinesMultigameWidget()
 {
+}
+
+void ColorLinesMultigameWidget::addBuilder(AbstractGameBuilder *builder)
+{
+    QPushButton *button = new QPushButton(builder->getIcon(),
+                                          builder->getName());
+
+    connect(button, SIGNAL(clicked()), SLOT(runGameClicked()));
+    buttonToBuilderMap.insert(button,
+                              QSharedPointer<AbstractGameBuilder>(builder));
+    menuWidget->addButton(button);
+}
+
+void ColorLinesMultigameWidget::runGameClicked()
+{
+    ButtonToBuilderMap::iterator it = buttonToBuilderMap.find(sender());
+    if(it != buttonToBuilderMap.end()){
+        runGame((*it).data());
+    }
 }
 
 void ColorLinesMultigameWidget::runGame(AbstractGameBuilder *builder)
@@ -50,7 +70,6 @@ void ColorLinesMultigameWidget::runGame(AbstractGameBuilder *builder)
     layout()->addWidget(gameWidget);
 }
 
-
 void ColorLinesMultigameWidget::keyPressEvent(QKeyEvent *e)
 {
     e->ignore();
@@ -59,26 +78,6 @@ void ColorLinesMultigameWidget::keyPressEvent(QKeyEvent *e)
 void ColorLinesMultigameWidget::keyReleaseEvent(QKeyEvent *e)
 {
     e->ignore();
-}
-
-void ColorLinesMultigameWidget::runColorLines()
-{
-
-    ColorLinesBuilder b;
-    runGame(&b);
-}
-
-void ColorLinesMultigameWidget::runSnake()
-{
-    SnakeGameBuilder b;
-    runGame(&b);
-
-}
-
-void ColorLinesMultigameWidget::runTetris()
-{
-    TetrisGameBuilder b;
-    runGame(&b);
 }
 
 void ColorLinesMultigameWidget::quitToMenu()
