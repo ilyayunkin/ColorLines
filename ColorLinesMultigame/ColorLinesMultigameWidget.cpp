@@ -28,6 +28,7 @@ ColorLinesMultigameWidget::ColorLinesMultigameWidget(QWidget *parent)
 
     layout()->setMargin(0);
     setWindowIcon(QIcon(":/icons/icons/field.png"));
+    setDefaultWindowTitle();
 }
 
 ColorLinesMultigameWidget::~ColorLinesMultigameWidget()
@@ -43,6 +44,11 @@ void ColorLinesMultigameWidget::addBuilder(AbstractGameBuilder *builder)
     buttonToBuilderMap.insert(button,
                               QSharedPointer<AbstractGameBuilder>(builder));
     menuWidget->addButton(button);
+}
+
+void ColorLinesMultigameWidget::setDefaultWindowTitle()
+{
+    setWindowTitle(QString("Multigame %1 in 1").arg(buttonToBuilderMap.size()));
 }
 
 void ColorLinesMultigameWidget::runGameClicked()
@@ -68,6 +74,7 @@ void ColorLinesMultigameWidget::runGame(AbstractGameBuilder *builder)
 
     gameWidget->setFocus();
     layout()->addWidget(gameWidget);
+    setWindowTitle(builder->getName());
 }
 
 void ColorLinesMultigameWidget::keyPressEvent(QKeyEvent *e)
@@ -82,6 +89,7 @@ void ColorLinesMultigameWidget::keyReleaseEvent(QKeyEvent *e)
 
 void ColorLinesMultigameWidget::quitToMenu()
 {
+    setDefaultWindowTitle();
     menuWidget->show();
 
     {
