@@ -5,6 +5,7 @@
 
 #include <assert.h>
 #include <time.h>
+#include <random>
 
 #include <QMessageBox>
 #include <QTimer>
@@ -46,6 +47,7 @@ struct SnakeGameData
     QList<ColorLinesTile *> eaten;
     QString statistics;
     QTimer timer;
+    std::default_random_engine randomEngine;
 private:
     SnakeGameData();
     explicit SnakeGameData(SnakeGameData&);
@@ -59,7 +61,8 @@ SnakeGameData::SnakeGameData(SnakeGame *game)
       newDirection(direction),
       period_ms(500),
       apples(0),
-      tileMap(DIMENSIONS, DIMENSIONS)
+      tileMap(DIMENSIONS, DIMENSIONS),
+      randomEngine(time(NULL))
 {
     initSnakeOnField();
     QObject::connect(&timer, SIGNAL(timeout()), game, SLOT(update()));
@@ -77,7 +80,6 @@ SnakeGame::SnakeGame(QObject *parent)
     : AbstractColorLinesGame(parent), data(new SnakeGameData(this)), paused(false)
 {        
     data = QSharedPointer<SnakeGameData>(new SnakeGameData(this));
-    srand(time(0));
     addApple();
 }
 
@@ -258,7 +260,7 @@ void SnakeGame::addApple()
         int i = 0;
         while(i < applesToAdd)
         {
-            int cell = rand() % freeCells;
+            int cell = data->randomEngine() % freeCells;
             ColorLinesTile *tile = data->tileMap.freeList[cell];
             if(!data->snake.contains(tile)){
                 data->tileMap.set(tile, ColorLinesTile::GREEN);

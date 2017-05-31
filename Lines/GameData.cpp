@@ -6,6 +6,7 @@
 
 ColorLinesGameData::ColorLinesGameData(JustAnotherLines *game)
     : lose(false),
+      randomEngine(time(NULL)),
       combo(1),
       coins(0),
       tileMap(DIMENSION, DIMENSION),
@@ -66,7 +67,7 @@ void ColorLinesGameData::placeBalls()
         lose = true;
     }else{
         for(int i = 0; i < ballsWeCanPlace; i++){
-            int cell = rand() % freeCells;
+            int cell = randomEngine() % freeCells;
             ColorLinesTile *randomTile = tileMap.freeList[cell];
             tileMap.set(randomTile, nextColors.color[i]);
             clearIfLined(randomTile);
@@ -87,7 +88,7 @@ void ColorLinesGameData::placeBalls()
 void ColorLinesGameData::randomColors()
 {
     for(int i = 0; i < BALLS_IN_STEP; i++){
-        int randomColor = rand() % ColorLinesTile::COUNT;
+        int randomColor = randomEngine() % ColorLinesTile::COUNT;
         nextColors.color[i] = (ColorLinesTile::Color) randomColor;
     }
 }

@@ -1,7 +1,10 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include <random>
+
 #include <QList>
+
 #include "COMMON/MAP/ColorLinesTileMap.h"
 
 struct Block
@@ -17,6 +20,7 @@ struct Block
         bool m[BLOCK_WIDTH_MAX][BLOCK_WIDTH_MAX];
     };
 
+    static std::default_random_engine randomEngine;
     Matrix matrix;
     ColorLinesTile::Color color;
     int col;

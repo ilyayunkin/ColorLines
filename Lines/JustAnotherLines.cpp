@@ -3,7 +3,6 @@
   */
 #include "JustAnotherLines.h"
 
-#include <stdlib.h>
 #include <time.h>
 #include <assert.h>
 
@@ -86,7 +85,6 @@ JustAnotherLines::JustAnotherLines(QObject *parent)
     : AbstractColorLinesGame(parent),
       data(new ColorLinesGameData(this))
 {    
-    srand(time(0));
     data->placeBalls();
 
     QTimer *t = new QTimer(this);

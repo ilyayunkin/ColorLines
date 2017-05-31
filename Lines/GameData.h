@@ -4,6 +4,8 @@
 #ifndef ColorLinesGameData_H
 #define ColorLinesGameData_H
 
+#include <random>
+
 #include <QObject>
 
 #include "JustAnotherLines.h"
@@ -50,6 +52,7 @@ class ColorLinesGameData: public QObject
     bool lose;
     /// Последний успешно проделанный путь между тайлами.
 public:
+    std::default_random_engine randomEngine;
     QList<ColorLinesTile *> path;
     /// Коэффициент, на который умножатся очки за ход в случае еще одного
     /// удачного хода подряд.

@@ -3,7 +3,6 @@
   */
 #include "TetrisGame.h"
 
-#include <stdlib.h>
 #include <time.h>
 #include <assert.h>
 
@@ -168,7 +167,6 @@ TetrisGameData::TetrisGameData(TetrisGame *game)
 TetrisGame::TetrisGame()
     : data(new TetrisGameData(this))
 {
-    srand(time(0));
 }
 
 

@@ -50,6 +50,8 @@ Block::Block(ColorLinesTile *topLeft, int rectSide)
 {
 }
 
+std::default_random_engine Block::randomEngine(time(NULL));
+
 enum
 {
     LINE,
@@ -67,7 +69,7 @@ Block *Block::createBlock(ColorLinesTile *topLeft)
 {
 
     Block *block = 0;
-    int type = rand() % COUNT;
+    int type = randomEngine() % COUNT;
     switch (type) {
     case LINE:
         block = new Line(topLeft);
