@@ -9,6 +9,7 @@
 
 #include <QMessageBox>
 #include <QTimer>
+#include <QQueue>
 
 #include "COMMON/GUI/ChampionsTable.h"
 #include "COMMON/MAP/ColorLinesTileMap.h"
@@ -38,7 +39,7 @@ struct SnakeGameData
 {
     SnakeGameData(SnakeGame *game);
     Direction direction;
-    Direction newDirection;
+    QQueue<Direction> directionQueue;
 
     int period_ms;
     int apples;
@@ -47,7 +48,14 @@ struct SnakeGameData
     QList<ColorLinesTile *> eaten;
     QString statistics;
     QTimer timer;
-    std::default_random_engine randomEngine;
+    std::default_random_engine randomEngine;    
+
+    /// Выбор тайла, на который заползет змея на следующем ходе.
+    ColorLinesTile *getNextHeadPosition(ColorLinesTile *head);
+    ColorLinesTile *getHeadTurned(ColorLinesTile *head, Direction &turnedDirection);
+    ColorLinesTile *getTile(ColorLinesTile *head, Direction direction);
+    Direction getOppositeDirection(Direction direction);
+
 private:
     SnakeGameData();
     explicit SnakeGameData(SnakeGameData&);
@@ -58,7 +66,6 @@ private:
 
 SnakeGameData::SnakeGameData(SnakeGame *game)
     : direction(UP),
-      newDirection(direction),
       period_ms(500),
       apples(0),
       tileMap(DIMENSIONS, DIMENSIONS),
@@ -74,6 +81,77 @@ void SnakeGameData::initSnakeOnField()
 {
     snake.push_back(tileMap.topLeft->getTile(DIMENSIONS / 2, DIMENSIONS / 2));
     snake.push_back(tileMap.topLeft->getTile(DIMENSIONS / 2, DIMENSIONS / 2 + 1));
+}
+
+
+ColorLinesTile *SnakeGameData::getNextHeadPosition(ColorLinesTile *head)
+{
+    if(!directionQueue.isEmpty()){
+        Direction tmp = directionQueue.takeFirst();
+        if((getTile(head, tmp) != 0) && (tmp != getOppositeDirection(direction))){
+            direction = tmp;
+        }
+    }
+
+    ColorLinesTile *next = getTile(head, direction);
+    bool isWall = (next == 0);
+
+    if(isWall){
+        Direction newDirection;
+        next = getHeadTurned(head, newDirection);
+        direction = newDirection;
+    }else{
+        // Next is already ok
+    }
+
+    return next;
+}
+
+ColorLinesTile *SnakeGameData::getTile(ColorLinesTile *head,
+                                       Direction direction)
+{
+    ColorLinesTile *next = 0;
+
+    switch (direction) {
+    case UP: next = head->getTopTile();
+        break;
+    case RIGHT: next = head->getRightTile();
+        break;
+    case DOWN: next = head->getBottomTile();
+        break;
+    case LEFT: next = head->getLeftTile();
+        break;
+    default:
+        break;
+    }
+
+    return next;
+}
+
+ColorLinesTile *SnakeGameData::getHeadTurned(ColorLinesTile *head,
+                                             Direction &turnedDirection)
+{
+    ColorLinesTile *next = 0;
+    for(int i = 0; i < COUNT; i++){
+        Direction candidateDirection = Direction((direction + i) % COUNT);
+        bool notWall = getTile(head, candidateDirection) != 0;
+        bool notBack = getOppositeDirection(direction) != candidateDirection;
+        bool notDir = candidateDirection != direction;
+
+        if(notWall && notBack && notDir){
+            next = getTile(head, candidateDirection);
+            turnedDirection = candidateDirection;
+            break;
+        }
+    }
+
+    assert(next != 0);
+    return next;
+}
+
+Direction SnakeGameData::getOppositeDirection(Direction direction)
+{
+    return Direction(((int)direction + 2) % COUNT);
 }
 
 SnakeGame::SnakeGame(QObject *parent)
@@ -105,8 +183,8 @@ void SnakeGame::keyPressed(int key, Qt::KeyboardModifiers modifiers)
     default:
         break;
     }
-    if(data->direction != Direction(((int)tmpDirection + 2) % COUNT)){
-        data->newDirection = tmpDirection;
+    if(data->direction != data->getOppositeDirection(data->direction)){
+        data->directionQueue.enqueue(tmpDirection);
     }
 }
 
@@ -153,14 +231,13 @@ void SnakeGame::update()
     if(!paused){
         assert(!data.isNull());
 
-        data->direction = data->newDirection;
         QList<ColorLinesTile *> newPath;
         int i = 0;
         ColorLinesTile *next = 0;
         ColorLinesTile *prevCurrent = 0;
         while(!data->snake.isEmpty()){
             ColorLinesTile *current = data->snake.takeFirst();
-            next = (i == 0) ? getNextHeadPosition(current) : prevCurrent;
+            next = (i == 0) ? data->getNextHeadPosition(current) : prevCurrent;
             if(data->snake.contains(next)){
                 lose();
                 return;
@@ -194,39 +271,6 @@ void SnakeGame::update()
     }
 
     data->timer.start(data->period_ms);
-}
-
-ColorLinesTile *SnakeGame::getNextHeadPosition(ColorLinesTile *head)
-{
-    assert(!data.isNull());
-
-    ColorLinesTile *next = 0;
-
-    /// i - небольшой трюк, чтобы змея не сменила направление
-    /// на противоположное и не захавала сегмент сразу за головой.
-    int i = 1;
-    while(next == 0){
-        switch (data->direction) {
-        case UP: next = head->getTopTile();
-            break;
-        case RIGHT: next = head->getRightTile();
-            break;
-        case DOWN: next = head->getBottomTile();
-            break;
-        case LEFT: next = head->getLeftTile();
-            break;
-        default:
-            assert(false);
-            break;
-        }
-        if((next == 0)){
-            data->direction = data->newDirection =
-                    Direction(((int)data->direction + i) % COUNT);
-            i++;
-        }
-    }
-
-    return next;
 }
 
 void SnakeGame::lose()

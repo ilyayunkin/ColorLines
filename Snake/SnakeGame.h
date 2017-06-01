@@ -19,8 +19,6 @@ class SnakeGame : public AbstractColorLinesGame
 
     /// Приватная реализация
     QSharedPointer<SnakeGameData> data;
-    /// Выбор тайла, на который заползет змея на следующем ходе.
-    ColorLinesTile *getNextHeadPosition(ColorLinesTile *head);
     /// Обработка поражения
     void lose();
     /// Вбросить новое яблоко на поле.
