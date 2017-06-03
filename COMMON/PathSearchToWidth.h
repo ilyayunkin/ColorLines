@@ -34,6 +34,10 @@ public:
      */
     bool search(ColorLinesTile *from, ColorLinesTile *to,
                 QList<ColorLinesTile *> &path);
+
+    bool isFree(ColorLinesTile *tile);
+
+    bool didntEnqued(ColorLinesTile *tile);
 };
 
 #endif // PATHSEARCHTOWIDTH_H

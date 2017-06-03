@@ -35,10 +35,20 @@ bool PathSearchToWidth::search(ColorLinesTile *from, ColorLinesTile *to, QList<C
 
 void PathSearchToWidth::enqueueChild(ColorLinesTile *child, ColorLinesTile *parent)
 {
-    if((child != 0) &&
-            (child->getColor() == ColorLinesTile::NONE) &&
-            (!tileParentMap.contains(child))){
+    bool childExists = (child != 0);
+
+    if(childExists && isFree(child) && didntEnqued(child)){
         openQueue.enqueue(child);
         tileParentMap.insert(child,parent);
     }
+}
+
+bool PathSearchToWidth::isFree(ColorLinesTile *tile)
+{
+    return tile->getColor() == ColorLinesTile::NONE;
+}
+
+bool PathSearchToWidth::didntEnqued(ColorLinesTile *tile)
+{
+    return !tileParentMap.contains(tile);
 }
