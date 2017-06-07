@@ -26,6 +26,8 @@ class ColorLinesMultigameWidget : public QWidget
     void runGame(AbstractGameBuilder *builder);
     void addBuilder(AbstractGameBuilder *builder);
     void setDefaultWindowTitle();
+    void setDefaultWindowIcon();
+
 public:
     ColorLinesMultigameWidget(QWidget *parent = 0);
     ~ColorLinesMultigameWidget();

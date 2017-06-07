@@ -27,7 +27,7 @@ ColorLinesMultigameWidget::ColorLinesMultigameWidget(QWidget *parent)
     addBuilder(new TetrisGameBuilder);
 
     layout()->setMargin(0);
-    setWindowIcon(QIcon(":/icons/icons/field.png"));
+    setDefaultWindowIcon();
     setDefaultWindowTitle();
 }
 
@@ -50,6 +50,11 @@ void ColorLinesMultigameWidget::addBuilder(AbstractGameBuilder *builder)
 void ColorLinesMultigameWidget::setDefaultWindowTitle()
 {
     setWindowTitle(QString("Multigame %1 in 1").arg(buttonToBuilderMap.size()));
+}
+
+void ColorLinesMultigameWidget::setDefaultWindowIcon()
+{
+    setWindowIcon(QIcon(":/icons/icons/field.png"));
 }
 
 void ColorLinesMultigameWidget::runGameClicked()
@@ -76,6 +81,7 @@ void ColorLinesMultigameWidget::runGame(AbstractGameBuilder *builder)
     gameWidget->setFocus();
     layout()->addWidget(gameWidget);
     setWindowTitle(builder->getName());
+    setWindowIcon(builder->getIcon());
 }
 
 void ColorLinesMultigameWidget::keyPressEvent(QKeyEvent *e)
@@ -91,6 +97,7 @@ void ColorLinesMultigameWidget::keyReleaseEvent(QKeyEvent *e)
 void ColorLinesMultigameWidget::quitToMenu()
 {
     setDefaultWindowTitle();
+    setDefaultWindowIcon();
     menuWidget->show();
 
     {
