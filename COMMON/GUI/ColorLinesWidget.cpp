@@ -160,19 +160,23 @@ void ColorLinesWidget::mouseReleaseEvent(QMouseEvent *e)
 
 void ColorLinesWidget::keyPressEvent(QKeyEvent *e)
 {
-    switch(e->key()){
-    case Qt::Key_Pause: game->pauseToggle();
-        break;
-    case Qt::Key_Escape: game->escape();
-        break;
-    default: game->keyPressed(e->key(), e->modifiers());
-        break;
+    if(!e->isAutoRepeat()){
+        switch(e->key()){
+        case Qt::Key_Pause: game->pauseToggle();
+            break;
+        case Qt::Key_Escape: game->escape();
+            break;
+        default: game->keyPressed(e->key(), e->modifiers());
+            break;
+        }
     }
 }
 
 void ColorLinesWidget::keyReleaseEvent(QKeyEvent *e)
 {
-    game->keyReleased(e->key());
+    if(!e->isAutoRepeat()){
+        game->keyReleased(e->key());
+    }
 }
 
 void ColorLinesWidget::setElementType(elementType_t elementType)
