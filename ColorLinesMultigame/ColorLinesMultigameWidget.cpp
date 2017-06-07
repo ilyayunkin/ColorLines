@@ -11,6 +11,7 @@
 #include "Lines/ColorLinesBuilder.h"
 #include "Snake/SnakeGameBuilder.h"
 #include "Tetris/TetrisGameBuilder.h"
+#include "ClickLines/ClickLinesGameBuilder.h"
 
 ColorLinesMultigameWidget::ColorLinesMultigameWidget(QWidget *parent)
     : QWidget(parent),
@@ -25,6 +26,7 @@ ColorLinesMultigameWidget::ColorLinesMultigameWidget(QWidget *parent)
     addBuilder(new ColorLinesBuilder);
     addBuilder(new SnakeGameBuilder);
     addBuilder(new TetrisGameBuilder);
+    addBuilder(new ClickLinesGameBuilder);
 
     layout()->setMargin(0);
     setDefaultWindowIcon();

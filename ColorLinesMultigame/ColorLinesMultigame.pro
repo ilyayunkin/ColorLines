@@ -34,7 +34,9 @@ SOURCES += main.cpp\
     ../Tetris/TetrisGame.cpp \
     ../Tetris/TetrisGameBuilder.cpp \
     MenuWidget.cpp \
-    ../COMMON/GUI/StatusBar.cpp
+    ../COMMON/GUI/StatusBar.cpp \
+    ../ClickLines/ClickLinesGame.cpp \
+    ../ClickLines/ClickLinesGameBuilder.cpp
 
 HEADERS  += ColorLinesMultigameWidget.h \
     ../COMMON/INTERFACES/AbstractColorLinesGame.h \
@@ -56,7 +58,9 @@ HEADERS  += ColorLinesMultigameWidget.h \
     ../Tetris/TetrisGame.h \
     ../Tetris/TetrisGameBuilder.h \
     MenuWidget.h \
-    ../COMMON/GUI/StatusBar.h
+    ../COMMON/GUI/StatusBar.h \
+    ../ClickLines/ClickLinesGame.h \
+    ../ClickLines/ClickLinesGameBuilder.h
 
 RESOURCES += \
     icons.qrc

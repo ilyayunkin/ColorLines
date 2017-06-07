@@ -2,9 +2,11 @@
 
 Project contains follow directories:
 * *COMMON* - Code, which may be used in different games projects.
+* *Screenshots* - Screenshots of games.
 * *Lines* - Simple puzle game. It contains interfaces and View classes, which are used as base of other projects
 * *Tetris* - Classic Tetris game.
 * *Snake* - Snake eats apples.
+* *Click Lines* - Snake eats apples.
 
 ## Controls
 ### Lines
@@ -24,6 +26,11 @@ Use keyboard buttons:
 * Space - turn a falling block.
 * Down - Force block's falling.
 
+### Click Lines
+Use a left mouse button:
+* Click to a ball - remove a group (more than one ball) of single color balls.
+
+
 ## Screenshots
 
 ![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-ColorLinesMultigame.png)
@@ -33,3 +40,5 @@ Use keyboard buttons:
 ![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-ColorLines.png)
 
 ![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-Snake.png)
+
+![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-ClickLines.png)

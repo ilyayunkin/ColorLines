@@ -4,5 +4,6 @@
         <file>icons/snake_ico.png</file>
         <file>icons/tetris_ico.png</file>
         <file>icons/field.png</file>
+        <file>icons/clicklines_ico.png</file>
     </qresource>
 </RCC>
