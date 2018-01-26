@@ -6,3 +6,16 @@ script:
   - cd ./ColorLinesMultigame
   - qmake ColorLinesMultigame.pro
   - make
+  - cd ../ClickLines
+  - qmake ClickLines.pro
+  - make
+  - cd ../Lines
+  - qmake ColorLines.pro
+  - make
+  - cd ../Snake
+  - qmake Snake.pro
+  - make
+  - cd ../Tetris
+  - qmake Tetris.pro
+  - make
+
