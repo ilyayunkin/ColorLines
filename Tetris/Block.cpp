@@ -8,38 +8,38 @@
 
 struct Line : Block
 {
-    Line(ColorLinesTile *topLeft);
+    explicit Line(ColorLinesTile *topLeft);
 };
 
 struct Cross : Block
 {
-    Cross(ColorLinesTile *topLeft);
+    explicit Cross(ColorLinesTile *topLeft);
 };
 
 struct LBlock : Block
 {
-    LBlock(ColorLinesTile *topLeft);
+    explicit LBlock(ColorLinesTile *topLeft);
 };
 
 struct Rect : Block
 {
-    Rect(ColorLinesTile *topLeft);
+    explicit Rect(ColorLinesTile *topLeft);
     void rotate(){}
 };
 
 struct Zeta : Block
 {
-    Zeta(ColorLinesTile *topLeft);
+    explicit Zeta(ColorLinesTile *topLeft);
 };
 
 struct Zeta2 : Block
 {
-    Zeta2(ColorLinesTile *topLeft);
+    explicit Zeta2(ColorLinesTile *topLeft);
 };
 
 struct LBlock2 : Block
 {
-    LBlock2(ColorLinesTile *topLeft);
+    explicit LBlock2(ColorLinesTile *topLeft);
 };
 
 Block::Block(ColorLinesTile *topLeft, int rectSide)

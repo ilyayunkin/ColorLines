@@ -22,7 +22,7 @@ class ClickLinesGame : public AbstractColorLinesGame
     void lose();
 
 public:
-    ClickLinesGame(QObject *parent = 0);
+    explicit ClickLinesGame(QObject *parent = 0);
     int getRowCount() const;
     int getColCount() const;
     int getCoins() const;

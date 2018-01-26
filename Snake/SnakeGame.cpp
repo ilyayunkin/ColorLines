@@ -37,7 +37,7 @@ enum Direction
 
 struct SnakeGameData
 {
-    SnakeGameData(SnakeGame *game);
+    explicit SnakeGameData(SnakeGame *game);
     Direction direction;
     QQueue<Direction> directionQueue;
 
@@ -233,11 +233,11 @@ void SnakeGame::update()
 
         QList<ColorLinesTile *> newPath;
         int i = 0;
-        ColorLinesTile *next = 0;
         ColorLinesTile *prevCurrent = 0;
+
         while(!data->snake.isEmpty()){
             ColorLinesTile *current = data->snake.takeFirst();
-            next = (i == 0) ? data->getNextHeadPosition(current) : prevCurrent;
+            ColorLinesTile *next =  (i == 0) ? data->getNextHeadPosition(current) : prevCurrent;
             if(data->snake.contains(next)){
                 lose();
                 return;
