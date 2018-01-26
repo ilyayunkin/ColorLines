@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/ilyayunkin/ColorLines.svg)](https://travis-ci.org/ilyayunkin/ColorLines)
 # ColorLines
 
 Project contains follow directories:
