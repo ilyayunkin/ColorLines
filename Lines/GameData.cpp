@@ -78,7 +78,6 @@ void ColorLinesGameData::placeBalls()
         }
         randomColors();
     }
-    freeCells = tileMap.freeList.size();
 
     if(tileMap.freeList.size() == 0){
         lose = true;
@@ -120,7 +119,7 @@ void ElementMovingState::update()
         ColorLinesTile *tile = *data->pathIterator;
         ColorLinesTile::Color color = tile->getColor();
         data->tileMap.free(tile);
-        data->pathIterator++;
+        ++data->pathIterator;
         data->tileMap.set(*data->pathIterator, color);
     }else{
         data->goToWaitingState();

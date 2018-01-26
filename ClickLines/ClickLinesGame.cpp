@@ -27,7 +27,7 @@ class NeighboursFinder
     QQueue<ColorLinesTile *> queue; ///< Очередь на посещение
     /// Получить список соприкасающихся тайлов того же цвета.
 public:
-    NeighboursFinder(ColorLinesTile *tile);
+    explicit NeighboursFinder(ColorLinesTile *tile);
     /// Возвращает список, включающий всех соседей тайла,
     /// переданного в конструктор, имеющих с ним один цвет, включая сам тайл.
     QSet<ColorLinesTile *> findNeighbours();
