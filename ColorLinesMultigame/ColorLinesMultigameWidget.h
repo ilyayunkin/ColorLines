@@ -29,7 +29,7 @@ class ColorLinesMultigameWidget : public QWidget
     void setDefaultWindowIcon();
 
 public:
-    ColorLinesMultigameWidget(QWidget *parent = 0);
+    explicit ColorLinesMultigameWidget(QWidget *parent = 0);
     ~ColorLinesMultigameWidget();
 
 private slots:
