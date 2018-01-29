@@ -2,6 +2,9 @@
   * @author Yunkin Ilya.
   */
 #include "GameData.h"
+
+#include <time.h>
+
 #include "COMMON/PathSearchToWidth.h"
 
 ColorLinesGameData::ColorLinesGameData(JustAnotherLines *game)
