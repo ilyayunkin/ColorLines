@@ -312,7 +312,7 @@ void SnakeGame::addApple()
                 i++;
             }
         }
-        if(data->tileMap.ownedList.size() == 0){// Чтобы с пустым полем не остаться
+        if(data->tileMap.ownedList.empty()){// Чтобы с пустым полем не остаться
             addApple();
         }
     }

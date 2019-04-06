@@ -82,7 +82,7 @@ void ColorLinesGameData::placeBalls()
         randomColors();
     }
 
-    if(tileMap.freeList.size() == 0){
+    if(tileMap.freeList.empty()){
         lose = true;
     }
 }
