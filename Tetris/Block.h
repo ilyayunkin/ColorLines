@@ -16,8 +16,18 @@ struct Block
 
     struct Matrix
     {
-        Matrix();
-        bool m[BLOCK_WIDTH_MAX][BLOCK_WIDTH_MAX];
+        typedef bool MatrixField[BLOCK_WIDTH_MAX][BLOCK_WIDTH_MAX];
+        MatrixField m;
+        const int matrixSide;
+
+        Matrix(const int matrixSide) : m{{0}}, matrixSide(matrixSide)
+        {};
+        void operator=(const Matrix &other)
+        {
+            memcpy(m, other.m, sizeof(m));
+        }
+        Matrix getLeftTurned();
+        Matrix getRightTurned();
     };
 
     static std::default_random_engine randomEngine;
@@ -35,8 +45,6 @@ struct Block
     bool landed();
     bool lefted();
     bool righted();
-    Matrix getLeftTurned();
-    Matrix getRightTurned();
     bool isVisible(int col, int row);
     int getPlotRow(int row);
     int getPlotCol(int col);
@@ -49,8 +57,7 @@ struct Block
     /// Создает новую падающую фигуру.
     static Block *createBlock(ColorLinesTile *topLeft);
 private:
-    Block();
-    int matrixSide;
+    Block() = delete;
 };
 
 #endif // BLOCK_H

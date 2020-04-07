@@ -110,11 +110,34 @@ enum
 };
 }
 
-Block::Block(ColorLinesTile *topLeft, int rectSide)
-    : col(BLOCK_WIDTH_MAX / 2 - 1),
+
+Block::Matrix Block::Matrix::getLeftTurned()
+{
+    Matrix newM(matrixSide);
+    for(int i = 0; i < matrixSide; i++){
+        for(int j = 0; j < matrixSide; j++){
+            newM.m[i][j] = m[matrixSide - 1 - j][i];
+        }
+    }
+    return newM;
+}
+
+Block::Matrix Block::Matrix::getRightTurned()
+{
+    Matrix newM(matrixSide);
+    for(int i = 0; i < matrixSide; i++){
+        for(int j = 0; j < matrixSide; j++){
+            newM.m[i][j] = m[j][matrixSide - i - 1];
+        }
+    }
+    return newM;
+}
+
+Block::Block(ColorLinesTile *topLeft, int matrixSide)
+    : matrix(matrixSide),
+      col(BLOCK_WIDTH_MAX / 2 - 1),
       row(-BLOCK_WIDTH_MAX),
-      topLeft(topLeft),
-      matrixSide(rectSide)
+      topLeft(topLeft)
 {
 }
 
@@ -154,38 +177,6 @@ Block *Block::createBlock(ColorLinesTile *topLeft)
     return block;
 }
 
-
-Block::Matrix::Matrix()
-{
-    for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
-        for(int j = 0; j < BLOCK_WIDTH_MAX; j++){
-            m[i][j] = false;
-        }
-    }
-}
-
-Block::Matrix Block::getLeftTurned()
-{
-    Matrix newM;
-    for(int i = 0; i < matrixSide; i++){
-        for(int j = 0; j < matrixSide; j++){
-            newM.m[i][j] = matrix.m[matrixSide - 1 - j][i];
-        }
-    }
-    return newM;
-}
-
-Block::Matrix Block::getRightTurned()
-{
-    Matrix newM;
-    for(int i = 0; i < matrixSide; i++){
-        for(int j = 0; j < matrixSide; j++){
-            newM.m[i][j] = matrix.m[j][matrixSide - i - 1];
-        }
-    }
-    return newM;
-}
-
 void Block::down()
 {
     if(!landed()){
@@ -223,13 +214,13 @@ void Block::printShape(Matrix m)
 
 void Block::rotate()
 {
-    Matrix newMatrix = getLeftTurned();
+    Matrix newMatrix = matrix.getLeftTurned();
     printShape(matrix);
     printShape(newMatrix);
 
     bool ok = true;
-    for(int i = 0; i < matrixSide; i++){
-        for(int j = 0; j < matrixSide; j++){
+    for(int i = 0; i < matrix.matrixSide; i++){
+        for(int j = 0; j < matrix.matrixSide; j++){
             int plotRow = getPlotRow(j);
             int plotCol = getPlotCol(i);
             bool visibleOrUpper = (plotRow < PLOT_ROW_CNT) &&
@@ -284,8 +275,8 @@ bool Block::lefted()
         }
     }
 
-    for(int mcol = 0; mcol < matrixSide; ++mcol){
-        for(int mrow = 0; mrow < matrixSide; ++mrow){
+    for(int mcol = 0; mcol < matrix.matrixSide; ++mcol){
+        for(int mrow = 0; mrow < matrix.matrixSide; ++mrow){
             if(matrix.m[mcol][mrow] && (col + mcol <= 0)){
                 ret = true;
                 break;
@@ -307,8 +298,8 @@ bool Block::righted()
         }
     }
 
-    for(int mcol = 0; mcol < matrixSide; ++mcol){
-        for(int mrow = 0; mrow < matrixSide; ++mrow){
+    for(int mcol = 0; mcol < matrix.matrixSide; ++mcol){
+        for(int mrow = 0; mrow < matrix.matrixSide; ++mrow){
             if(matrix.m[mcol][mrow] && (col + mcol >= (PLOT_COL_CNT - 1))){
                 ret = true;
                 break;
