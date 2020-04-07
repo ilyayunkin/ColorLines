@@ -2,12 +2,13 @@
 #define BLOCK_H
 
 #include <random>
+#include <array>
 
 #include <QList>
 
 #include "COMMON/MAP/ColorLinesTileMap.h"
 
-struct Block
+struct Block final
 {
     enum
     {
@@ -16,15 +17,21 @@ struct Block
 
     struct Matrix
     {
-        typedef bool MatrixField[BLOCK_WIDTH_MAX][BLOCK_WIDTH_MAX];
+        typedef std::array<std::array<bool, BLOCK_WIDTH_MAX>, BLOCK_WIDTH_MAX> MatrixField;
         MatrixField m;
         const int matrixSide;
 
-        Matrix(const int matrixSide) : m{{0}}, matrixSide(matrixSide)
+        Matrix(const int matrixSide) : m{{{0}}}, matrixSide(matrixSide)
         {};
+        Matrix(const Matrix &other) : m(other.m), matrixSide(other.matrixSide)
+        {
+        }
+        Matrix(const MatrixField &m, int matrixSide) : m(m), matrixSide(matrixSide)
+        {
+        }
         void operator=(const Matrix &other)
         {
-            memcpy(m, other.m, sizeof(m));
+            m = other.m;
         }
         Matrix getLeftTurned();
         Matrix getRightTurned();
@@ -51,8 +58,7 @@ struct Block
     QList<ColorLinesTile *> getBody(Matrix m);
     void updateBody();
 
-    Block(ColorLinesTile *topLeft, int matrixSide = BLOCK_WIDTH_MAX);
-    virtual ~Block(){}
+    Block(ColorLinesTile *topLeft, const Matrix &matrix);
 
     /// Создает новую падающую фигуру.
     static Block *createBlock(ColorLinesTile *topLeft);

@@ -9,93 +9,49 @@
 
 namespace
 {
-struct Line : Block
-{
-    explicit Line(ColorLinesTile *topLeft) : Block(topLeft)
-    {
-        color = blockColor;
-        for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
-            matrix.m[i][BLOCK_WIDTH_MAX - 1] = true;
-        }
-    }
-};
+const Block::Matrix lineMatrix({
+                                   std::array<bool, 4>{false, false, false, true},
+                                   std::array<bool, 4>{false, false, false, true},
+                                   std::array<bool, 4>{false, false, false, true},
+                                   std::array<bool, 4>{false, false, false, true}
+                               }, 4);
+const Block::Matrix crossMatrix({
+                                    std::array<bool, 4>{false, true, false, false},
+                                    std::array<bool, 4>{true, true, true, false},
+                                    std::array<bool, 4>{false, true, false, false},
+                                    std::array<bool, 4>{false, false, false, false}
+                                }, 3);
+const Block::Matrix lbMatrix({
+                                 std::array<bool, 4>{true, true, false, false},
+                                 std::array<bool, 4>{false, true, false, false},
+                                 std::array<bool, 4>{false, true, false, false},
+                                 std::array<bool, 4>{false, false, false, false}
+                             }, 3);
+const Block::Matrix lb2Matrix({
+                                  std::array<bool, 4>{true, true, false, false},
+                                  std::array<bool, 4>{true, false, false, false},
+                                  std::array<bool, 4>{true, false, false, false},
+                                  std::array<bool, 4>{false, false, false, false}
+                              }, 3);
+const Block::Matrix rectMatrix({
+                                   std::array<bool, 4>{false, true, true, false},
+                                   std::array<bool, 4>{false, true, true, false},
+                                   std::array<bool, 4>{false, false, false, false},
+                                   std::array<bool, 4>{false, false, false, false}
+                               }, 4);
+const Block::Matrix zetaMatrix({
+                                   std::array<bool, 4>{true, true, false, false},
+                                   std::array<bool, 4>{false, true, true, false},
+                                   std::array<bool, 4>{false, false, false, false},
+                                   std::array<bool, 4>{false, false, false, false}
+                               }, 3);
+const Block::Matrix zeta2Matrix({
+                                    std::array<bool, 4>{false, true, true, false},
+                                    std::array<bool, 4>{true, true, false, false},
+                                    std::array<bool, 4>{false, false, false, false},
+                                    std::array<bool, 4>{false, false, false, false}
+                                }, 3);
 
-struct Cross : Block
-{
-    explicit Cross(ColorLinesTile *topLeft) : Block(topLeft, 3)
-    {
-        color = blockColor;
-        for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
-            for(int j = 0; j < BLOCK_WIDTH_MAX; j++){
-                matrix.m[i][j] = false;
-            }
-        }
-        matrix.m[0][0] = true;
-        matrix.m[1][0] = true;
-        matrix.m[2][0] = true;
-        matrix.m[1][1] = true;
-    }
-};
-
-struct LBlock : Block
-{
-    explicit LBlock(ColorLinesTile *topLeft) : Block(topLeft, 3)
-    {
-        color = blockColor;
-        matrix.m[0][0] = true;
-        matrix.m[0][1] = true;
-        matrix.m[1][1] = true;
-        matrix.m[2][1] = true;
-    }
-};
-
-struct LBlock2 : Block
-{
-    explicit LBlock2(ColorLinesTile *topLeft) : Block(topLeft, 3)
-    {
-        color = blockColor;
-        matrix.m[0][1] = true;
-        matrix.m[0][0] = true;
-        matrix.m[1][0] = true;
-        matrix.m[2][0] = true;
-    }
-};
-
-struct Rect : Block
-{
-    explicit Rect(ColorLinesTile *topLeft) : Block(topLeft)
-    {
-        color = blockColor;
-        matrix.m[BLOCK_WIDTH_MAX/2][BLOCK_WIDTH_MAX/2] = true;
-        matrix.m[BLOCK_WIDTH_MAX/2 - 1][BLOCK_WIDTH_MAX/2] = true;
-        matrix.m[BLOCK_WIDTH_MAX/2][BLOCK_WIDTH_MAX/2 + 1] = true;
-        matrix.m[BLOCK_WIDTH_MAX/2 - 1][BLOCK_WIDTH_MAX/2 + 1] = true;
-    }
-};
-
-struct Zeta : Block
-{
-    explicit Zeta(ColorLinesTile *topLeft) : Block(topLeft, 3)
-    {
-        color = blockColor;
-        matrix.m[0][0] = true;
-        matrix.m[1][0] = true;
-        matrix.m[1][1] = true;
-        matrix.m[2][1] = true;
-    }
-};
-
-struct Zeta2 : Block
-{
-    explicit Zeta2(ColorLinesTile *topLeft) : Block(topLeft, 3)
-    {
-        color = blockColor;
-        matrix.m[0][1] = true;
-        matrix.m[1][0] = true;
-        matrix.m[2][0] = true;
-        matrix.m[1][1] = true;
-    }
-};
 enum
 {
     LINE,
@@ -133,8 +89,9 @@ Block::Matrix Block::Matrix::getRightTurned()
     return newM;
 }
 
-Block::Block(ColorLinesTile *topLeft, int matrixSide)
-    : matrix(matrixSide),
+Block::Block(ColorLinesTile *topLeft, const Matrix &matrix)
+    : matrix(matrix),
+      color(blockColor),
       col(BLOCK_WIDTH_MAX / 2 - 1),
       row(-BLOCK_WIDTH_MAX),
       topLeft(topLeft)
@@ -150,25 +107,25 @@ Block *Block::createBlock(ColorLinesTile *topLeft)
     int type = randomEngine() % COUNT;
     switch (type) {
     case LINE:
-        block = new Line(topLeft);
+        block = new Block(topLeft, lineMatrix);
         break;
     case CROSS:
-        block = new Cross(topLeft);
+        block = new Block(topLeft, crossMatrix);
         break;
     case L_BLOCK:
-        block = new LBlock(topLeft);
+        block = new Block(topLeft, lbMatrix);
         break;
     case RECT:
-        block = new Rect(topLeft);
+        block = new Block(topLeft, rectMatrix);
         break;
     case ZETA:
-        block = new Zeta(topLeft);
+        block = new Block(topLeft, zetaMatrix);
         break;
     case ZETA2:
-        block = new Zeta2(topLeft);
+        block = new Block(topLeft, zeta2Matrix);
         break;
     case L_BLOCK2:
-        block = new LBlock2(topLeft);
+        block = new Block(topLeft, lb2Matrix);
         break;
     default:
         assert(false);
