@@ -1,7 +1,6 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include <random>
 #include <array>
 
 #include <QList>
@@ -37,7 +36,6 @@ struct Block final
         Matrix getRightTurned();
     };
 
-    static std::default_random_engine randomEngine;
     Matrix matrix;
     ColorLinesTile::Color color;
     int col;
@@ -45,17 +43,17 @@ struct Block final
     ColorLinesTile *topLeft;
     QList<ColorLinesTile *> body;
     void rotate();
-    void printShape(Matrix m);
+    void printShape(const Matrix &m) const;
     void down();
     void left();
     void right();
-    bool landed();
-    bool lefted();
-    bool righted();
-    bool isVisible(int col, int row);
-    int getPlotRow(int row);
-    int getPlotCol(int col);
-    QList<ColorLinesTile *> getBody(Matrix m);
+    bool landed() const;
+    bool lefted() const;
+    bool righted() const;
+    bool isVisible(int col, int row) const;
+    int getPlotRow(int row) const;
+    int getPlotCol(int col) const;
+    QList<ColorLinesTile *> getBody(const Matrix &m) const;
     void updateBody();
 
     Block(ColorLinesTile *topLeft, const Matrix &matrix);

@@ -1,5 +1,6 @@
 #include "Block.h"
 
+#include <random>
 #include <assert.h>
 #include <time.h>
 
@@ -64,6 +65,7 @@ enum
 
     COUNT
 };
+std::default_random_engine randomEngine(time(NULL));
 }
 
 
@@ -98,7 +100,6 @@ Block::Block(ColorLinesTile *topLeft, const Matrix &matrix)
 {
 }
 
-std::default_random_engine Block::randomEngine(time(NULL));
 
 Block *Block::createBlock(ColorLinesTile *topLeft)
 {
@@ -158,7 +159,7 @@ void Block::left()
     }
 }
 
-void Block::printShape(Matrix m)
+void Block::printShape(const Matrix &m) const
 {
     for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
         qDebug() << (m.m[0][i] ? 'x' : ' ')
@@ -200,7 +201,7 @@ void Block::rotate()
     }
 }
 
-bool Block::landed()
+bool Block::landed() const
 {
     bool ret = false;
 
@@ -221,7 +222,7 @@ bool Block::landed()
     return ret;
 }
 
-bool Block::lefted()
+bool Block::lefted() const
 {
     bool ret = false;
     foreach (ColorLinesTile *tile, body){
@@ -244,7 +245,7 @@ bool Block::lefted()
     return ret;
 }
 
-bool Block::righted()
+bool Block::righted() const
 {
     bool ret = false;
     foreach (ColorLinesTile *tile, body){
@@ -267,7 +268,7 @@ bool Block::righted()
     return ret;
 }
 
-bool Block::isVisible(int col, int row)
+bool Block::isVisible(int col, int row) const
 {
     int plotRow = getPlotRow(row);
     int plotCol = getPlotCol(col);
@@ -275,17 +276,17 @@ bool Block::isVisible(int col, int row)
             (plotCol >= 0) && (plotCol < PLOT_COL_CNT);
 }
 
-int Block::getPlotRow(int row)
+int Block::getPlotRow(int row) const
 {
     return row + this->row;
 }
 
-int Block::getPlotCol(int col)
+int Block::getPlotCol(int col) const
 {
     return col + this->col;
 }
 
-QList<ColorLinesTile *> Block::getBody(Matrix m)
+QList<ColorLinesTile *> Block::getBody(const Matrix &m) const
 {
     QList<ColorLinesTile *> body;
     for(int j = 0; j < BLOCK_WIDTH_MAX; j++){
