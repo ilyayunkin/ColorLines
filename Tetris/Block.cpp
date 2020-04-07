@@ -7,52 +7,95 @@
 
 #include "TetrisCommon.h"
 
+namespace
+{
 struct Line : Block
 {
-    explicit Line(ColorLinesTile *topLeft);
+    explicit Line(ColorLinesTile *topLeft) : Block(topLeft)
+    {
+        color = blockColor;
+        for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
+            matrix.m[i][BLOCK_WIDTH_MAX - 1] = true;
+        }
+    }
 };
 
 struct Cross : Block
 {
-    explicit Cross(ColorLinesTile *topLeft);
+    explicit Cross(ColorLinesTile *topLeft) : Block(topLeft, 3)
+    {
+        color = blockColor;
+        for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
+            for(int j = 0; j < BLOCK_WIDTH_MAX; j++){
+                matrix.m[i][j] = false;
+            }
+        }
+        matrix.m[0][0] = true;
+        matrix.m[1][0] = true;
+        matrix.m[2][0] = true;
+        matrix.m[1][1] = true;
+    }
 };
 
 struct LBlock : Block
 {
-    explicit LBlock(ColorLinesTile *topLeft);
-};
-
-struct Rect : Block
-{
-    explicit Rect(ColorLinesTile *topLeft);
-    void rotate(){}
-};
-
-struct Zeta : Block
-{
-    explicit Zeta(ColorLinesTile *topLeft);
-};
-
-struct Zeta2 : Block
-{
-    explicit Zeta2(ColorLinesTile *topLeft);
+    explicit LBlock(ColorLinesTile *topLeft) : Block(topLeft, 3)
+    {
+        color = blockColor;
+        matrix.m[0][0] = true;
+        matrix.m[0][1] = true;
+        matrix.m[1][1] = true;
+        matrix.m[2][1] = true;
+    }
 };
 
 struct LBlock2 : Block
 {
-    explicit LBlock2(ColorLinesTile *topLeft);
+    explicit LBlock2(ColorLinesTile *topLeft) : Block(topLeft, 3)
+    {
+        color = blockColor;
+        matrix.m[0][1] = true;
+        matrix.m[0][0] = true;
+        matrix.m[1][0] = true;
+        matrix.m[2][0] = true;
+    }
 };
 
-Block::Block(ColorLinesTile *topLeft, int rectSide)
-    : col(BLOCK_WIDTH_MAX / 2 - 1),
-      row(-BLOCK_WIDTH_MAX),
-      topLeft(topLeft),
-      matrixSide(rectSide)
+struct Rect : Block
 {
-}
+    explicit Rect(ColorLinesTile *topLeft) : Block(topLeft)
+    {
+        color = blockColor;
+        matrix.m[BLOCK_WIDTH_MAX/2][BLOCK_WIDTH_MAX/2] = true;
+        matrix.m[BLOCK_WIDTH_MAX/2 - 1][BLOCK_WIDTH_MAX/2] = true;
+        matrix.m[BLOCK_WIDTH_MAX/2][BLOCK_WIDTH_MAX/2 + 1] = true;
+        matrix.m[BLOCK_WIDTH_MAX/2 - 1][BLOCK_WIDTH_MAX/2 + 1] = true;
+    }
+};
 
-std::default_random_engine Block::randomEngine(time(NULL));
+struct Zeta : Block
+{
+    explicit Zeta(ColorLinesTile *topLeft) : Block(topLeft, 3)
+    {
+        color = blockColor;
+        matrix.m[0][0] = true;
+        matrix.m[1][0] = true;
+        matrix.m[1][1] = true;
+        matrix.m[2][1] = true;
+    }
+};
 
+struct Zeta2 : Block
+{
+    explicit Zeta2(ColorLinesTile *topLeft) : Block(topLeft, 3)
+    {
+        color = blockColor;
+        matrix.m[0][1] = true;
+        matrix.m[1][0] = true;
+        matrix.m[2][0] = true;
+        matrix.m[1][1] = true;
+    }
+};
 enum
 {
     LINE,
@@ -65,6 +108,17 @@ enum
 
     COUNT
 };
+}
+
+Block::Block(ColorLinesTile *topLeft, int rectSide)
+    : col(BLOCK_WIDTH_MAX / 2 - 1),
+      row(-BLOCK_WIDTH_MAX),
+      topLeft(topLeft),
+      matrixSide(rectSide)
+{
+}
+
+std::default_random_engine Block::randomEngine(time(NULL));
 
 Block *Block::createBlock(ColorLinesTile *topLeft)
 {
@@ -308,79 +362,4 @@ void Block::updateBody()
         tile->setColor(color);
     }
     body = newBody;
-}
-
-Line::Line(ColorLinesTile *topLeft)
-    : Block(topLeft)
-{
-    color = blockColor;
-    for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
-        matrix.m[i][BLOCK_WIDTH_MAX - 1] = true;
-    }
-}
-
-Cross::Cross(ColorLinesTile *topLeft)
-    : Block(topLeft, 3)
-{
-    color = blockColor;
-    for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
-        for(int j = 0; j < BLOCK_WIDTH_MAX; j++){
-            matrix.m[i][j] = false;
-        }
-    }
-    matrix.m[0][0] = true;
-    matrix.m[1][0] = true;
-    matrix.m[2][0] = true;
-    matrix.m[1][1] = true;
-}
-
-
-Rect::Rect(ColorLinesTile *topLeft)
-    : Block(topLeft)
-{
-    color = blockColor;
-    matrix.m[BLOCK_WIDTH_MAX/2][BLOCK_WIDTH_MAX/2] = true;
-    matrix.m[BLOCK_WIDTH_MAX/2 - 1][BLOCK_WIDTH_MAX/2] = true;
-    matrix.m[BLOCK_WIDTH_MAX/2][BLOCK_WIDTH_MAX/2 + 1] = true;
-    matrix.m[BLOCK_WIDTH_MAX/2 - 1][BLOCK_WIDTH_MAX/2 + 1] = true;
-}
-
-Zeta::Zeta(ColorLinesTile *topLeft)
-    : Block(topLeft, 3)
-{
-    color = blockColor;
-    matrix.m[0][0] = true;
-    matrix.m[1][0] = true;
-    matrix.m[1][1] = true;
-    matrix.m[2][1] = true;
-}
-
-Zeta2::Zeta2(ColorLinesTile *topLeft)
-    : Block(topLeft, 3)
-{
-    color = blockColor;
-    matrix.m[0][1] = true;
-    matrix.m[1][0] = true;
-    matrix.m[2][0] = true;
-    matrix.m[1][1] = true;
-}
-
-LBlock::LBlock(ColorLinesTile *topLeft)
-    : Block(topLeft, 3)
-{
-    color = blockColor;
-    matrix.m[0][0] = true;
-    matrix.m[0][1] = true;
-    matrix.m[1][1] = true;
-    matrix.m[2][1] = true;
-}
-
-LBlock2::LBlock2(ColorLinesTile *topLeft)
-    : Block(topLeft, 3)
-{
-    color = blockColor;
-    matrix.m[0][1] = true;
-    matrix.m[0][0] = true;
-    matrix.m[1][0] = true;
-    matrix.m[2][0] = true;
 }
