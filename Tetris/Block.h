@@ -34,8 +34,6 @@ struct Matrix
 
 struct Block final
 {
-
-
     Matrix matrix;
     ColorLinesTile::Color color;
     int col;
@@ -43,7 +41,6 @@ struct Block final
     ColorLinesTile *topLeft;
     std::vector<ColorLinesTile *> body;
     void rotate();
-    void printShape(const Matrix &m) const;
     void down();
     void left();
     void right();

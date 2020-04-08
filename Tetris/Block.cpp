@@ -54,6 +54,17 @@ constexpr Matrix zeta2Matrix({
                                         std::array<bool, 4>{false, false, false, false}
                                     }, 3);
 
+void printShape(const Matrix &m)
+{
+    for(int i = 0; i < Matrix::BLOCK_WIDTH_MAX; i++){
+        qDebug() << (m.m[0][i] ? 'x' : ' ')
+                << (m.m[1][i] ? 'x' : ' ')
+                << (m.m[2][i] ? 'x' : ' ')
+                << (m.m[3][i] ? 'x' : ' ');
+    }
+    qDebug() << "";
+}
+
 enum
 {
     LINE,
@@ -158,17 +169,6 @@ void Block::left()
         col--;
         updateBody();
     }
-}
-
-void Block::printShape(const Matrix &m) const
-{
-    for(int i = 0; i < Matrix::BLOCK_WIDTH_MAX; i++){
-        qDebug() << (m.m[0][i] ? 'x' : ' ')
-                << (m.m[1][i] ? 'x' : ' ')
-                << (m.m[2][i] ? 'x' : ' ')
-                << (m.m[3][i] ? 'x' : ' ');
-    }
-    qDebug() << "";
 }
 
 void Block::rotate()
