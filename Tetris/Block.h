@@ -35,7 +35,6 @@ struct Matrix
 class Block final
 {
     Matrix matrix;
-    ColorLinesTile::Color color;
     int col;
     int row;
     ColorLinesTile *topLeft;

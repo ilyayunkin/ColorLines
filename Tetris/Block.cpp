@@ -105,7 +105,6 @@ Matrix Matrix::getRightTurned()
 
 Block::Block(ColorLinesTile *topLeft, const Matrix &matrix)
     : matrix(matrix),
-      color(blockColor),
       col(Matrix::BLOCK_WIDTH_MAX / 2 - 1),
       row(-Matrix::BLOCK_WIDTH_MAX),
       topLeft(topLeft)
@@ -309,7 +308,7 @@ void Block::updateBody()
     }
     std::vector<ColorLinesTile *> newBody = getBody(matrix);
     for (ColorLinesTile *tile: newBody){
-        tile->setColor(color);
+        tile->setColor(blockColor);
     }
     body = newBody;
 }
