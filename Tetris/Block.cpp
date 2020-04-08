@@ -3,6 +3,7 @@
 #include <random>
 #include <assert.h>
 #include <time.h>
+#include <algorithm>
 
 #include <QDebug>
 
@@ -10,43 +11,43 @@
 
 namespace
 {
-constexpr Block::Matrix lineMatrix({
+constexpr Matrix lineMatrix({
                                        std::array<bool, 4>{false, false, false, true},
                                        std::array<bool, 4>{false, false, false, true},
                                        std::array<bool, 4>{false, false, false, true},
                                        std::array<bool, 4>{false, false, false, true}
                                    }, 4);
-constexpr Block::Matrix crossMatrix({
+constexpr Matrix crossMatrix({
                                         std::array<bool, 4>{false, true, false, false},
                                         std::array<bool, 4>{true, true, true, false},
                                         std::array<bool, 4>{false, true, false, false},
                                         std::array<bool, 4>{false, false, false, false}
                                     }, 3);
-constexpr Block::Matrix lbMatrix({
+constexpr Matrix lbMatrix({
                                      std::array<bool, 4>{true, true, false, false},
                                      std::array<bool, 4>{false, true, false, false},
                                      std::array<bool, 4>{false, true, false, false},
                                      std::array<bool, 4>{false, false, false, false}
                                  }, 3);
-constexpr Block::Matrix lb2Matrix({
+constexpr Matrix lb2Matrix({
                                       std::array<bool, 4>{true, true, false, false},
                                       std::array<bool, 4>{true, false, false, false},
                                       std::array<bool, 4>{true, false, false, false},
                                       std::array<bool, 4>{false, false, false, false}
                                   }, 3);
-constexpr Block::Matrix rectMatrix({
+constexpr Matrix rectMatrix({
                                        std::array<bool, 4>{false, true, true, false},
                                        std::array<bool, 4>{false, true, true, false},
                                        std::array<bool, 4>{false, false, false, false},
                                        std::array<bool, 4>{false, false, false, false}
                                    }, 4);
-constexpr Block::Matrix zetaMatrix({
+constexpr Matrix zetaMatrix({
                                        std::array<bool, 4>{true, true, false, false},
                                        std::array<bool, 4>{false, true, true, false},
                                        std::array<bool, 4>{false, false, false, false},
                                        std::array<bool, 4>{false, false, false, false}
                                    }, 3);
-constexpr Block::Matrix zeta2Matrix({
+constexpr Matrix zeta2Matrix({
                                         std::array<bool, 4>{false, true, true, false},
                                         std::array<bool, 4>{true, true, false, false},
                                         std::array<bool, 4>{false, false, false, false},
@@ -69,7 +70,7 @@ std::default_random_engine randomEngine(time(NULL));
 }
 
 
-Block::Matrix Block::Matrix::getLeftTurned()
+Matrix Matrix::getLeftTurned()
 {
     Matrix newM(matrixSide);
     for(int i = 0; i < matrixSide; i++){
@@ -80,7 +81,7 @@ Block::Matrix Block::Matrix::getLeftTurned()
     return newM;
 }
 
-Block::Matrix Block::Matrix::getRightTurned()
+Matrix Matrix::getRightTurned()
 {
     Matrix newM(matrixSide);
     for(int i = 0; i < matrixSide; i++){
@@ -94,8 +95,8 @@ Block::Matrix Block::Matrix::getRightTurned()
 Block::Block(ColorLinesTile *topLeft, const Matrix &matrix)
     : matrix(matrix),
       color(blockColor),
-      col(BLOCK_WIDTH_MAX / 2 - 1),
-      row(-BLOCK_WIDTH_MAX),
+      col(Matrix::BLOCK_WIDTH_MAX / 2 - 1),
+      row(-Matrix::BLOCK_WIDTH_MAX),
       topLeft(topLeft)
 {
 }
@@ -161,7 +162,7 @@ void Block::left()
 
 void Block::printShape(const Matrix &m) const
 {
-    for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
+    for(int i = 0; i < Matrix::BLOCK_WIDTH_MAX; i++){
         qDebug() << (m.m[0][i] ? 'x' : ' ')
                 << (m.m[1][i] ? 'x' : ' ')
                 << (m.m[2][i] ? 'x' : ' ')
@@ -212,7 +213,7 @@ bool Block::landed() const
             ColorLinesTile *bottom = tile->getBottomTile();
             if((bottom == 0) ||
                     ((bottom->getColor() != ColorLinesTile::NONE) &&
-                     (!body.contains(bottom)))){
+                     (std::find(body.begin(), body.end(), bottom) == body.end()))){
                 ret = true;
                 break;
             }
@@ -286,11 +287,11 @@ int Block::getPlotCol(int col) const
     return col + this->col;
 }
 
-QList<ColorLinesTile *> Block::getBody(const Matrix &m) const
+std::vector<ColorLinesTile *> Block::getBody(const Matrix &m) const
 {
-    QList<ColorLinesTile *> body;
-    for(int j = 0; j < BLOCK_WIDTH_MAX; j++){
-        for(int i = 0; i < BLOCK_WIDTH_MAX; i++){
+    std::vector<ColorLinesTile *> body;
+    for(int j = 0; j < Matrix::BLOCK_WIDTH_MAX; j++){
+        for(int i = 0; i < Matrix::BLOCK_WIDTH_MAX; i++){
             if(isVisible(i, j)){
                 if(m.m[i][j]){
                     body.push_back(topLeft->getTile(i + col, getPlotRow(j)));
@@ -306,7 +307,7 @@ void Block::updateBody()
     for (ColorLinesTile *tile: body){
         tile->setColor(ColorLinesTile::NONE);
     }
-    QList<ColorLinesTile *> newBody = getBody(matrix);
+    std::vector<ColorLinesTile *> newBody = getBody(matrix);
     for (ColorLinesTile *tile: newBody){
         tile->setColor(color);
     }

@@ -2,46 +2,46 @@
 #define BLOCK_H
 
 #include <array>
-
-#include <QList>
+#include <vector>
 
 #include "COMMON/MAP/ColorLinesTileMap.h"
 
-struct Block final
+struct Matrix
 {
     enum
     {
         BLOCK_WIDTH_MAX = 4
     };
+    typedef std::array<std::array<bool, BLOCK_WIDTH_MAX>, BLOCK_WIDTH_MAX> MatrixField;
+    MatrixField m;
+    const int matrixSide;
 
-    struct Matrix
+    constexpr Matrix(const int matrixSide) : m{{{0}}}, matrixSide(matrixSide)
+    {};
+    constexpr Matrix(const Matrix &other) : m(other.m), matrixSide(other.matrixSide)
     {
-        typedef std::array<std::array<bool, BLOCK_WIDTH_MAX>, BLOCK_WIDTH_MAX> MatrixField;
-        MatrixField m;
-        const int matrixSide;
+    }
+    constexpr Matrix(const MatrixField &m, int matrixSide) : m(m), matrixSide(matrixSide)
+    {
+    }
+    void operator=(const Matrix &other)
+    {
+        m = other.m;
+    }
+    Matrix getLeftTurned();
+    Matrix getRightTurned();
+};
 
-        constexpr Matrix(const int matrixSide) : m{{{0}}}, matrixSide(matrixSide)
-        {};
-        constexpr Matrix(const Matrix &other) : m(other.m), matrixSide(other.matrixSide)
-        {
-        }
-        constexpr Matrix(const MatrixField &m, int matrixSide) : m(m), matrixSide(matrixSide)
-        {
-        }
-        void operator=(const Matrix &other)
-        {
-            m = other.m;
-        }
-        Matrix getLeftTurned();
-        Matrix getRightTurned();
-    };
+struct Block final
+{
+
 
     Matrix matrix;
     ColorLinesTile::Color color;
     int col;
     int row;
     ColorLinesTile *topLeft;
-    QList<ColorLinesTile *> body;
+    std::vector<ColorLinesTile *> body;
     void rotate();
     void printShape(const Matrix &m) const;
     void down();
@@ -53,7 +53,7 @@ struct Block final
     bool isVisible(int col, int row) const;
     int getPlotRow(int row) const;
     int getPlotCol(int col) const;
-    QList<ColorLinesTile *> getBody(const Matrix &m) const;
+    std::vector<ColorLinesTile *> getBody(const Matrix &m) const;
     void updateBody();
 
     Block(ColorLinesTile *topLeft, const Matrix &matrix);
