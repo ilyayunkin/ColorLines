@@ -8,6 +8,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
+#include <algorithm>
+
 ChampionsTable::ChampionsTable(QString company, QString application)
     : key("champions"),
       company(company),
@@ -24,7 +26,7 @@ ChampionsTable::ChampionsTable(QString company, QString application)
     QString championsString(champions.toString());
     if(champions != defaultValue){
         QStringList list = championsString.split(";");
-        foreach (QString item, list) {
+        for (QString item: list) {
             QStringList itemList = item.split("#");
             if(itemList.size() == 2){
                 long long way = itemList[0].toLongLong();
@@ -38,16 +40,16 @@ ChampionsTable::ChampionsTable(QString company, QString application)
 void ChampionsTable::setCoins(long long coins)
 {
     QList<int> sortedCoins = map.keys();
-    qSort(sortedCoins.begin(), sortedCoins.end(), qGreater<int>());
+    std::sort(sortedCoins.begin(), sortedCoins.end(), std::greater<int>());
     if((sortedCoins.size() < COUNT) || (coins > sortedCoins.last())){
         QString name = QInputDialog::getText(0, "Enter your name", "Name");
         map.insert(coins, name);
         sortedCoins = map.keys();
-        qSort(sortedCoins.begin(), sortedCoins.end(), qGreater<int>());
+        std::sort(sortedCoins.begin(), sortedCoins.end(), std::greater<int>());
         QString outputTable;
         QString text;
         int i = 1;
-        foreach(int way, sortedCoins){
+        for(int way: sortedCoins){
             if(i != 1){
                 outputTable += ";";
             }

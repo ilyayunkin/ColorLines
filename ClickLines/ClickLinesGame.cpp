@@ -111,7 +111,7 @@ void ClickLinesGame::dropDown()
     bool redrop = true;
     while(redrop){
         redrop = false;
-        foreach (ColorLinesTile * freeTile, data->tileMap.freeList) {
+	for (ColorLinesTile * freeTile: data->tileMap.freeList) {
             ColorLinesTile *tile = freeTile->getTopTile();
             QList<ColorLinesTile *> upperBlocks;
             while (tile != 0) {
@@ -121,7 +121,7 @@ void ClickLinesGame::dropDown()
                 tile = tile->getTopTile();
             }
             ColorLinesTile *dropToTile = freeTile;
-            foreach (ColorLinesTile *block, upperBlocks) {
+	    for (ColorLinesTile *block: upperBlocks) {
                 data->tileMap.set(dropToTile, block->getColor());
                 data->tileMap.free(block);
                 dropToTile = dropToTile->getTopTile();
@@ -167,7 +167,7 @@ void ClickLinesGame::moveLeft()
                     tile = tile->getRightTile();
                 }
                 ColorLinesTile *moveToTile = left;
-                foreach (ColorLinesTile *block, rightBlocks) {
+		for (ColorLinesTile *block: rightBlocks) {
                     data->tileMap.set(moveToTile, block->getColor());
                     data->tileMap.free(block);
                     moveToTile = moveToTile->getRightTile();
@@ -235,7 +235,7 @@ void ClickLinesGame::tileClicked(int col, int row)
         QSet<ColorLinesTile *> neighbours =
                 NeighboursFinder(tile).findNeighbours();
         if(neighbours.size() > 1){
-            foreach (ColorLinesTile *tile, neighbours) {
+	    for (ColorLinesTile *tile: neighbours) {
                 data->tileMap.free(tile);
             }
             data->coins += neighbours.size() * neighbours.size();
@@ -243,7 +243,7 @@ void ClickLinesGame::tileClicked(int col, int row)
             moveLeft();
 
             bool existChain = false;
-            foreach (ColorLinesTile *tile, data->tileMap.ownedList) {
+	    for (ColorLinesTile *tile: data->tileMap.ownedList) {
                 if(NeighboursFinder(tile).findNeighbours().size() > 1){
                     existChain = true;
                     break;

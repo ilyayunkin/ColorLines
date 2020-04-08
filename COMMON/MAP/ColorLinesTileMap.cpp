@@ -26,7 +26,7 @@ void ColorLinesTileMap::clear()
     QList<ColorLinesTile *> list = topLeft->getTileList();
     freeList = list;
     ownedList.clear();
-    foreach (ColorLinesTile *t, list) {
+    for (ColorLinesTile *t: list) {
         t->setColor(ColorLinesTile::NONE);
     }
 }

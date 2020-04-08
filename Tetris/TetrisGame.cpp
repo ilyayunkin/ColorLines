@@ -53,14 +53,14 @@ void Drop::down()
 {
     QList<ColorLinesTile *> newBody;
     if(!landed()){
-        foreach (ColorLinesTile *tile, body){
+        for (ColorLinesTile *tile: body){
             ColorLinesTile *bottom = tile->getBottomTile();
             newBody.push_back(bottom);
         }
-        foreach (ColorLinesTile *tile, body){
+        for (ColorLinesTile *tile: body){
             tile->setColor(ColorLinesTile::NONE);
         }
-        foreach (ColorLinesTile *tile, newBody){
+        for (ColorLinesTile *tile: newBody){
             tile->setColor(buildingColor);
         }
         body = newBody;
@@ -71,7 +71,7 @@ bool Drop::landed()
 {
     bool ret = false;
     if(!body.isEmpty()){
-        foreach (ColorLinesTile *tile, body){
+        for (ColorLinesTile *tile: body){
             ColorLinesTile *bottom = tile->getBottomTile();
             if((bottom == 0) ||
                     ((bottom->getColor() != ColorLinesTile::NONE) &&
@@ -332,7 +332,7 @@ void TetrisGame::update()
                         data->blockDownPeriod;
             if(data->periodCnt % blockDownPeriod == 0){
                 if(data->block->landed()){
-                    foreach (ColorLinesTile *tile, data->block->body) {
+                    for (ColorLinesTile *tile: data->block->body) {
                         tile->setColor(buildingColor);
                     }
                     data->block.clear();

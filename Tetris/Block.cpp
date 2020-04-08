@@ -208,7 +208,7 @@ bool Block::landed() const
     if(row > PLOT_ROW_CNT - 1){
         ret = true;
     }else{
-        foreach (ColorLinesTile *tile, body){
+        for (ColorLinesTile *tile: body){
             ColorLinesTile *bottom = tile->getBottomTile();
             if((bottom == 0) ||
                     ((bottom->getColor() != ColorLinesTile::NONE) &&
@@ -225,7 +225,7 @@ bool Block::landed() const
 bool Block::lefted() const
 {
     bool ret = false;
-    foreach (ColorLinesTile *tile, body){
+    for (ColorLinesTile *tile: body){
         ColorLinesTile *left = tile->getLeftTile();
         if((left == 0) || (left->getColor() == buildingColor)){
             ret = true;
@@ -248,7 +248,7 @@ bool Block::lefted() const
 bool Block::righted() const
 {
     bool ret = false;
-    foreach (ColorLinesTile *tile, body){
+    for (ColorLinesTile *tile: body){
         ColorLinesTile *right = tile->getRightTile();
         if((right == 0) || (right->getColor() == buildingColor)){
             ret = true;
@@ -303,11 +303,11 @@ QList<ColorLinesTile *> Block::getBody(const Matrix &m) const
 
 void Block::updateBody()
 {
-    foreach (ColorLinesTile *tile, body){
+    for (ColorLinesTile *tile: body){
         tile->setColor(ColorLinesTile::NONE);
     }
     QList<ColorLinesTile *> newBody = getBody(matrix);
-    foreach (ColorLinesTile *tile, newBody){
+    for (ColorLinesTile *tile: newBody){
         tile->setColor(color);
     }
     body = newBody;

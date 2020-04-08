@@ -48,7 +48,7 @@ int ColorLinesGameData::clearIfLined(QList<ColorLinesTile *> line)
     int cash = 0;
     if(line.size() >= MIN_LINE){
         cash+= combo * line.size();
-        foreach (ColorLinesTile *t, line) {
+	for (ColorLinesTile *t: line) {
             tileMap.free(t);
         }
     }

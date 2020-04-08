@@ -79,7 +79,7 @@ void ColorLinesWidget::drawElement(QPainter &p,
 
 void ColorLinesWidget::drawPath(QPainter &p)
 {
-    foreach(ColorLinesTile *t, game->getPath()){
+    for(ColorLinesTile *t: game->getPath()){
         QPoint point = game->getRootTile()->getTileCoordinate(t);
         QPen pen(Qt::darkBlue);
         pen.setWidth(plotWidth / 100);
