@@ -9,9 +9,9 @@
 class TetrisGameBuilder : public AbstractGameBuilder
 {
 public:
-    void createGame(AbstractColorLinesGame *&game, QWidget *&widget);
-    QString getName() const;
-    QIcon getIcon() const;
+    void createGame(AbstractColorLinesGame *&game, QWidget *&widget) override;
+    QString getName() const override;
+    QIcon getIcon() const override;
 };
 
 #endif // TETRISGAMEBUILDER_H

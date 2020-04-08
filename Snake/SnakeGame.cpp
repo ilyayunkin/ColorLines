@@ -53,8 +53,8 @@ struct SnakeGameData
     /// Выбор тайла, на который заползет змея на следующем ходе.
     ColorLinesTile *getNextHeadPosition(ColorLinesTile *head);
     ColorLinesTile *getHeadTurned(ColorLinesTile *head, Direction &turnedDirection);
-    ColorLinesTile *getTile(ColorLinesTile *head, Direction direction);
-    Direction getOppositeDirection(Direction direction);
+    ColorLinesTile *getTile(ColorLinesTile *head, Direction direction) const;
+    Direction getOppositeDirection(Direction direction) const;
 
 private:
     SnakeGameData();
@@ -108,7 +108,7 @@ ColorLinesTile *SnakeGameData::getNextHeadPosition(ColorLinesTile *head)
 }
 
 ColorLinesTile *SnakeGameData::getTile(ColorLinesTile *head,
-                                       Direction direction)
+                                       Direction direction) const
 {
     ColorLinesTile *next = 0;
 
@@ -149,7 +149,7 @@ ColorLinesTile *SnakeGameData::getHeadTurned(ColorLinesTile *head,
     return next;
 }
 
-Direction SnakeGameData::getOppositeDirection(Direction direction)
+Direction SnakeGameData::getOppositeDirection(Direction direction) const
 {
     return Direction(((int)direction + 2) % COUNT);
 }

@@ -177,7 +177,7 @@ void JustAnotherLines::update()
     }
 }
 
-NextColors JustAnotherLines::getNextColors()
+NextColors JustAnotherLines::getNextColors() const
 {
     assert(!data.isNull());
     return data->nextColors;

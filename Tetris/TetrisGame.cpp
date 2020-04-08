@@ -24,7 +24,7 @@ struct Drop
     Drop(ColorLinesTile *topLeft, int row);
     ColorLinesTile *next(ColorLinesTile *tile);
     void down();
-    bool landed();
+    bool landed() const;
 };
 
 Drop::Drop(ColorLinesTile *topLeft, int row)
@@ -67,7 +67,7 @@ void Drop::down()
     }
 }
 
-bool Drop::landed()
+bool Drop::landed() const
 {
     bool ret = false;
     if(!body.isEmpty()){
@@ -260,7 +260,7 @@ void TetrisGame::rotate()
     }
 }
 
-bool TetrisGame::isCaput()
+bool TetrisGame::isCaput() const
 {
     assert(!data.isNull());
 

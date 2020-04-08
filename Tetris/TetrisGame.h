@@ -30,22 +30,22 @@ class TetrisGame : public AbstractColorLinesGame
     /// Поворачивает двигающуюся фигуру.
     void rotate();
     /// Возвращает истину, если поле застроено до верхней границы
-    bool isCaput();
+    bool isCaput() const;
 public:
     TetrisGame();
-    int getRowCount() const;
-    int getColCount() const;
+    int getRowCount() const override;
+    int getColCount() const override;
     int getCoins() const;
-    const QString &getStatistics() const;
-    ColorLinesTile *getRootTile() const;
-    ColorLinesTile *getSelectedTile() const;
-    QList<ColorLinesTile *> const&getPath() const;
+    const QString &getStatistics() const override;
+    ColorLinesTile *getRootTile() const override;
+    ColorLinesTile *getSelectedTile() const override;
+    QList<ColorLinesTile *> const&getPath() const override;
 private slots:
     void update();
 public slots:
-    void keyPressed(int key, Qt::KeyboardModifiers modifiers);
-    void keyReleased(int key);
-    void pauseToggle();
+    void keyPressed(int key, Qt::KeyboardModifiers modifiers) override;
+    void keyReleased(int key) override;
+    void pauseToggle() override;
 };
 
 #endif // TETRISGAME_H

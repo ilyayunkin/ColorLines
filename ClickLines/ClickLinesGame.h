@@ -23,15 +23,15 @@ class ClickLinesGame : public AbstractColorLinesGame
 
 public:
     explicit ClickLinesGame(QObject *parent = 0);
-    int getRowCount() const;
-    int getColCount() const;
+    int getRowCount() const override;
+    int getColCount() const override;
     int getCoins() const;
-    const QString &getStatistics() const;
-    ColorLinesTile *getRootTile() const;
-    ColorLinesTile *getSelectedTile() const;
-    QList<ColorLinesTile *> const&getPath() const;
+    const QString &getStatistics() const override;
+    ColorLinesTile *getRootTile() const override;
+    ColorLinesTile *getSelectedTile() const override;
+    QList<ColorLinesTile *> const&getPath() const override;
 public slots:
-    void tileClicked(int col, int row);
+    void tileClicked(int col, int row) override;
 };
 
 #endif // CLICKLINESGAME_H

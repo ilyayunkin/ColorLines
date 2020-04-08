@@ -26,11 +26,11 @@ private slots:
 public:
     Adapter(JustAnotherLines *game, QObject *parent = 0);
     ~Adapter();
-    int getRowCount() const;
-    int getColCount() const;
-    ColorLinesTile *getRootTile() const;
-    ColorLinesTile *getSelectedTile() const;
-    QList<ColorLinesTile *> const&getPath() const;
+    int getRowCount() const override;
+    int getColCount() const override;
+    ColorLinesTile *getRootTile() const override;
+    ColorLinesTile *getSelectedTile() const override;
+    QList<ColorLinesTile *> const&getPath() const override;
 };
 
 class ColorLinesGameData;
@@ -55,17 +55,17 @@ class JustAnotherLines : public AbstractColorLinesGame
     /// Приватная реализация
     QSharedPointer<ColorLinesGameData> data;
     /// Возвращает цвета фишек, которые появятся на следующим ходе.
-    NextColors getNextColors();
+    NextColors getNextColors() const;
 public:
     explicit JustAnotherLines(QObject *parent = 0);
-    int getRowCount() const;
-    int getColCount() const;
+    int getRowCount() const override;
+    int getColCount() const override;
     int getCoins() const;
     int getCombo() const;
-    const QString &getStatistics() const;
-    ColorLinesTile *getRootTile() const;
-    ColorLinesTile *getSelectedTile() const;
-    QList<ColorLinesTile *> const&getPath() const;
+    const QString &getStatistics() const override;
+    ColorLinesTile *getRootTile() const override;
+    ColorLinesTile *getSelectedTile() const override;
+    QList<ColorLinesTile *> const&getPath() const override;
 
     /// Обрабатывает случай поражения.
     void lose();
@@ -77,7 +77,7 @@ private slots:
     void update();
 
 public slots:
-    void tileClicked(int col, int row);
+    void tileClicked(int col, int row) override;
 };
 
 #endif // JUSTANOTHERLINES_H
