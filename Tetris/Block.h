@@ -20,12 +20,12 @@ struct Block final
         MatrixField m;
         const int matrixSide;
 
-        Matrix(const int matrixSide) : m{{{0}}}, matrixSide(matrixSide)
+        constexpr Matrix(const int matrixSide) : m{{{0}}}, matrixSide(matrixSide)
         {};
-        Matrix(const Matrix &other) : m(other.m), matrixSide(other.matrixSide)
+        constexpr Matrix(const Matrix &other) : m(other.m), matrixSide(other.matrixSide)
         {
         }
-        Matrix(const MatrixField &m, int matrixSide) : m(m), matrixSide(matrixSide)
+        constexpr Matrix(const MatrixField &m, int matrixSide) : m(m), matrixSide(matrixSide)
         {
         }
         void operator=(const Matrix &other)

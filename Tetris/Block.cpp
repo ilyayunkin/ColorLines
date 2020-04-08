@@ -10,48 +10,48 @@
 
 namespace
 {
-const Block::Matrix lineMatrix({
-                                   std::array<bool, 4>{false, false, false, true},
-                                   std::array<bool, 4>{false, false, false, true},
-                                   std::array<bool, 4>{false, false, false, true},
-                                   std::array<bool, 4>{false, false, false, true}
-                               }, 4);
-const Block::Matrix crossMatrix({
-                                    std::array<bool, 4>{false, true, false, false},
-                                    std::array<bool, 4>{true, true, true, false},
-                                    std::array<bool, 4>{false, true, false, false},
-                                    std::array<bool, 4>{false, false, false, false}
-                                }, 3);
-const Block::Matrix lbMatrix({
-                                 std::array<bool, 4>{true, true, false, false},
-                                 std::array<bool, 4>{false, true, false, false},
-                                 std::array<bool, 4>{false, true, false, false},
-                                 std::array<bool, 4>{false, false, false, false}
-                             }, 3);
-const Block::Matrix lb2Matrix({
-                                  std::array<bool, 4>{true, true, false, false},
-                                  std::array<bool, 4>{true, false, false, false},
-                                  std::array<bool, 4>{true, false, false, false},
-                                  std::array<bool, 4>{false, false, false, false}
-                              }, 3);
-const Block::Matrix rectMatrix({
-                                   std::array<bool, 4>{false, true, true, false},
-                                   std::array<bool, 4>{false, true, true, false},
-                                   std::array<bool, 4>{false, false, false, false},
-                                   std::array<bool, 4>{false, false, false, false}
-                               }, 4);
-const Block::Matrix zetaMatrix({
-                                   std::array<bool, 4>{true, true, false, false},
-                                   std::array<bool, 4>{false, true, true, false},
-                                   std::array<bool, 4>{false, false, false, false},
-                                   std::array<bool, 4>{false, false, false, false}
-                               }, 3);
-const Block::Matrix zeta2Matrix({
-                                    std::array<bool, 4>{false, true, true, false},
-                                    std::array<bool, 4>{true, true, false, false},
-                                    std::array<bool, 4>{false, false, false, false},
-                                    std::array<bool, 4>{false, false, false, false}
-                                }, 3);
+constexpr Block::Matrix lineMatrix({
+                                       std::array<bool, 4>{false, false, false, true},
+                                       std::array<bool, 4>{false, false, false, true},
+                                       std::array<bool, 4>{false, false, false, true},
+                                       std::array<bool, 4>{false, false, false, true}
+                                   }, 4);
+constexpr Block::Matrix crossMatrix({
+                                        std::array<bool, 4>{false, true, false, false},
+                                        std::array<bool, 4>{true, true, true, false},
+                                        std::array<bool, 4>{false, true, false, false},
+                                        std::array<bool, 4>{false, false, false, false}
+                                    }, 3);
+constexpr Block::Matrix lbMatrix({
+                                     std::array<bool, 4>{true, true, false, false},
+                                     std::array<bool, 4>{false, true, false, false},
+                                     std::array<bool, 4>{false, true, false, false},
+                                     std::array<bool, 4>{false, false, false, false}
+                                 }, 3);
+constexpr Block::Matrix lb2Matrix({
+                                      std::array<bool, 4>{true, true, false, false},
+                                      std::array<bool, 4>{true, false, false, false},
+                                      std::array<bool, 4>{true, false, false, false},
+                                      std::array<bool, 4>{false, false, false, false}
+                                  }, 3);
+constexpr Block::Matrix rectMatrix({
+                                       std::array<bool, 4>{false, true, true, false},
+                                       std::array<bool, 4>{false, true, true, false},
+                                       std::array<bool, 4>{false, false, false, false},
+                                       std::array<bool, 4>{false, false, false, false}
+                                   }, 4);
+constexpr Block::Matrix zetaMatrix({
+                                       std::array<bool, 4>{true, true, false, false},
+                                       std::array<bool, 4>{false, true, true, false},
+                                       std::array<bool, 4>{false, false, false, false},
+                                       std::array<bool, 4>{false, false, false, false}
+                                   }, 3);
+constexpr Block::Matrix zeta2Matrix({
+                                        std::array<bool, 4>{false, true, true, false},
+                                        std::array<bool, 4>{true, true, false, false},
+                                        std::array<bool, 4>{false, false, false, false},
+                                        std::array<bool, 4>{false, false, false, false}
+                                    }, 3);
 
 enum
 {
