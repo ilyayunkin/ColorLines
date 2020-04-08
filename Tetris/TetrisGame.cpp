@@ -332,7 +332,7 @@ void TetrisGame::update()
                         data->blockDownPeriod;
             if(data->periodCnt % blockDownPeriod == 0){
                 if(data->block->landed()){
-                    for (ColorLinesTile *tile: data->block->body) {
+                    for (ColorLinesTile *tile: data->block->getBody()) {
                         tile->setColor(buildingColor);
                     }
                     data->block.clear();

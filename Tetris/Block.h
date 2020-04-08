@@ -32,7 +32,7 @@ struct Matrix
     Matrix getRightTurned();
 };
 
-struct Block final
+class Block final
 {
     Matrix matrix;
     ColorLinesTile::Color color;
@@ -40,25 +40,26 @@ struct Block final
     int row;
     ColorLinesTile *topLeft;
     std::vector<ColorLinesTile *> body;
-    void rotate();
-    void down();
-    void left();
-    void right();
-    bool landed() const;
+    std::vector<ColorLinesTile *> getBody(const Matrix &m) const;
+    void updateBody();
+    Block() = delete;
     bool lefted() const;
     bool righted() const;
     bool isVisible(int col, int row) const;
     int getPlotRow(int row) const;
     int getPlotCol(int col) const;
-    std::vector<ColorLinesTile *> getBody(const Matrix &m) const;
-    void updateBody();
+public:
+    void rotate();
+    void down();
+    void left();
+    void right();
+    bool landed() const;
 
     Block(ColorLinesTile *topLeft, const Matrix &matrix);
 
     /// Создает новую падающую фигуру.
     static Block *createBlock(ColorLinesTile *topLeft);
-private:
-    Block() = delete;
+    std::vector<ColorLinesTile *> getBody() const {return body;}
 };
 
 #endif // BLOCK_H
