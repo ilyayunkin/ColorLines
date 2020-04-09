@@ -97,7 +97,7 @@ void JustAnotherLines::lose()
     assert(!data.isNull());
 
     ChampionsTable t("Ilya Yunkin", "Just Another Lines");
-    t.setCoins(data->coins);
+    t.setResult(data->coins);
     QMessageBox::StandardButton b =
             QMessageBox::question(0, tr("Game over!"), tr("Do you want to replay?"));
     if(b == QMessageBox::Yes)

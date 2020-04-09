@@ -278,7 +278,7 @@ void SnakeGame::lose()
     assert(!data.isNull());
 
     ChampionsTable t("Ilya Yunkin", "Snake");
-    t.setCoins(data->apples);
+    t.setResult(data->apples);
     QMessageBox::StandardButton b =
             QMessageBox::question(0, tr("Game over!"), tr("Do you want to replay?"));
     if(b == QMessageBox::Yes)

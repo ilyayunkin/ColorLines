@@ -177,7 +177,7 @@ void TetrisGame::lose()
     qDebug() << __PRETTY_FUNCTION__ << __LINE__;
     data->timer.stop();
     ChampionsTable t("Ilya Yunkin", "Tetris");
-    t.setCoins(data->coins);
+    t.setResult(data->coins);
     QMessageBox::StandardButton b =
             QMessageBox::question(0, tr("Game over!"),
                                   tr("Do you want to replay?"));

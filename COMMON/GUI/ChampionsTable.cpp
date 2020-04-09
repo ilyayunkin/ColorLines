@@ -15,9 +15,11 @@ namespace
 const QString key("champions");
 }
 
-ChampionsTable::ChampionsTable(QString company, QString application)
+ChampionsTable::ChampionsTable(QString company, QString application, unsigned count, bool greater)
     : company(company),
-      application(application)
+      application(application),
+      count(count),
+      greater(greater)
 {
     QCoreApplication::setOrganizationName(company);
     QCoreApplication::setOrganizationDomain("");
@@ -41,21 +43,34 @@ ChampionsTable::ChampionsTable(QString company, QString application)
     }
 }
 
-void ChampionsTable::setCoins(long long coins)
+void ChampionsTable::setResult(long long coins)
 {
     auto greaterCoinsFunctor= [&](const Entry &e1, const Entry &e2)
     {
         return e1.coins > e2.coins;
     };
+    auto lessCoinsFunctor= [&](const Entry &e1, const Entry &e2)
+    {
+        return e1.coins < e2.coins;
+    };
 
-    std::sort(map.begin(), map.end(), greaterCoinsFunctor);
-    if((map.size() < COUNT) || (coins > map.rbegin()->coins)){
+    if(greater)
+        std::sort(map.begin(), map.end(), greaterCoinsFunctor);
+    else
+        std::sort(map.begin(), map.end(), lessCoinsFunctor);
+
+    if((map.size() < count) || (coins > map.rbegin()->coins)){
         QString name = QInputDialog::getText(0, "Enter your name", "Name");
         map.push_back({coins, name});
-        std::sort(map.begin(), map.end(), greaterCoinsFunctor);
+
+        if(greater)
+            std::sort(map.begin(), map.end(), greaterCoinsFunctor);
+        else
+            std::sort(map.begin(), map.end(), lessCoinsFunctor);
+
         QString outputTable;
         QString text;
-        for(unsigned i = 0; i < COUNT && i < map.size(); ++i){
+        for(unsigned i = 0; i < count && i < map.size(); ++i){
             const Entry &e = map[i];
             if(i != 0){
                 outputTable += ";";

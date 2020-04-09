@@ -182,7 +182,7 @@ void ClickLinesGame::moveLeft()
 void ClickLinesGame::lose()
 {
     ChampionsTable t("Ilya Yunkin", "ClickLines");
-    t.setCoins(data->coins);
+    t.setResult(data->coins);
     QMessageBox::StandardButton b =
             QMessageBox::question(0, tr("Game over!"),
                                   tr("Do you want to replay?"));

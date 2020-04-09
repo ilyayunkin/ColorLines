@@ -16,14 +16,13 @@ class ChampionsTable
     };
 
     std::vector<Entry> map;
-    enum{
-        COUNT = 10
-    };
     QString company;
     QString application;
+    const unsigned count;
+    const bool greater;
 public:
-    ChampionsTable(QString company, QString application);
-    void setCoins(long long coins);
+    ChampionsTable(QString company, QString application, unsigned count=10, bool greater = true);
+    void setResult(long long coins);
 };
 
 #endif // CHAMPIONSTABLE_H
