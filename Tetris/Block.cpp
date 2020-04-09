@@ -16,43 +16,43 @@ constexpr Matrix lineMatrix({
                                 std::array<bool, 4>{false, false, false, true},
                                 std::array<bool, 4>{false, false, false, true},
                                 std::array<bool, 4>{false, false, false, true}
-                            }, 4);
+                            });
 constexpr Matrix tetaMatrix({
                                 std::array<bool, 4>{false, false, false, false},
                                 std::array<bool, 4>{true, true, true, false},
                                 std::array<bool, 4>{false, true, false, false},
                                 std::array<bool, 4>{false, false, false, false}
-                            }, 3);
+                            });
 constexpr Matrix lbMatrix({
                               std::array<bool, 4>{true, true, false, false},
                               std::array<bool, 4>{false, true, false, false},
                               std::array<bool, 4>{false, true, false, false},
                               std::array<bool, 4>{false, false, false, false}
-                          }, 3);
+                          });
 constexpr Matrix lb2Matrix({
                                std::array<bool, 4>{true, true, false, false},
                                std::array<bool, 4>{true, false, false, false},
                                std::array<bool, 4>{true, false, false, false},
                                std::array<bool, 4>{false, false, false, false}
-                           }, 3);
+                           });
 constexpr Matrix rectMatrix({
                                 std::array<bool, 4>{false, true, true, false},
                                 std::array<bool, 4>{false, true, true, false},
                                 std::array<bool, 4>{false, false, false, false},
                                 std::array<bool, 4>{false, false, false, false}
-                            }, 4);
+                            });
 constexpr Matrix zetaMatrix({
                                 std::array<bool, 4>{true, true, false, false},
                                 std::array<bool, 4>{false, true, true, false},
                                 std::array<bool, 4>{false, false, false, false},
                                 std::array<bool, 4>{false, false, false, false}
-                            }, 3);
+                            });
 constexpr Matrix zeta2Matrix({
                                  std::array<bool, 4>{false, true, true, false},
                                  std::array<bool, 4>{true, true, false, false},
                                  std::array<bool, 4>{false, false, false, false},
                                  std::array<bool, 4>{false, false, false, false}
-                             }, 3);
+                             });
 
 void printShape(const Matrix &m)
 {

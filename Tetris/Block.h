@@ -3,8 +3,10 @@
 
 #include <array>
 #include <vector>
+#include <algorithm>
 
 #include "COMMON/MAP/ColorLinesTileMap.h"
+
 
 struct Matrix
 {
@@ -13,17 +15,32 @@ struct Matrix
         BLOCK_WIDTH_MAX = 4
     };
     typedef std::array<std::array<bool, BLOCK_WIDTH_MAX>, BLOCK_WIDTH_MAX> MatrixField;
+
+    static constexpr int side(const MatrixField&m)
+    {
+        int longestRow = 0;
+        for (int i = 0; i < BLOCK_WIDTH_MAX; ++i)
+        {
+            for (int j = 0; j < BLOCK_WIDTH_MAX; ++j)
+            {
+                if(m[i][j])
+                {
+                    longestRow = std::max(j + 1, longestRow);
+                    longestRow = std::max(i + 1, longestRow);
+                }
+
+            }
+        }
+        return longestRow;
+    }
     MatrixField m;
     const int matrixSide;
-
     constexpr Matrix(const int matrixSide) : m{{{0}}}, matrixSide(matrixSide)
     {};
     constexpr Matrix(const Matrix &other) : m(other.m), matrixSide(other.matrixSide)
-    {
-    }
-    constexpr Matrix(const MatrixField &m, int matrixSide) : m(m), matrixSide(matrixSide)
-    {
-    }
+    {}
+    constexpr Matrix(const MatrixField &m) : m(m), matrixSide(side(m))
+    {}
     void operator=(const Matrix &other)
     {
         m = other.m;
