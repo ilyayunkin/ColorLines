@@ -5,14 +5,19 @@
 #define CHAMPIONSTABLE_H
 
 #include <QString>
-#include <QMap>
+#include <vector>
 
 class ChampionsTable
 {
-    QString key;
-    QMap<int, QString> map;
+    struct Entry
+    {
+        long long coins;
+        QString name;
+    };
+
+    std::vector<Entry> map;
     enum{
-        COUNT = 15
+        COUNT = 10
     };
     QString company;
     QString application;

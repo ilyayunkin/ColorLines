@@ -10,9 +10,13 @@
 
 #include <algorithm>
 
+namespace
+{
+const QString key("champions");
+}
+
 ChampionsTable::ChampionsTable(QString company, QString application)
-    : key("champions"),
-      company(company),
+    : company(company),
       application(application)
 {
     QCoreApplication::setOrganizationName(company);
@@ -29,9 +33,9 @@ ChampionsTable::ChampionsTable(QString company, QString application)
         for (QString item: list) {
             QStringList itemList = item.split("#");
             if(itemList.size() == 2){
-                long long way = itemList[0].toLongLong();
+                long long coins = itemList[0].toLongLong();
                 QString name = itemList[1];
-                map.insert(way, name);
+                map.push_back(Entry{coins, name});
             }
         }
     }
@@ -39,23 +43,25 @@ ChampionsTable::ChampionsTable(QString company, QString application)
 
 void ChampionsTable::setCoins(long long coins)
 {
-    QList<int> sortedCoins = map.keys();
-    std::sort(sortedCoins.begin(), sortedCoins.end(), std::greater<int>());
-    if((sortedCoins.size() < COUNT) || (coins > sortedCoins.last())){
+    auto greaterCoinsFunctor= [&](const Entry &e1, const Entry &e2)
+    {
+        return e1.coins > e2.coins;
+    };
+
+    std::sort(map.begin(), map.end(), greaterCoinsFunctor);
+    if((map.size() < COUNT) || (coins > map.rbegin()->coins)){
         QString name = QInputDialog::getText(0, "Enter your name", "Name");
-        map.insert(coins, name);
-        sortedCoins = map.keys();
-        std::sort(sortedCoins.begin(), sortedCoins.end(), std::greater<int>());
+        map.push_back({coins, name});
+        std::sort(map.begin(), map.end(), greaterCoinsFunctor);
         QString outputTable;
         QString text;
         int i = 1;
-        for(int way: sortedCoins){
+        for(auto e: map){
             if(i != 1){
                 outputTable += ";";
             }
-            QString name(map[way]);
-            outputTable += QString("%1#%2").arg(way).arg(name);
-            text += QString("%1 %2\n").arg(way).arg(name);
+            outputTable += QString("%1#%2").arg(e.coins).arg(e.name);
+            text += QString("%1. %2 %3\n").arg(i).arg(e.name).arg(e.coins);
             if(i == COUNT){
                 break;
             }
