@@ -55,7 +55,6 @@ void ChampionsTable::setCoins(long long coins)
         std::sort(map.begin(), map.end(), greaterCoinsFunctor);
         QString outputTable;
         QString text;
-
         for(unsigned i = 0; i < COUNT && i < map.size(); ++i){
             const Entry &e = map[i];
             if(i != 0){
@@ -63,6 +62,7 @@ void ChampionsTable::setCoins(long long coins)
             }
             outputTable += QString("%1#%2").arg(e.coins).arg(e.name);
             text += QString("%1. %2 %3\n").arg(i + 1).arg(e.name).arg(e.coins);
+
         }
         text += QString("%1 (c) %2 2016").arg(application).arg(company);
         QMessageBox::information(0, "Champions", text);
