@@ -65,3 +65,9 @@ HEADERS  += ColorLinesMultigameWidget.h \
 
 RESOURCES += \
     icons.qrc
+
+DESTDIR= ../bin
+
+win32{
+RC_ICONS = icons\icon.ico
+}
