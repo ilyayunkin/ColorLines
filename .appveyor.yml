@@ -6,6 +6,7 @@ install:
   - set QTDIR=C:\Qt\5.13\mingw73_32
   - set QT_TOOLS_DIR=C:\Qt\Tools\mingw730_32
   - set PATH=%QTDIR%\bin;%QT_TOOLS_DIR%\bin;%PATH%
+  - qmake -v
   
 build_script:
   - cd ./ColorLinesMultigame
@@ -23,3 +24,17 @@ after_build:
 artifacts:
   - path: ColorLines
     type: zip
+    
+deploy: 
+  release: ColorLines-$(APPVEYOR_REPO_TAG_NAME)
+  tag: $(APPVEYOR_REPO_TAG_NAME)
+  description: 'Release description'
+  provider: GitHub
+  auth_token: # your encrypted token from GitHub
+    secure: 5c6ifu7R/0JzCAHg9PIxYsWvkc93jD6LZeAUmVoE8TxSMb8953FlsdJwNTzM30XN
+  artifact: ColorLines.zip 
+  force_update: true
+  draft: false
+  prerelease: false
+  on:
+    APPVEYOR_REPO_TAG: true
