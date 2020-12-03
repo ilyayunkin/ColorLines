@@ -19,10 +19,10 @@ Use a left mouse button:
 
 ### Snake
 Use keyboard buttons:
-* Up - when the snake are moving horizontally - turn head to top side of the game field.
-* Down - when the snake are moving horizontally - turn head to bottom side of the game field.
-* Left - when the snake are moving vertically - turn head to left side of the game field.
-* Rignt - when the snake are moving vertically - turn head to right side of the game field.
+* Up - when the snake is moving horizontally - turn head to top side of the game field.
+* Down - when the snake is moving horizontally - turn head to bottom side of the game field.
+* Left - when the snake is moving vertically - turn head to left side of the game field.
+* Rignt - when the snake is moving vertically - turn head to right side of the game field.
 
 ### Tetris
 Use keyboard buttons:
