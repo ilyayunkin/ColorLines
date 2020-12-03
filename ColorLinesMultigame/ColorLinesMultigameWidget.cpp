@@ -76,7 +76,7 @@ void ColorLinesMultigameWidget::runGame(AbstractGameBuilder *builder)
     {
         AbstractColorLinesGame *game;
         builder->createGame(game, gameWidget);
-        this->game = QSharedPointer<AbstractColorLinesGame>(game);
+        this->game.reset(game);
         connect(game, SIGNAL(quitToMenu()), SLOT(quitToMenu()));
     }
 

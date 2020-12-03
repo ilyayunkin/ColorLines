@@ -157,7 +157,7 @@ Direction SnakeGameData::getOppositeDirection(Direction direction) const
 SnakeGame::SnakeGame(QObject *parent)
     : AbstractColorLinesGame(parent), data(new SnakeGameData(this)), paused(false)
 {        
-    data = QSharedPointer<SnakeGameData>(new SnakeGameData(this));
+    data.reset(new SnakeGameData(this));
     addApple();
 }
 
@@ -283,7 +283,7 @@ void SnakeGame::lose()
             QMessageBox::question(0, tr("Game over!"), tr("Do you want to replay?"));
     if(b == QMessageBox::Yes)
     {
-        data = QSharedPointer<SnakeGameData>(new SnakeGameData(this));
+        data.reset(new SnakeGameData(this));
         data->timer.start(data->period_ms);
 
         addApple();

@@ -102,7 +102,7 @@ void JustAnotherLines::lose()
             QMessageBox::question(0, tr("Game over!"), tr("Do you want to replay?"));
     if(b == QMessageBox::Yes)
     {
-        data = QSharedPointer<ColorLinesGameData>(new ColorLinesGameData(this));
+        data.reset(new ColorLinesGameData(this));
         data->placeBalls();
     }else{
         emit quitToMenu();

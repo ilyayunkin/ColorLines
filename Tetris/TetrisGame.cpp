@@ -182,7 +182,7 @@ void TetrisGame::lose()
             QMessageBox::question(0, tr("Game over!"),
                                   tr("Do you want to replay?"));
     if(b == QMessageBox::Yes){
-        data = QSharedPointer<TetrisGameData>(new TetrisGameData(this));
+        data.reset(new TetrisGameData(this));
     }else{
         emit quitToMenu();
     }
@@ -318,7 +318,7 @@ void TetrisGame::update()
         }
 
         if(data->block == 0){
-            data->block = QSharedPointer<Block>(Block::createBlock(data->tileMap.topLeft));
+            data->block.reset(Block::createBlock(data->tileMap.topLeft));
         }else{
             if(data->periodCnt % HORIZONTAL_MOVING_PERIOD == 0){
                 if(data->left){

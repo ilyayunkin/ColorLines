@@ -187,7 +187,7 @@ void ClickLinesGame::lose()
             QMessageBox::question(0, tr("Game over!"),
                                   tr("Do you want to replay?"));
     if(b == QMessageBox::Yes){
-        data = QSharedPointer<ClickLinesGameData>(new ClickLinesGameData);
+        data.reset(new ClickLinesGameData);
     }else{
         emit quitToMenu();
     }
