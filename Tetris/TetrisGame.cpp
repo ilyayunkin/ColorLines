@@ -12,6 +12,7 @@
 
 #include "COMMON/GUI/ChampionsTable.h"
 #include "COMMON/MAP/ColorLinesTileMap.h"
+#include "COMMON/MISC/container_convenience.h"
 #include "Block.h"
 #include "TetrisCommon.h"
 
@@ -20,7 +21,7 @@ static const int acceleration = 7;
 /// Блок отстроенного здания, который должен упасть.
 struct Drop
 {
-    QList<ColorLinesTile *> body;
+    std::vector<ColorLinesTile *> body;
     Drop(ColorLinesTile *topLeft, int row);
     ColorLinesTile *next(ColorLinesTile *tile);
     void down();
@@ -51,7 +52,7 @@ Drop::Drop(ColorLinesTile *topLeft, int row)
 
 void Drop::down()
 {
-    QList<ColorLinesTile *> newBody;
+    std::vector<ColorLinesTile *> newBody;
     if(!landed()){
         for (ColorLinesTile *tile: body){
             ColorLinesTile *bottom = tile->getBottomTile();
@@ -70,12 +71,12 @@ void Drop::down()
 bool Drop::landed() const
 {
     bool ret = false;
-    if(!body.isEmpty()){
+    if(!body.empty()){
         for (ColorLinesTile *tile: body){
             ColorLinesTile *bottom = tile->getBottomTile();
             if((bottom == 0) ||
                     ((bottom->getColor() != ColorLinesTile::NONE) &&
-                     (!body.contains(bottom)))){
+                     (!Container::contains(body, bottom)))){
                 ret = true;
                 break;
             }
@@ -116,11 +117,11 @@ ColorLinesTile *Drop::next(ColorLinesTile *tile)
 
 struct TetrisGameData
 {
-    QSharedPointer<Block> block;
+    std::unique_ptr<Block> block;
     /// Последний успешно проделанный путь между тайлами.
-    QList<ColorLinesTile *> path;
+    std::vector<ColorLinesTile *> path;
     /// То, что уже нападало.
-    QList<ColorLinesTile *> building;
+    std::vector<ColorLinesTile *> building;
 
     QTimer timer;
 
@@ -148,8 +149,7 @@ private:
  };
 
 TetrisGameData::TetrisGameData(TetrisGame *game)
-    : block(0),
-      left(false),
+    : left(false),
       right(false),
       down(false),
       fire(false),
@@ -169,10 +169,13 @@ TetrisGame::TetrisGame()
 {
 }
 
+TetrisGame::~TetrisGame()
+{
+}
 
 void TetrisGame::lose()
 {
-    assert(!data.isNull());
+    assert(data);
 
     qDebug() << __PRETTY_FUNCTION__ << __LINE__;
     data->timer.stop();
@@ -190,7 +193,7 @@ void TetrisGame::lose()
 
 bool TetrisGame::clearIfLined(int row)
 {
-    assert(!data.isNull());
+    assert(data);
 
     ColorLinesTile *left =
             data->tileMap.topLeft->getTile(0, row);
@@ -218,7 +221,7 @@ bool TetrisGame::clearIfLined(int row)
 
 bool TetrisGame::clearIfLined()
 {
-    assert(!data.isNull());
+    assert(data);
 
     bool lined = false;
 
@@ -243,7 +246,7 @@ bool TetrisGame::clearIfLined()
 
 void TetrisGame::dropAfterLined(int row)
 {
-    assert(!data.isNull());
+    assert(data);
 
     Drop d(data->tileMap.topLeft, row);
     while(!d.landed()){
@@ -253,16 +256,16 @@ void TetrisGame::dropAfterLined(int row)
 
 void TetrisGame::rotate()
 {
-    assert(!data.isNull());
+    assert(data);
 
-    if(!data->block.isNull()){
+    if(data->block){
         data->block->rotate();
     }
 }
 
 bool TetrisGame::isCaput() const
 {
-    assert(!data.isNull());
+    assert(data);
 
     bool ret = false;
     ColorLinesTile *tile = data->tileMap.topLeft;
@@ -286,32 +289,32 @@ int TetrisGame::getColCount() const
 }
 int TetrisGame::getCoins() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->coins;
 }
 const QString &TetrisGame::getStatistics() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->statistics;
 }
 ColorLinesTile *TetrisGame::getRootTile() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->tileMap.topLeft;
 }
 ColorLinesTile *TetrisGame::getSelectedTile() const
 {
     return 0;
 }
-QList<ColorLinesTile *> const &TetrisGame::getPath() const
+std::vector<ColorLinesTile *> const &TetrisGame::getPath() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->path;
 }
 
 void TetrisGame::update()
 {
-    assert(!data.isNull());
+    assert(data);
     if(!data->paused){
         data->periodCnt++;
         while(clearIfLined()){
@@ -335,7 +338,7 @@ void TetrisGame::update()
                     for (ColorLinesTile *tile: data->block->getBody()) {
                         tile->setColor(buildingColor);
                     }
-                    data->block.clear();
+                    data->block.reset();
                 }else{
                     data->block->down();
                 }
@@ -354,7 +357,7 @@ void TetrisGame::update()
 
 void TetrisGame::keyPressed(int key, Qt::KeyboardModifiers modifiers)
 {
-    assert(!data.isNull());
+    assert(data);
     Q_UNUSED(modifiers);
 
     switch (key) {
@@ -373,7 +376,7 @@ void TetrisGame::keyPressed(int key, Qt::KeyboardModifiers modifiers)
 
 void TetrisGame::keyReleased(int key)
 {
-    assert(!data.isNull());
+    assert(data);
 
     switch (key) {
     case Qt::Key_Left: data->left = false;
@@ -390,7 +393,7 @@ void TetrisGame::keyReleased(int key)
 
 void TetrisGame::pauseToggle()
 {
-    assert(!data.isNull());
+    assert(data);
 
     data->paused = !data->paused;
 }

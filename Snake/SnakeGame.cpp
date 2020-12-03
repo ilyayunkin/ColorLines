@@ -13,6 +13,7 @@
 
 #include "COMMON/GUI/ChampionsTable.h"
 #include "COMMON/MAP/ColorLinesTileMap.h"
+#include "COMMON/MISC/container_convenience.h"
 
 static const ColorLinesTile::Color eatColor = ColorLinesTile::GREEN;
 
@@ -44,8 +45,8 @@ struct SnakeGameData
     int period_ms;
     int apples;
     ColorLinesTileMap tileMap;
-    QList<ColorLinesTile *> snake;
-    QList<ColorLinesTile *> eaten;
+    std::vector<ColorLinesTile *> snake;
+    std::vector<ColorLinesTile *> eaten;
     QString statistics;
     QTimer timer;
     std::default_random_engine randomEngine;    
@@ -86,7 +87,7 @@ void SnakeGameData::initSnakeOnField()
 
 ColorLinesTile *SnakeGameData::getNextHeadPosition(ColorLinesTile *head)
 {
-    if(!directionQueue.isEmpty()){
+    if(!directionQueue.empty()){
         Direction tmp = directionQueue.takeFirst();
         if((getTile(head, tmp) != 0) && (tmp != getOppositeDirection(direction))){
             direction = tmp;
@@ -161,10 +162,14 @@ SnakeGame::SnakeGame(QObject *parent)
     addApple();
 }
 
+SnakeGame::~SnakeGame()
+{
+}
+
 void SnakeGame::keyPressed(int key, Qt::KeyboardModifiers modifiers)
 {
     Q_UNUSED(modifiers);
-    assert(!data.isNull());
+    assert(data);
 
     Direction tmpDirection = data->direction;
     switch (key) {
@@ -203,42 +208,43 @@ int SnakeGame::getColCount() const
 }
 int SnakeGame::getCoins() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->apples;
 }
 const QString &SnakeGame::getStatistics() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->statistics;
 }
 ColorLinesTile *SnakeGame::getRootTile() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->tileMap.topLeft;
 }
 ColorLinesTile *SnakeGame::getSelectedTile() const
 {
     return 0;
 }
-QList<ColorLinesTile *> const &SnakeGame::getPath() const
+std::vector<ColorLinesTile *> const &SnakeGame::getPath() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->snake;
 }
 
 void SnakeGame::update()
 {
     if(!paused){
-        assert(!data.isNull());
+        assert(data);
 
-        QList<ColorLinesTile *> newPath;
+        std::vector<ColorLinesTile *> newPath;
         int i = 0;
         ColorLinesTile *prevCurrent = 0;
 
-        while(!data->snake.isEmpty()){
-            ColorLinesTile *current = data->snake.takeFirst();
+        while(!data->snake.empty()){
+            ColorLinesTile *current = data->snake.front();
+            data->snake.erase(data->snake.begin());
             ColorLinesTile *next =  (i == 0) ? data->getNextHeadPosition(current) : prevCurrent;
-            if(data->snake.contains(next)){
+            if(Container::contains(data->snake, next)){
                 lose();
                 return;
             }
@@ -254,14 +260,14 @@ void SnakeGame::update()
                 data->eaten.push_back(current);
             }
             /// Хвост на месте съеденного яблока
-            if(data->snake.isEmpty() && data->eaten.contains(current)){
+            if(data->snake.empty() && Container::contains(data->eaten, current)){
                 newPath.push_back(current);
-                data->eaten.removeAll(current);
+                data->eaten.erase(std::remove(data->eaten.begin(), data->eaten.end(), current), data->eaten.end());
             }
             i++;
         }
         data->snake = newPath;
-        if(data->tileMap.ownedList.isEmpty()){
+        if(data->tileMap.ownedList.empty()){
             addApple();
         }
         data->statistics =
@@ -275,7 +281,7 @@ void SnakeGame::update()
 
 void SnakeGame::lose()
 {
-    assert(!data.isNull());
+    assert(data);
 
     ChampionsTable t("Ilya Yunkin", "Snake");
     t.setResult(data->apples);
@@ -294,7 +300,7 @@ void SnakeGame::lose()
 
 void SnakeGame::addApple()
 {
-    assert(!data.isNull());
+    assert(data);
 
     int freeCells = data->tileMap.freeList.size();
     int applesToAdd = std::min(freeCells, (int)APPLES_IN_STEP);
@@ -306,7 +312,7 @@ void SnakeGame::addApple()
         {
             int cell = data->randomEngine() % freeCells;
             ColorLinesTile *tile = data->tileMap.freeList[cell];
-            if(!data->snake.contains(tile)){
+            if(!Container::contains(data->snake, tile)){
                 data->tileMap.set(tile, ColorLinesTile::GREEN);
                 --freeCells;
                 i++;

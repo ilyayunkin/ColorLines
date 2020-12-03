@@ -67,7 +67,7 @@ void NeighboursFinder::enqueueChild(ColorLinesTile *child)
 struct ClickLinesGameData
 {
     /// Последний успешно проделанный путь между тайлами.
-    QList<ColorLinesTile *> path;
+    std::vector<ColorLinesTile *> path;
 
     /// Набранные очки.
     int coins;
@@ -106,6 +106,10 @@ ClickLinesGame::ClickLinesGame(QObject *parent)
 {
 }
 
+ClickLinesGame::~ClickLinesGame()
+{
+}
+
 void ClickLinesGame::dropDown()
 {
     bool redrop = true;
@@ -113,7 +117,7 @@ void ClickLinesGame::dropDown()
         redrop = false;
 	for (ColorLinesTile * freeTile: data->tileMap.freeList) {
             ColorLinesTile *tile = freeTile->getTopTile();
-            QList<ColorLinesTile *> upperBlocks;
+            std::vector<ColorLinesTile *> upperBlocks;
             while (tile != 0) {
                 if(tile->getColor() != ColorLinesTile::NONE){
                     upperBlocks.push_back(tile);
@@ -126,7 +130,7 @@ void ClickLinesGame::dropDown()
                 data->tileMap.free(block);
                 dropToTile = dropToTile->getTopTile();
             }
-            if(!upperBlocks.isEmpty()){
+            if(!upperBlocks.empty()){
                 redrop = true;
                 break;
             }
@@ -159,7 +163,7 @@ void ClickLinesGame::moveLeft()
         if(movingFront){
             while(left != 0){
                 ColorLinesTile *tile = movingFront;
-                QList<ColorLinesTile *> rightBlocks;
+                std::vector<ColorLinesTile *> rightBlocks;
                 while (tile != 0) {
                     if(tile->getColor() != ColorLinesTile::NONE){
                         rightBlocks.push_back(tile);
@@ -223,7 +227,7 @@ ColorLinesTile *ClickLinesGame::getSelectedTile() const
     return 0;
 }
 
-QList<ColorLinesTile *> const&ClickLinesGame::getPath() const
+std::vector<ColorLinesTile *> const&ClickLinesGame::getPath() const
 {
     return data->path;
 }

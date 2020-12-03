@@ -4,7 +4,7 @@
 #ifndef COLORLINESTILE_H
 #define COLORLINESTILE_H
 
-#include <QList>
+#include <vector>
 #include <QColor>
 #include <QPoint>
 
@@ -73,11 +73,11 @@ public:
 
     /// Возвращает список тайлов при движении вправо и вниз,
     /// включая тайл, для которого метод вызван.
-    QList<ColorLinesTile *>getTileList() const;
-    QList<ColorLinesTile *>getHorizontalColorList() const;
-    QList<ColorLinesTile *>getVerticalColorList() const;
-    QList<ColorLinesTile *>getDiagonal1ColorList() const;
-    QList<ColorLinesTile *>getDiagonal2ColorList() const;
+    std::vector<ColorLinesTile *>getTileList() const;
+    std::vector<ColorLinesTile *>getHorizontalColorList() const;
+    std::vector<ColorLinesTile *>getVerticalColorList() const;
+    std::vector<ColorLinesTile *>getDiagonal1ColorList() const;
+    std::vector<ColorLinesTile *>getDiagonal2ColorList() const;
 private:
     /// Цвет фишки, стоящей на тайле.
     Color color;

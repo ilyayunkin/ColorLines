@@ -4,7 +4,8 @@
 #ifndef TETRISGAME_H
 #define TETRISGAME_H
 
-#include <QSharedPointer>
+#include <memory>
+#include <vector>
 
 #include "COMMON/INTERFACES/AbstractColorLinesGame.h"
 
@@ -17,7 +18,7 @@ class TetrisGame : public AbstractColorLinesGame
     friend class TetrisGameData;
 
     /// Приватная реализация.
-    QSharedPointer<TetrisGameData> data;
+    std::unique_ptr<TetrisGameData> data;
 
     /// Обработка поражения.
     void lose();
@@ -33,13 +34,14 @@ class TetrisGame : public AbstractColorLinesGame
     bool isCaput() const;
 public:
     TetrisGame();
+    ~TetrisGame();
     int getRowCount() const override;
     int getColCount() const override;
     int getCoins() const;
     const QString &getStatistics() const override;
     ColorLinesTile *getRootTile() const override;
     ColorLinesTile *getSelectedTile() const override;
-    QList<ColorLinesTile *> const&getPath() const override;
+    std::vector<ColorLinesTile *> const&getPath() const override;
 private slots:
     void update();
 public slots:

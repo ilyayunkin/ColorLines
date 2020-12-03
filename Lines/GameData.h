@@ -5,6 +5,7 @@
 #define ColorLinesGameData_H
 
 #include <random>
+#include <vector>
 
 #include <QObject>
 
@@ -53,7 +54,7 @@ class ColorLinesGameData: public QObject
     /// Последний успешно проделанный путь между тайлами.
 public:
     std::default_random_engine randomEngine;
-    QList<ColorLinesTile *> path;
+    std::vector<ColorLinesTile *> path;
     /// Коэффициент, на который умножатся очки за ход в случае еще одного
     /// удачного хода подряд.
     int combo;
@@ -64,10 +65,10 @@ public:
     /// Выделенный тайл с фишкой.
     ColorLinesTile *selection;
     QString statistics;
-    QList<ColorLinesTile *>::iterator pathIterator;
+    std::vector<ColorLinesTile *>::iterator pathIterator;
 
-    QSharedPointer<ElementMovingState> elementMovingStatePointer;
-    QSharedPointer<WaitingState> waitingStatePointer;
+    std::unique_ptr<ElementMovingState> elementMovingStatePointer;
+    std::unique_ptr<WaitingState> waitingStatePointer;
     AbstractGameState *currentState;
 
     NextColors nextColors;
@@ -98,7 +99,7 @@ public:
      * @param list Список тайлов одного цвета, выстроенных в одну линию.
      * @return  Начисленные очки.
      */
-    int clearIfLined(QList<ColorLinesTile *> line);
+    int clearIfLined(std::vector<ColorLinesTile *> line);
     /**
      * @brief Добавляет случайные финки в случайные свободные тайлы.
      */

@@ -4,6 +4,8 @@
 #ifndef ABSTRACTCOLORLINESGAME_H
 #define ABSTRACTCOLORLINESGAME_H
 
+#include <vector>
+
 #include <QObject>
 
 #include "COMMON/MAP/ColorLinesTile.h"
@@ -28,7 +30,7 @@ public:
     /// Выделенный квадрат.
     virtual ColorLinesTile *getSelectedTile() const = 0;
     /// Цепочка тайлов, составляющая путь из начальной точки в конечную.
-    virtual QList<ColorLinesTile *> const&getPath() const = 0;
+    virtual std::vector<ColorLinesTile *> const&getPath() const = 0;
 
 public slots:
     /// Обработчик нажатия на квадрат игрового поля.

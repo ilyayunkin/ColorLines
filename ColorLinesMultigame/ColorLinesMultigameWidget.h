@@ -5,9 +5,10 @@
 #define COLORLINESMULTIGAMEWIDGET_H
 
 #include <QWidget>
-#include <QSharedPointer>
 #include <QKeyEvent>
-#include <QMap>
+
+#include <map>
+#include <memory>
 
 #include "COMMON/INTERFACES/AbstractGameBuilder.h"
 #include "MenuWidget.h"
@@ -16,11 +17,11 @@ class ColorLinesMultigameWidget : public QWidget
 {
     Q_OBJECT
 
-    QSharedPointer<AbstractColorLinesGame> game;
+    std::unique_ptr<AbstractColorLinesGame> game;
     QWidget *gameWidget;
     MenuWidget *menuWidget;
 
-    typedef QMap<QObject *, QSharedPointer<AbstractGameBuilder> > ButtonToBuilderMap;
+    typedef std::map<QObject *, std::unique_ptr<AbstractGameBuilder> > ButtonToBuilderMap;
     ButtonToBuilderMap buttonToBuilderMap;
 
     void runGame(AbstractGameBuilder *builder);

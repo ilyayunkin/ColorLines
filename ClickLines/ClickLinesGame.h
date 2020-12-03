@@ -3,7 +3,8 @@
 
 #include "COMMON/INTERFACES/AbstractColorLinesGame.h"
 
-#include <QSharedPointer>
+#include <memory>
+#include <vector>
 
 #include "COMMON/MAP/ColorLinesTileMap.h"
 
@@ -13,7 +14,7 @@ class ClickLinesGame : public AbstractColorLinesGame
 {
     Q_OBJECT 
 
-    QSharedPointer<ClickLinesGameData> data;
+    std::unique_ptr<ClickLinesGameData> data;
     /// Роняет тайлы, находящиеся над пустотами.
     void dropDown();
     /// Сдвигает влево тайлы, находящиеся правее пустот.
@@ -23,13 +24,14 @@ class ClickLinesGame : public AbstractColorLinesGame
 
 public:
     explicit ClickLinesGame(QObject *parent = 0);
+    ~ClickLinesGame();
     int getRowCount() const override;
     int getColCount() const override;
     int getCoins() const;
     const QString &getStatistics() const override;
     ColorLinesTile *getRootTile() const override;
     ColorLinesTile *getSelectedTile() const override;
-    QList<ColorLinesTile *> const&getPath() const override;
+    std::vector<ColorLinesTile *> const&getPath() const override;
 public slots:
     void tileClicked(int col, int row) override;
 };

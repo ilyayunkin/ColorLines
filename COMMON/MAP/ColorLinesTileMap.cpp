@@ -10,20 +10,20 @@ void ColorLinesTileMap::set(ColorLinesTile *tile, ColorLinesTile::Color color)
     }else{
         tile->setColor(color);
         ownedList.push_back(tile);
-        freeList.removeAll(tile);
+        freeList.erase(std::remove(freeList.begin(), freeList.end(), tile), freeList.end());
     }
 }
 
 void ColorLinesTileMap::free(ColorLinesTile *tile)
 {
-    ownedList.removeAll(tile);
+    ownedList.erase(std::remove(ownedList.begin(), ownedList.end(), tile), ownedList.end());
     freeList.push_back(tile);
     tile->setColor(ColorLinesTile::NONE);
 }
 
 void ColorLinesTileMap::clear()
 {
-    QList<ColorLinesTile *> list = topLeft->getTileList();
+    std::vector<ColorLinesTile *> list = topLeft->getTileList();
     freeList = list;
     ownedList.clear();
     for (ColorLinesTile *t: list) {

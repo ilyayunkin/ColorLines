@@ -33,7 +33,7 @@ public:
      * @return true если путь существует.
      */
     bool search(ColorLinesTile *from, ColorLinesTile *to,
-                QList<ColorLinesTile *> &path);
+                std::vector<ColorLinesTile *> &path);
 
     bool isFree(ColorLinesTile *tile);
 

@@ -20,7 +20,7 @@ class AdapterData
 public:
     AdapterData();
     ColorLinesTileMap tileMap;
-    QList<ColorLinesTile *> path;
+    std::vector<ColorLinesTile *> path;
 };
 
 AdapterData::AdapterData() :
@@ -46,7 +46,7 @@ Adapter::~Adapter()
 
 void Adapter::update()
 {
-    assert(!data.isNull());
+    assert(data);
 
     ColorLinesTile *tile = data->tileMap.topLeft;
     NextColors nextColors = game->getNextColors();
@@ -58,26 +58,26 @@ void Adapter::update()
 
 int Adapter::getRowCount() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->tileMap.getRowCount();
 }
 int Adapter::getColCount() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->tileMap.getColCount();
 }
 ColorLinesTile *Adapter::getRootTile() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->tileMap.topLeft;
 }
 ColorLinesTile *Adapter::getSelectedTile() const
 {
     return 0;
 }
-QList<ColorLinesTile *> const& Adapter::getPath() const
+std::vector<ColorLinesTile *> const& Adapter::getPath() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->path;
 }
 
@@ -92,9 +92,13 @@ JustAnotherLines::JustAnotherLines(QObject *parent)
     t->start(100);
 }
 
+JustAnotherLines::~JustAnotherLines()
+{
+}
+
 void JustAnotherLines::lose()
 {
-    assert(!data.isNull());
+    assert(data);
 
     ChampionsTable t("Ilya Yunkin", "Just Another Lines");
     t.setResult(data->coins);
@@ -127,49 +131,49 @@ int JustAnotherLines::getColCount() const
 
 int JustAnotherLines::getCoins() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->coins;
 }
 
 int JustAnotherLines::getCombo() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->combo;
 }
 
 const QString &JustAnotherLines::getStatistics() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->statistics;
 }
 
 ColorLinesTile *JustAnotherLines::getRootTile() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->tileMap.topLeft;
 }
 
 ColorLinesTile *JustAnotherLines::getSelectedTile() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->selection;
 }
 
-QList<ColorLinesTile *> const&JustAnotherLines::getPath() const
+std::vector<ColorLinesTile *> const&JustAnotherLines::getPath() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->path;
 }
 
 void JustAnotherLines::tileClicked(int col, int row)
 {
-    assert(!data.isNull());
+    assert(data);
     data->currentState->tileClicked(col, row);
 }
 
 void JustAnotherLines::update()
 {
-    assert(!data.isNull());
+    assert(data);
     if(data->isLose()){
         lose();
     }else{
@@ -179,7 +183,7 @@ void JustAnotherLines::update()
 
 NextColors JustAnotherLines::getNextColors() const
 {
-    assert(!data.isNull());
+    assert(data);
     return data->nextColors;
 }
 

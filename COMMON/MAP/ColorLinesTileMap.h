@@ -5,6 +5,7 @@
 #define COLORLINESTILEMAPBUILDER_H
 
 #include "ColorLinesTile.h"
+#include <vector>
 
 /// Класс карты игрового поля
 struct ColorLinesTileMap
@@ -12,9 +13,9 @@ struct ColorLinesTileMap
     /// Корневой узел карты тайлов.
     ColorLinesTile *topLeft;
     /// Список свободных тайлов.
-    QList<ColorLinesTile *> freeList;
+    std::vector<ColorLinesTile *> freeList;
     /// Список тайлов с фишками.
-    QList<ColorLinesTile *> ownedList;
+    std::vector<ColorLinesTile *> ownedList;
     /// Установить фишку на квадрат игрового поля.
     void set(ColorLinesTile *tile, ColorLinesTile::Color color);
     void free(ColorLinesTile *tile);

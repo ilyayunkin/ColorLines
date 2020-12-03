@@ -6,7 +6,8 @@
 
 #include "COMMON/INTERFACES/AbstractColorLinesGame.h"
 
-#include <QSharedPointer>
+#include <memory>
+#include <vector>
 
 struct SnakeGameData;
 
@@ -18,7 +19,7 @@ class SnakeGame : public AbstractColorLinesGame
     Q_OBJECT
 
     /// Приватная реализация
-    QSharedPointer<SnakeGameData> data;
+    std::unique_ptr<SnakeGameData> data;
     /// Обработка поражения
     void lose();
     /// Вбросить новое яблоко на поле.
@@ -26,13 +27,14 @@ class SnakeGame : public AbstractColorLinesGame
     bool paused;
 public:
     explicit SnakeGame(QObject *parent = 0);
+    ~SnakeGame();
     int getRowCount() const;
     int getColCount() const;
     int getCoins() const;
     const QString &getStatistics() const;
     ColorLinesTile *getRootTile() const;
     ColorLinesTile *getSelectedTile() const;
-    QList<ColorLinesTile *> const&getPath() const;
+    std::vector<ColorLinesTile *> const&getPath() const;
 
 private slots:
     void update();

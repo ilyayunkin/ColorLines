@@ -6,7 +6,8 @@
 
 #include "../COMMON/INTERFACES/AbstractColorLinesGame.h"
 
-#include <QSharedPointer>
+#include <memory>
+#include <vector>
 
 class JustAnotherLines;
 class AdapterData;
@@ -16,7 +17,7 @@ class Adapter : public AbstractColorLinesGame
 {
     Q_OBJECT
     /// Приватная реализация
-    QSharedPointer<AdapterData> data;
+    std::unique_ptr<AdapterData> data;
     /// Объект игры, для которой выполняется подсказка.
     JustAnotherLines *game;
     Adapter();
@@ -30,7 +31,7 @@ public:
     int getColCount() const override;
     ColorLinesTile *getRootTile() const override;
     ColorLinesTile *getSelectedTile() const override;
-    QList<ColorLinesTile *> const&getPath() const override;
+    std::vector<ColorLinesTile *> const&getPath() const override;
 };
 
 class ColorLinesGameData;
@@ -53,11 +54,12 @@ class JustAnotherLines : public AbstractColorLinesGame
     Q_OBJECT
     friend class Adapter;
     /// Приватная реализация
-    QSharedPointer<ColorLinesGameData> data;
+    std::unique_ptr<ColorLinesGameData> data;
     /// Возвращает цвета фишек, которые появятся на следующим ходе.
     NextColors getNextColors() const;
 public:
     explicit JustAnotherLines(QObject *parent = 0);
+    ~JustAnotherLines();
     int getRowCount() const override;
     int getColCount() const override;
     int getCoins() const;
@@ -65,7 +67,7 @@ public:
     const QString &getStatistics() const override;
     ColorLinesTile *getRootTile() const override;
     ColorLinesTile *getSelectedTile() const override;
-    QList<ColorLinesTile *> const&getPath() const override;
+    std::vector<ColorLinesTile *> const&getPath() const override;
 
     /// Обрабатывает случай поражения.
     void lose();

@@ -44,8 +44,7 @@ void ColorLinesMultigameWidget::addBuilder(AbstractGameBuilder *builder)
 
     button->setIconSize(QSize(32, 32));
     connect(button, SIGNAL(clicked()), SLOT(runGameClicked()));
-    buttonToBuilderMap.insert(button,
-                              QSharedPointer<AbstractGameBuilder>(builder));
+    buttonToBuilderMap[button] = std::unique_ptr<AbstractGameBuilder>(builder);
     menuWidget->addButton(button);
 }
 
@@ -63,7 +62,7 @@ void ColorLinesMultigameWidget::runGameClicked()
 {
     ButtonToBuilderMap::iterator it = buttonToBuilderMap.find(sender());
     if(it != buttonToBuilderMap.end()){
-        runGame((*it).data());
+        runGame((*it).second.get());
     }
 }
 
@@ -107,5 +106,5 @@ void ColorLinesMultigameWidget::quitToMenu()
         delete gameWidget;
         gameWidget = NULL;
     }
-    game.clear();
+    game.reset();
 }

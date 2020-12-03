@@ -2,25 +2,26 @@
   * @author Yunkin Ilya.
   */
 #include "PathSearchToWidth.h"
+#include "MISC/container_convenience.h"
 
-
-bool PathSearchToWidth::search(ColorLinesTile *from, ColorLinesTile *to, QList<ColorLinesTile *> &path)
+bool PathSearchToWidth::search(ColorLinesTile *from, ColorLinesTile *to, std::vector<ColorLinesTile *> &path)
 {
     bool ret = false;
     tileParentMap.insert(from, 0);
     openQueue.enqueue(from);
-    while(!openQueue.isEmpty()){
+    while(!openQueue.empty()){
         ColorLinesTile *current = openQueue.takeFirst();
         if(current == to){
             /// Конструирование пути
             path.clear();
             ColorLinesTile *pathTile = current;
             while(pathTile != from){
-                path.prepend(pathTile);
+                path.push_back(pathTile);
                 pathTile = tileParentMap[pathTile];
             }
-            path.prepend(from);
+            path.push_back(from);
             ret = true;
+            std::reverse(path.begin(), path.end());
             break;
         }else
         {
@@ -50,5 +51,5 @@ bool PathSearchToWidth::isFree(ColorLinesTile *tile)
 
 bool PathSearchToWidth::didntEnqued(ColorLinesTile *tile)
 {
-    return !tileParentMap.contains(tile);
+    return !Container::contains(tileParentMap, tile);
 }

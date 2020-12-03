@@ -166,9 +166,9 @@ void ColorLinesTile::setColor(Color color)
     this->color = color;
 }
 
-QList<ColorLinesTile *> ColorLinesTile::getTileList() const
+std::vector<ColorLinesTile *> ColorLinesTile::getTileList() const
 {
-    QList<ColorLinesTile *> list;
+    std::vector<ColorLinesTile *> list;
     const ColorLinesTile *left = this;
     while(left){
         const ColorLinesTile *current = left;
@@ -181,9 +181,9 @@ QList<ColorLinesTile *> ColorLinesTile::getTileList() const
     return list;
 }
 
-QList<ColorLinesTile *> ColorLinesTile::getHorizontalColorList() const
+std::vector<ColorLinesTile *> ColorLinesTile::getHorizontalColorList() const
 {
-    QList<ColorLinesTile *> list;
+    std::vector<ColorLinesTile *> list;
     list.push_back(const_cast<ColorLinesTile *>(this));
     ColorLinesTile *cur = right;
     while((cur != 0) && (cur->getColor() == color)){
@@ -198,9 +198,9 @@ QList<ColorLinesTile *> ColorLinesTile::getHorizontalColorList() const
     return list;
 }
 
-QList<ColorLinesTile *> ColorLinesTile::getVerticalColorList() const
+std::vector<ColorLinesTile *> ColorLinesTile::getVerticalColorList() const
 {
-    QList<ColorLinesTile *> list;
+    std::vector<ColorLinesTile *> list;
     list.push_back(const_cast<ColorLinesTile *>(this));
     ColorLinesTile *cur = getTopTile();
     while((cur != 0) && (cur->getColor() == getColor())){
@@ -215,9 +215,9 @@ QList<ColorLinesTile *> ColorLinesTile::getVerticalColorList() const
     return list;
 }
 
-QList<ColorLinesTile *> ColorLinesTile::getDiagonal1ColorList() const
+std::vector<ColorLinesTile *> ColorLinesTile::getDiagonal1ColorList() const
 {
-    QList<ColorLinesTile *> list;
+    std::vector<ColorLinesTile *> list;
     list.push_back(const_cast<ColorLinesTile *>(this));
     ColorLinesTile *cur = (left != 0) ? left->top : 0;
     while((cur != 0) && (cur->getColor() == getColor())){
@@ -232,9 +232,9 @@ QList<ColorLinesTile *> ColorLinesTile::getDiagonal1ColorList() const
     return list;
 }
 
-QList<ColorLinesTile *> ColorLinesTile::getDiagonal2ColorList() const
+std::vector<ColorLinesTile *> ColorLinesTile::getDiagonal2ColorList() const
 {
-    QList<ColorLinesTile *> list;
+    std::vector<ColorLinesTile *> list;
     list.push_back(const_cast<ColorLinesTile *>(this));
     ColorLinesTile *cur = (left != 0) ? left->bottom : 0;
     while((cur != 0) && (cur->getColor() == getColor())){

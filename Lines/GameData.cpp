@@ -16,7 +16,7 @@ ColorLinesGameData::ColorLinesGameData(JustAnotherLines *game)
       selection(0),
       elementMovingStatePointer(new ElementMovingState(this)),
       waitingStatePointer(new WaitingState(this)),
-      currentState(waitingStatePointer.data()),
+      currentState(waitingStatePointer.get()),
       game(game)
 {
     statistics = QString("Coins=%1 Combo=%2").arg(coins).arg(combo);
@@ -25,10 +25,10 @@ ColorLinesGameData::ColorLinesGameData(JustAnotherLines *game)
 
 bool ColorLinesGameData::clearIfLined(ColorLinesTile *tile)
 {
-    QList<ColorLinesTile *> hList = tile->getHorizontalColorList();
-    QList<ColorLinesTile *> vList = tile->getVerticalColorList();
-    QList<ColorLinesTile *> d1List = tile->getDiagonal1ColorList();
-    QList<ColorLinesTile *> d2List = tile->getDiagonal2ColorList();
+    std::vector<ColorLinesTile *> hList = tile->getHorizontalColorList();
+    std::vector<ColorLinesTile *> vList = tile->getVerticalColorList();
+    std::vector<ColorLinesTile *> d1List = tile->getDiagonal1ColorList();
+    std::vector<ColorLinesTile *> d2List = tile->getDiagonal2ColorList();
     int cash = clearIfLined(hList) +
             clearIfLined(vList) +
             clearIfLined(d1List) +
@@ -43,7 +43,7 @@ bool ColorLinesGameData::clearIfLined(ColorLinesTile *tile)
     return cash > 0;
 }
 
-int ColorLinesGameData::clearIfLined(QList<ColorLinesTile *> line)
+int ColorLinesGameData::clearIfLined(std::vector<ColorLinesTile *> line)
 {
     int cash = 0;
     if(line.size() >= MIN_LINE){
@@ -76,7 +76,7 @@ void ColorLinesGameData::placeBalls()
             clearIfLined(randomTile);
             --freeCells;
         }
-        if(tileMap.ownedList.isEmpty()){// Чтобы с пустым полем не остаться
+        if(tileMap.ownedList.empty()){// Чтобы с пустым полем не остаться
             placeBalls();
         }
         randomColors();
@@ -98,12 +98,12 @@ void ColorLinesGameData::randomColors()
 
 void ColorLinesGameData::goToElementMovingState()
 {
-    currentState = elementMovingStatePointer.data();
+    currentState = elementMovingStatePointer.get();
 }
 
 void ColorLinesGameData::goToWaitingState()
 {
-    currentState = waitingStatePointer.data();
+    currentState = waitingStatePointer.get();
 }
 
 void ColorLinesGameData::pathClean()
@@ -126,11 +126,11 @@ void ElementMovingState::update()
         data->tileMap.set(*data->pathIterator, color);
     }else{
         data->goToWaitingState();
-        ColorLinesTile *tile = data->path.last();
+        ColorLinesTile *tile = data->path.back();
         data->pathClean();
         if(!data->clearIfLined(tile)){
             data->placeBalls();
-        }else if(data->tileMap.ownedList.isEmpty()){// Чтобы с пустым полем не остаться
+        }else if(data->tileMap.ownedList.empty()){// Чтобы с пустым полем не остаться
             data->placeBalls();
         }
         data->selection = 0;
