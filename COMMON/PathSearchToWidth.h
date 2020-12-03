@@ -37,7 +37,7 @@ public:
 
     bool isFree(ColorLinesTile *tile);
 
-    bool didntEnqued(ColorLinesTile *tile);
+    bool notEnqued(ColorLinesTile *tile);
 };
 
 #endif // PATHSEARCHTOWIDTH_H

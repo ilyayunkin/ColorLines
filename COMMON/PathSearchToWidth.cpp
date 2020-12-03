@@ -38,7 +38,7 @@ void PathSearchToWidth::enqueueChild(ColorLinesTile *child, ColorLinesTile *pare
 {
     bool childExists = (child != 0);
 
-    if(childExists && isFree(child) && didntEnqued(child)){
+    if(childExists && isFree(child) && notEnqued(child)){
         openQueue.enqueue(child);
         tileParentMap.insert(child,parent);
     }
@@ -49,7 +49,7 @@ bool PathSearchToWidth::isFree(ColorLinesTile *tile)
     return tile->getColor() == ColorLinesTile::NONE;
 }
 
-bool PathSearchToWidth::didntEnqued(ColorLinesTile *tile)
+bool PathSearchToWidth::notEnqued(ColorLinesTile *tile)
 {
     return !Container::contains(tileParentMap, tile);
 }
