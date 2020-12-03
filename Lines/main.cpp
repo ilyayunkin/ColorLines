@@ -2,7 +2,7 @@
   * @author Yunkin Ilya.
   */
 #include <QApplication>
-#include <QSharedPointer>
+#include <memory>
 
 #include "ColorLinesBuilder.h"
 
@@ -10,17 +10,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QSharedPointer<AbstractColorLinesGame> gameP;
-    QSharedPointer<QWidget> widgetP;
-
-    {
-        AbstractColorLinesGame *game;
-        QWidget *w;
-        ColorLinesBuilder b;
-        b.createGame(game, w);
-        gameP = QSharedPointer<AbstractColorLinesGame>(game);
-        widgetP = QSharedPointer<QWidget>(w);
-    }
+    AbstractColorLinesGame *game;
+    QWidget *w;
+    ColorLinesBuilder b;
+    b.createGame(game, w);
+    std::unique_ptr<AbstractColorLinesGame> gameP(game);
+    std::unique_ptr<QWidget> widgetP(w);
 
     widgetP->show();
 
