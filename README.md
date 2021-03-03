@@ -36,12 +36,12 @@ Use a left mouse button:
 
 ## Screenshots
 
-![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-ColorLinesMultigame.png)
+![](Screenshots/Screenshot-ColorLinesMultigame.png)
 
-![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-Tetris.png)
+![](Screenshots/Screenshot-Tetris.png)
 
-![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-ColorLines.png)
+![](Screenshots/Screenshot-ColorLines.png)
 
-![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-Snake.png)
+![](Screenshots/Screenshot-Snake.png)
 
-![](https://github.com/ilyayunkin/ColorLines/blob/master/Screenshots/Screenshot-ClickLines.png)
+![](Screenshots/Screenshot-ClickLines.png)
